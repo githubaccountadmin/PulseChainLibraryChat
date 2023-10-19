@@ -29,12 +29,18 @@
       <!-- Books go here -->
     </section>
 
-    <!-- User Input Form -->
-    <form id="userInputForm">
-      <label for="content">Share your thoughts:</label>
-      <textarea id="content"></textarea>
-      <button type="submit">Post</button>
-    </form>
+<!-- User Input Form -->
+<form id="userInputForm">
+  <label for="postType">Type:</label>
+  <select id="postType">
+    <option value="tweet">Tweet</option>
+    <option value="story">Story</option>
+    <option value="book">Book</option>
+  </select>
+  <label for="content">Share your thoughts:</label>
+  <textarea id="content"></textarea>
+  <button type="submit">Post</button>
+</form>
   </main>
 
   <script src="script.js"></script>
