@@ -1,49 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>90's Themed Message Board</title>
+    <meta charset="UTF-8">
+    <title>90's BBS Style Message Board</title>
 </head>
 <body>
- <div class="ansi-art">
-    <_______________________________
-||     ||     ||     ||     || 
-||     ||     ||     ||     || 
-||     ||     ||     ||     || 
-||=====||=====||=====||=====||
-||_____||_____||_____||_____||
-_______________________________
-||     ||     ||     ||     || 
-||     ||     ||     ||     || 
-||     ||     ||     ||     || 
-||=====||=====||=====||=====||
-||_____||_____||_____||_____||
-_______________________________>
-  </div>
-  
-  <h1>Welcome to the 90's BBS</h1>
 
-  <select id="postType">
-    <option value="Tweet">Tweet</option>
-    <option value="Story">Story</option>
-    <option value="Book">Book</option>
-  </select>
+    <button id="connect-wallet">Connect Wallet</button> <!-- New Wallet Connect Button -->
 
-  <textarea id="postContent" rows="4" cols="50"></textarea>
-  <button id="postButton">Post</button>
+    <h1>Tweets</h1>
+    <div id="tweet-section"></div>
+    <textarea id="tweet-message"></textarea>
+    <button class="post-button" data-target="tweet">Post Tweet</button>
 
-  <section id="tweets">
-    <!-- Tweets will appear here -->
-  </section>
+    <h1>Stories</h1>
+    <div id="story-section"></div>
+    <textarea id="story-message"></textarea>
+    <button class="post-button" data-target="story">Post Story</button>
 
-  <section id="stories">
-    <!-- Stories will appear here -->
-</section>
+    <h1>Books</h1>
+    <div id="book-section"></div>
+    <textarea id="book-message"></textarea>
+    <button class="post-button" data-target="book">Post Book</button>
 
-  <section id="books">
-    <!-- Books will appear here -->
-  </section>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
