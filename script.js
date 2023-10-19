@@ -8,15 +8,17 @@ const tweetsSection = document.getElementById("tweets");
 form.addEventListener("submit", function(event) {
   event.preventDefault(); // Prevent the form from reloading the page
 
-  // Get the content from the textarea
+  // Get the content and post type from the form
   const content = document.getElementById("content").value;
+  const postType = document.getElementById("postType").value;
 
-  // Create a new element to hold the tweet
-  const newTweet = document.createElement("p");
-  newTweet.textContent = content;
-  
-  // Add the new tweet to the tweets section
-  tweetsSection.appendChild(newTweet);
+  // Create a new element to hold the post
+  const newPost = document.createElement("p");
+  newPost.textContent = content;
+
+  // Decide where to add the new post
+  const targetSection = document.getElementById(postType + "s");
+  targetSection.appendChild(newPost);
 
   // Clear the textarea
   document.getElementById("content").value = "";
