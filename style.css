@@ -1,54 +1,30 @@
-/* Basic resets */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Overall page styling */
 body {
   background-color: black;
-  color: lime;
+  color: #33ff33;
   font-family: 'Courier New', Courier, monospace;
-  line-height: 1.6;
 }
 
-/* Header */
-header {
-  background-color: #333;
-  color: white;
-  text-align: center;
-  padding: 1rem;
-}
-
-/* Main content */
-main {
-  padding: 2rem;
-}
-
-/* Sections */
 section {
-  margin-bottom: 2rem;
+  border: 2px solid #33ff33;
+  margin: 10px;
+  padding: 10px;
 }
 
-/* Headings */
-h1, h2 {
-  border-bottom: 2px solid lime;
-  padding-bottom: 10px;
-  margin-bottom: 1rem;
+button {
+  background-color: #33ff33;
+  color: black;
+  border: none;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
 }
 
-/* User input form */
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-label, textarea, button {
-  margin-bottom: 1rem;
-}
-
-textarea {
-  width: 100%;
-  height: 100px;
+/* Add any ANSI or ASCII art here */
+.ansi-art {
+  white-space: pre;
+  font-family: monospace;
 }
