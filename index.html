@@ -1,29 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>The PulseChain Press</title>
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
+  <meta charset="UTF-8">
+  <title>90's Themed BBS Message Board</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
+  <div class="container">
+    <h1>Welcome to the 90's BBS Message Board!</h1>
+    <div id="network-status">Not connected</div>
 
-    <button id="connect-wallet">Connect Wallet</button> <!-- New Wallet Connect Button -->
+    <div class="form-container">
+      <div id="tweets">
+        <h2>Tweets</h2>
+        <textarea id="tweetInput" placeholder="What's on your mind?"></textarea>
+        <button onclick="postMessage('tweets')">Post Tweet</button>
+        <div id="tweetSection"></div>
+      </div>
 
-    <h1>Tweets</h1>
-    <div id="tweet-section"></div>
-    <textarea id="tweet-message"></textarea>
-    <button class="post-button" data-target="tweet">Post Tweet</button>
+      <div id="stories">
+        <h2>Stories</h2>
+        <textarea id="storyInput" placeholder="Tell us a story..."></textarea>
+        <button onclick="postMessage('stories')">Post Story</button>
+        <div id="storySection"></div>
+      </div>
 
-    <h1>Stories</h1>
-    <div id="story-section"></div>
-    <textarea id="story-message"></textarea>
-    <button class="post-button" data-target="story">Post Story</button>
-
-    <h1>Books</h1>
-    <div id="book-section"></div>
-    <textarea id="book-message"></textarea>
-    <button class="post-button" data-target="book">Post Book</button>
-
-    <script src="script.js"></script>
+      <div id="books">
+        <h2>Books</h2>
+        <textarea id="bookInput" placeholder="Write a book if you want!"></textarea>
+        <button onclick="postMessage('books')">Post Book</button>
+        <div id="bookSection"></div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
