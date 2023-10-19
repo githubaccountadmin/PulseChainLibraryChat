@@ -1,39 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>90's Themed BBS Message Board</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
-  <script src="script.js" defer></script>
+    <meta charset="UTF-8">
+    <title>The PulseChain Press</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
 </head>
 <body>
-  <div class="container">
-    <h1>Welcome to the 90's BBS Message Board!</h1>
-    <div id="network-status">Not connected</div>
+    <button id="connect-button">Connect Wallet</button>
+    <div id="network-status"></div> <!-- Added this line to display the network status -->
 
-    <div class="form-container">
-      <div id="tweets">
-        <h2>Tweets</h2>
-        <textarea id="tweetInput" placeholder="What's on your mind?"></textarea>
-        <button onclick="postMessage('tweets')">Post Tweet</button>
-        <div id="tweetSection"></div>
-      </div>
+    <form id="tweet-form">
+        <input type="text" id="tweet-input">
+        <button type="submit">Post Tweet</button>
+    </form>
 
-      <div id="stories">
-        <h2>Stories</h2>
-        <textarea id="storyInput" placeholder="Tell us a story..."></textarea>
-        <button onclick="postMessage('stories')">Post Story</button>
-        <div id="storySection"></div>
-      </div>
+    <form id="book-form">
+        <input type="text" id="book-input">
+        <button type="submit">Post Book</button>
+    </form>
 
-      <div id="books">
-        <h2>Books</h2>
-        <textarea id="bookInput" placeholder="Write a book if you want!"></textarea>
-        <button onclick="postMessage('books')">Post Book</button>
-        <div id="bookSection"></div>
-      </div>
-    </div>
-  </div>
+    <form id="story-form">
+        <input type="text" id="story-input">
+        <button type="submit">Post Story</button>
+    </form>
+
+    <section id="tweets">
+        <!-- Tweets will be appended here -->
+    </section>
+
+    <section id="books">
+        <!-- Books will be appended here -->
+    </section>
+
+    <section id="stories">
+        <!-- Stories will be appended here -->
+    </section>
 </body>
 </html>
