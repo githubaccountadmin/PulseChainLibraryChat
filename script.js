@@ -1,23 +1,30 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const postButton = document.getElementById("postButton");
-  postButton.addEventListener("click", () => {
-    const postType = document.getElementById("postType").value;
-    console.log("Post Type:", postType); // Debug line
-    const postContent = document.getElementById("postContent").value;
-    const timestamp = new Date().toISOString();
-    const postId = Math.random().toString(36).substr(2, 9);
+// Initialize Web3
+const Web3 = require('web3');
+let web3 = new Web3(Web3.givenProvider || "YOUR_RPC_URL_HERE");
 
-    const newPost = document.createElement("div");
-    newPost.innerHTML = `
-      <h2>${postType} - ID: ${postId}</h2>
-      <p>${postContent}</p>
-      <small>${timestamp}</small>
-    `;
+// Wallet Connection Function
+async function connectWallet() {
+  const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+  const account = accounts[0];
+  console.log(`Connected account: ${account}`);
+}
 
-    const targetSection = document.getElementById(postType.toLowerCase() + "s");
-    console.log("Target section ID:", postType.toLowerCase() + "s"); // Debug line
-    console.log("Target section:", targetSection); // Debug line
+// Event Listener for Wallet Connection
+document.getElementById('connect-wallet').addEventListener('click', connectWallet);
 
-    targetSection.appendChild(newPost);
-  });
+// Previous code
+document.addEventListener('DOMContentLoaded', function () {
+    let buttons = document.querySelectorAll('.post-button');
+
+    buttons.forEach(function (button) {
+        button.addEventListener('click', function (e) {
+            let target = e.target.dataset.target;
+            let message = document.getElementById(target + '-message').value;
+            let targetSection = document.getElementById(target + '-section');
+
+            let newMessage = document.createElement('p');
+            newMessage.textContent = message;
+            targetSection.appendChild(newMessage);
+        });
+    });
 });
