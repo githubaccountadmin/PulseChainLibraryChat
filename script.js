@@ -1,5 +1,4 @@
 // Initialize Web3
-const Web3 = require('web3');
 let web3 = new Web3(Web3.givenProvider || "YOUR_RPC_URL_HERE");
 
 // Wallet Connection Function
