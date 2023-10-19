@@ -1,47 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>The PulseChain Press (PulseChain Publishing House, The Great Library of the PulseChain Nation) </title>
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <meta charset="UTF-8">
+  <title>90's Themed Message Board</title>
 </head>
 <body>
-  <header>
-    <!-- We'll add some cool ANSI art here later -->
-    <h1>Welcome to The Great Library of the PulseChain Nation</h1>
-  </header>
+  <h1>Welcome to the 90's BBS</h1>
 
-  <main>
-    <!-- Tweets Section -->
-    <section id="tweets">
-      <h2>Tweets</h2>
-      <!-- We'll dynamically populate this with JS -->
-    </section>
-
-    <!-- Stories Section -->
-    <section id="stories">
-      <h2>Stories</h2>
-      <!-- Stories go here -->
-    </section>
-
-    <!-- Books Section -->
-    <section id="books">
-      <h2>Books</h2>
-      <!-- Books go here -->
-    </section>
-
-<!-- User Input Form -->
-<form id="userInputForm">
-  <label for="postType">Type:</label>
   <select id="postType">
-    <option value="tweet">Tweet</option>
-    <option value="story">Story</option>
-    <option value="book">Book</option>
+    <option value="Tweet">Tweet</option>
+    <option value="Story">Story</option>
+    <option value="Book">Book</option>
   </select>
-  <label for="content">Share your thoughts:</label>
-  <textarea id="content"></textarea>
-  <button type="submit">Post</button>
-</form>
-  </main>
+
+  <textarea id="postContent" rows="4" cols="50"></textarea>
+  <button id="postButton">Post</button>
+
+  <section id="tweets">
+    <!-- Tweets will appear here -->
+  </section>
+
+  <section id="stories">
+    <!-- Stories will appear here -->
+  </section>
+
+  <section id="books">
+    <!-- Books will appear here -->
+  </section>
 
   <script src="script.js"></script>
 </body>
