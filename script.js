@@ -2,9 +2,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
     let transactionCount = 10;  // Default to fetching the last 10 transactions
+    let isConnected = false;  // New variable to track wallet connection
 
     async function connectWallet() {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        isConnected = true;  // Update to true upon successful connection
         const networkId = await web3.eth.net.getId();
         checkPulseChain(networkId);
     }
@@ -12,8 +14,13 @@ document.addEventListener('DOMContentLoaded', function() {
     function checkPulseChain(networkId) {
         const networkDisplay = document.getElementById('networkStatus');
         const pulseChainId = 369;
-        networkDisplay.innerHTML = networkId === pulseChainId ? "Connected to PulseChain" : "Not connected to PulseChain";
-        networkDisplay.style.color = networkId === pulseChainId ? "green" : "red";
+        if (isConnected) {  // Check if the wallet is connected
+            networkDisplay.innerHTML = networkId === pulseChainId ? "Connected to PulseChain" : "Not connected to PulseChain";
+            networkDisplay.style.color = networkId === pulseChainId ? "green" : "red";
+        } else {
+            networkDisplay.innerHTML = "Wallet not connected";  // Display this when the wallet is not connected
+            networkDisplay.style.color = "red";
+        }
     }
 
     function postContent() {
@@ -36,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
             let outputText = "";
 
-            const filteredData = data.result.filter(tx => tx.input !== '0x').slice(0, transactionCount).forEach(tx => {
+            data.result.filter(tx => tx.input !== '0x').slice(0, transactionCount).forEach(tx => {
                 try {
                     if (web3.utils.isHexStrict(tx.input)) {
                         const decodedInput = web3.utils.hexToUtf8(tx.input);
@@ -66,7 +73,9 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('loadMoreTransactionsButton').addEventListener('click', fetchTransactionData);
     document.getElementById('transactionCountInput').addEventListener('input', updateTransactionCount);
 
-    web3.eth.net.getId().then(checkPulseChain);
+    web3.eth.net.getId().then(id => {
+        isConnected = true;  // Assume connected initially
+        checkPulseChain(id);
+    });
     fetchTransactionData();
-
 });
