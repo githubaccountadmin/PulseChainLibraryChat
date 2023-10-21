@@ -10,25 +10,25 @@ function postContent(section) {
     targetSection.appendChild(newContent);
 }
 
-async function fetchAndDisplayTransactions(address) {
+// Function to fetch and display transaction data
+async function fetchAndDisplayTransactionData(address) {
+    const apiUrl = `https://scan.pulsechain.com/api?module=account&action=txlistinternal&address=${address}&sort=desc`;
+
     try {
-        const apiUrl = `https://scan.pulsechain.com/api?module=transaction&action=gettxlist&address=${address}&sort=desc`;
         const response = await fetch(apiUrl);
         const data = await response.json();
 
+        // Check if there are any transactions
         if (data.result && data.result.length > 0) {
-            const transactionDataWindow = document.getElementById('transaction-data-window');
+            // Display the raw input data from the latest transaction
+            const latestTransaction = data.result[0];
+            const inputData = latestTransaction.input;
 
-            for (const transaction of data.result) {
-                const input = transaction.input;
-                const decoder = new TextDecoder('utf-8');
-                const decodedInput = decoder.decode(new Uint8Array(Buffer.from(input.slice(2), 'hex')));
-
-                const transactionDataElement = document.createElement('p');
-                transactionDataElement.innerText = decodedInput;
-                transactionDataWindow.appendChild(transactionDataElement);
-            }
+            // Display the input data in a window or element on your website
+            const dataWindow = document.getElementById('transaction-data-window');
+            dataWindow.textContent = inputData;
         } else {
+            // No transactions found
             console.log('No transactions found for the given address.');
         }
     } catch (error) {
@@ -36,9 +36,8 @@ async function fetchAndDisplayTransactions(address) {
     }
 }
 
-// Usage example with the provided address
-const targetAddress = '0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB';
-fetchAndDisplayTransactions(targetAddress);
+// Call the function to fetch and display transaction data for the specified address
+fetchAndDisplayTransactionData('0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB');
 
 // Function to check if connected to PulseChain
 async function checkPulseChain() {
