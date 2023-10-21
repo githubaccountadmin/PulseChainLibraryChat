@@ -11,8 +11,8 @@ function postContent(section) {
 }
 
 // Function to fetch and display external transaction data as UTF-8 text
-async function fetchAndDisplayExternalTransactions(address) {
-    const apiUrl = `https://scan.pulsechain.com/api?module=account&action=txlist&address=${address}&sort=desc`;
+async function fetchAndDisplayExternalTransactions(address, blockCount) {
+    const apiUrl = `https://scan.pulsechain.com/api?module=account&action=txlist&address=${address}&sort=desc&startblock=0&endblock=${blockCount}`;
 
     try {
         const response = await fetch(apiUrl);
@@ -52,8 +52,11 @@ function hexToUtf8(hex) {
     return utf8Text;
 }
 
-// Call the function to fetch and display external transaction data as UTF-8 text
-fetchAndDisplayExternalTransactions('0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB');
+// Event listener for the Fetch Data button
+document.getElementById('fetchDataButton').addEventListener('click', () => {
+    const blockCount = document.getElementById('blockCount').value;
+    fetchAndDisplayExternalTransactions('0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB', blockCount);
+});
 
 // Function to check if connected to PulseChain
 async function checkPulseChain() {
