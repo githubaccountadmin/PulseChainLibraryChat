@@ -24,25 +24,40 @@ document.addEventListener('DOMContentLoaded', function() {
         contentInput.value = '';
     }
 
-    async function fetchTransactionData() {
-        const window = document.getElementById('transactionDataWindow');
-        window.innerHTML = 'Fetching data...';
+   async function fetchTransactionData() {
+    const window = document.getElementById('transaction-data-window');
+    window.innerHTML = 'Fetching data...';
+    const apiEndpoint = 'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc';
 
-        const transactionCountInput = document.getElementById('transactionCountInput');
-        const count = transactionCountInput.value || transactionCount;
+    try {
+        const response = await fetch(apiEndpoint);
+        const data = await response.json();
 
-        // Note: I've left the API endpoint same, you'll need to add pagination if needed.
-        const apiEndpoint = `https://scan.pulsechain.com/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc&count=${count}`;
+        console.log("Fetched data:", data);
 
-        try {
-            const response = await fetch(apiEndpoint);
-            const data = await response.json();
-            displayTransactions(data.result);
-        } catch (error) {
-            console.error("Error details:", error.name, error.message);
-            window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
-        }
+        const filteredData = data.result.filter(tx => tx.input !== '0x').slice(0, 10).map(tx => {
+            let decodedInput;
+            try {
+                decodedInput = web3.utils.hexToUtf8(tx.input);
+            } catch (e) {
+                console.error("Failed to decode input:", tx.input, e);
+                decodedInput = "Invalid UTF-8 data";  // This is where the error message is set
+            }
+
+            return {
+                from: tx.from,
+                input: decodedInput
+            };
+        });
+
+        console.log("Filtered data:", filteredData);
+
+        window.innerText = JSON.stringify(filteredData, null, 2);
+    } catch (error) {
+        console.error("Error details:", error.name, error.message);
+        window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
     }
+}
 
     function displayTransactions(transactions) {
         const window = document.getElementById('transactionDataWindow');
