@@ -88,12 +88,12 @@ textarea {
     font-family: 'Courier New', Courier, monospace;
     overflow: auto;
     padding: 10px;
-    margin-top: 20vh; /* Increase this value for more space at the top */
-    margin-bottom: 50px; /* Adjust this value to leave space for the buttons */
-    height: calc(50vh - 50px); /* Calculate the height based on viewport height and button space */
-    width: 90%;
+    margin-top: 50vh; /* Start in the middle of the screen vertically */
+    height: calc(50vh - 50px); /* Cover the lower half of the screen minus space for buttons */
+    width: 95%;
     white-space: pre-wrap;
     border: 2px solid #00ff00;
     border-left: 2px solid #00ff00;
     border-right: 2px solid #00ff00;
 }
+
