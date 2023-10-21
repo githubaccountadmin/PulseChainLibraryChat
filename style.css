@@ -35,14 +35,13 @@ button {
     z-index: 3; /* Ensures it's above all other elements */
     left: 50%; /* Initially center it horizontally */
     top: 20%; /* Initially place it vertically */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Positioning the button above the textarea */
 button.publish-button {
-    position: relative;
-    top: 0;
-    left: 50%; /* Centering it relative to the textarea */
-    transform: translate(-50%, 0); /* Fine-tuning the centering */
     background-color: #00ff00;
     border: none;
     color: black;
@@ -55,7 +54,6 @@ button.publish-button {
 
 /* The text area */
 textarea {
-    position: relative;
     background-color: #000000;
     color: #00ff00;
     padding: 10px;
