@@ -1,3 +1,6 @@
+// Wrap your code in a DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', function() {
+    
 // Initialize web3 instance
 const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
 
@@ -57,18 +60,19 @@ async function fetchTransactionData() {
     }
 }
 
-// Event listener for the fetch data button
-document.getElementById('fetchDataButton').addEventListener('click', () => {
-    fetchTransactionData();
-});
+ // Event listener for the fetch data button
+    document.getElementById('fetchDataButton').addEventListener('click', () => {
+        fetchTransactionData();
+    });
 
-// Get and display the current network ID
-web3.eth.net.getId().then(checkPulseChain);
+    // Get and display the current network ID
+    web3.eth.net.getId().then(checkPulseChain);
 
-// Listen for network changes and update the display accordingly
-web3.eth.net.isListening().then(() => {
-    window.ethereum.on('chainChanged', (chainId) => {
-        const networkId = parseInt(chainId.substring(2), 16);  // Convert hexadecimal to decimal
-        checkPulseChain(networkId);
+    // Listen for network changes and update the display accordingly
+    web3.eth.net.isListening().then(() => {
+        window.ethereum.on('chainChanged', (chainId) => {
+            const networkId = parseInt(chainId.substring(2), 16);  // Convert hexadecimal to decimal
+            checkPulseChain(networkId);
+        });
     });
 });
