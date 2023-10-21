@@ -25,15 +25,17 @@ document.addEventListener('DOMContentLoaded', function() {
         contentInput.value = '';
     }
 
-    async function fetchTransactionData() {
-        const window = document.getElementById('transactionDataWindow');
-        window.innerHTML = 'Fetching data...';
+   async function fetchTransactionData() {
+    const window = document.getElementById('transactionDataWindow');
+    window.innerHTML = 'Fetching data...';
 
-        const apiEndpoint = 'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc';
+    const apiEndpoint = 'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc';
 
-        try {
-            const response = await fetch(apiEndpoint);
-            const data = await response.json();
+    try {
+        const response = await fetch(apiEndpoint);
+        const data = await response.json();
+        
+        if (data && data.result) {
             const filteredData = data.result.filter(tx => tx.input !== '0x').slice(0, transactionCount).map(tx => {
                 let decodedInput;
                 try {
@@ -49,11 +51,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 };
             });
             window.innerText = JSON.stringify(filteredData, null, 2);
-        } catch (error) {
-            console.error("Error details:", error.name, error.message);
-            window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
+        } else {
+            window.innerHTML = 'No transaction data found.';
         }
+    } catch (error) {
+        console.error("Error details:", error.name, error.message);
+        window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
     }
+}
 
     function updateTransactionCount() {
         const newCount = parseInt(document.getElementById('transactionCountInput').value);
