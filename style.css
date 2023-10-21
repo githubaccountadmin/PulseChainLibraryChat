@@ -38,12 +38,12 @@ textarea {
     color: #00ff00;
     padding: 10px;
     margin: 4px 2px;
-    width: 50%;
-    left: 25%;
+    width: 50%; /* Adjust as needed */
     position: fixed;
-    top: 60%;  /* Adjust this to move it higher */
-    height: 10%;  /* Set the height */
+    bottom: 52%;  /* Positioning it above the 50% mark */
+    left: 25%;  /* Centering it horizontally */
     border: 2px solid #00ff00;
+    z-index: 2;  /* To ensure it appears at the front */
 }
 
 .scrollable-window {
@@ -52,11 +52,10 @@ textarea {
     font-family: 'Courier New', Courier, monospace;
     overflow: auto;
     padding: 10px;
-    margin-top: 20px;
-    height: 50%;
-    position: fixed;  /* Make it non-movable */
-    bottom: 0;  /* Stick it to the bottom of the screen */
-    width: 100%;  /* Make it full-width */
+    height: 50%; /* This should occupy the bottom 50% of the screen */
+    position: fixed;
+    bottom: 0;
+    width: 100%;
     border: 2px solid #00ff00;
+    z-index: 1;  /* To ensure it stays behind */
 }
-
