@@ -41,9 +41,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 try {
                     decodedInput = web3.utils.isHexStrict(tx.input) ? web3.utils.hexToUtf8(tx.input) : 'Not a hex string';
                 } catch (error) {
-                    console.error(`Error decoding hex to UTF-8 for tx.input: ${tx.input}`);
-                    console.error(error);
-                    decodedInput = 'Invalid UTF-8 data';
+                    console.warn(`Error decoding hex to UTF-8 for tx.input: ${tx.input}`);
+                    console.warn(error);
+                    decodedInput = `Hex data: ${tx.input}`;
                 }
                 return {
                     from: tx.from,
