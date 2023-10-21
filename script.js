@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     async function fetchTransactionData() {
     const window = document.getElementById('transaction-data-window');
     window.innerHTML = 'Fetching data...';
-    const apiEndpoint = `https://scan.pulsechain.com/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc&limit=${transactionCount}`;
+    const apiEndpoint = `https://scan.pulsechain.com/api?module=account&action=txlist&address={0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB}&sort=desc&limit=${transactionCount}`;
 
     try {
         const response = await fetch(apiEndpoint);
