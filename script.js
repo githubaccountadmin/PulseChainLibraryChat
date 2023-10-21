@@ -50,7 +50,7 @@ async function fetchTransactionData() {
     const address = '0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB'; // Replace with your address
     const response = await fetch(`https://scan.pulsechain.com/api?module=transaction&action=gettxlist&address=${address}&sort=desc&startblock=0&endblock=${blockCount}`);
     const data = await response.json();
-    
+
     // Clear the transaction data window
     const transactionDataWindow = document.getElementById('transaction-data-window');
     transactionDataWindow.innerHTML = '';
