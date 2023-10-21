@@ -4,15 +4,16 @@ const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
 // Function to post content to a specific section
 function postContent(section) {
     const contentInput = document.getElementById(section + '-input');
-    const targetSection = document.getElementById(section + '-section');
-    const newContent = document.createElement('p');
+    const targetSection = document.getElementById(section + '-list');
+    const newContent = document.createElement('li');
     newContent.innerText = contentInput.value;
     targetSection.appendChild(newContent);
+    contentInput.value = ''; // Clear the input field after posting
 }
 
 // Function to check if connected to PulseChain
 function checkPulseChain(networkId) {
-    const networkDisplay = document.getElementById('network-display');
+    const networkDisplay = document.getElementById('networkStatus');
 
     // PulseChain's Chain ID is 369
     const pulseChainId = 369;
@@ -27,9 +28,39 @@ function checkPulseChain(networkId) {
 }
 
 // Event listeners for the buttons
-document.getElementById('tweets-button').addEventListener('click', () => postContent('tweets'));
-document.getElementById('stories-button').addEventListener('click', () => postContent('stories'));
-document.getElementById('books-button').addEventListener('click', () => postContent('books'));
+document.getElementById('connectButton').addEventListener('click', () => {
+    // Add your code to connect the wallet here
+});
+
+document.getElementById('tweet-button').addEventListener('click', () => postContent('tweets'));
+document.getElementById('book-button').addEventListener('click', () => postContent('books'));
+document.getElementById('story-button').addEventListener('click', () => postContent('stories'));
+
+// Function to fetch transaction data
+async function fetchTransactionData() {
+    const window = document.getElementById('transaction-data-window');
+    window.innerHTML = 'Fetching data...';
+
+    // Replace 'YOUR_API_ENDPOINT' with the actual API endpoint
+    const apiEndpoint = 'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc';
+
+    // Make a GET request to fetch transaction data
+    try {
+        const response = await fetch(apiEndpoint);
+        const data = await response.json();
+        
+        // Process and display the data in the window
+        window.innerHTML = JSON.stringify(data, null, 2);
+    } catch (error) {
+        console.error(error);
+        window.innerHTML = 'Error fetching data.';
+    }
+}
+
+// Event listener for the fetch data button
+document.getElementById('fetchDataButton').addEventListener('click', () => {
+    fetchTransactionData();
+});
 
 // Get and display the current network ID
 web3.eth.net.getId().then(checkPulseChain);
@@ -40,41 +71,4 @@ web3.eth.net.isListening().then(() => {
         const networkId = parseInt(chainId.substring(2), 16);  // Convert hexadecimal to decimal
         checkPulseChain(networkId);
     });
-});
-
-// Default number of blocks to load
-let blockCount = 100;
-
-// Function to fetch transaction data for the given number of blocks
-async function fetchTransactionData() {
-    const address = '0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB'; // Replace with your address
-    const response = await fetch(`https://scan.pulsechain.com/api?module=account&action=txlist&address=${address}&sort=desc&startblock=0&endblock=${blockCount}`);
-    const data = await response.json();
-
-    // Clear the transaction data window
-    const transactionDataWindow = document.getElementById('transaction-data-window');
-    transactionDataWindow.innerHTML = '';
-
-    if (data.status === '1') {
-        const transactions = data.result;
-        transactions.forEach((transaction, index) => {
-            const transactionData = transaction.input;
-            const listItem = document.createElement('div');
-            listItem.textContent = `Transaction ${index + 1}: ${transactionData}`;
-            transactionDataWindow.appendChild(listItem);
-        });
-    } else {
-        transactionDataWindow.textContent = 'No transactions found.';
-    }
-}
-
-// Load transaction data when the page loads
-window.addEventListener('load', () => {
-    fetchTransactionData();
-});
-
-// Listen for the "Load More Blocks" button click
-document.getElementById('fetchDataButton').addEventListener('click', () => {
-    blockCount += 100; // Increase the number of blocks to load by 100
-    fetchTransactionData();
 });
