@@ -97,15 +97,22 @@ textarea {
     border-right: 2px solid #00ff00;
 }
 
-.docs-button {
-    background-color: #000000;
-    color: #00ff00;
+#docs-button {
+    background-color: #00ff00;
+    border: none;
+    color: black;
     padding: 10px 20px;
     text-align: center;
     font-size: 16px;
     margin: 4px 2px;
-    text-decoration: none; /* Remove underline */
-    display: inline-block; /* Make it look like a button */
-    border: none;
     cursor: pointer;
+    position: absolute;
+    top: 10px; /* Adjust the top position to your liking */
+    left: 10px; /* Adjust the left position to your liking */
+    z-index: 1;
+}
+
+/* Additional styles for the button (if needed) */
+#docs-button:hover {
+    background-color: #009900; /* Change the background color on hover */
 }
