@@ -53,7 +53,7 @@ button {
     margin: 4px 2px;
     border: 2px solid #00ff00;
     width: 100%;
-    height: 200px; /* Increase the height value to expand the text area downward */
+    height: 300px; /* Increase the height value to expand the text area downward */
     resize: none;
 }
 
@@ -88,7 +88,7 @@ textarea {
     font-family: 'Courier New', Courier, monospace;
     overflow: auto;
     padding: 10px;
-    margin-top: 150px;
+    margin-top: 100px;
     height: 44%;
     width: 90%;
     white-space: pre-wrap;
