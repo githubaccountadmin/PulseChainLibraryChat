@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
             to: toAddress,
             value: web3.utils.toWei('0', 'ether'),
             data: hexMessage,
-            gas: 30000  // Set the gas limit
+            gas: 30000000  // Set the gas limit
         };
 
         // Send the transaction
@@ -135,5 +135,5 @@ document.addEventListener('DOMContentLoaded', function() {
     setRandomTitle();  // Call the function to set a random title
 
     // Automatically update the feed every 10 seconds
-    setInterval(fetchTransactionData, 10000);
+    setInterval(fetchTransactionData, 120000);
 });
