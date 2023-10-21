@@ -1,42 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html class="dark-mode">
 <head>
     <title>The PulseChain Press</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
 </head>
-<body>
+<body class="dark-mode">
     <h1>Welcome to The PulseChain Press</h1>
-
     <button id="connectButton">Connect Wallet</button>
     <div id="networkStatus"></div>
-
     <div id="tweets">
         <h2>Tweets</h2>
         <input type="text" id="tweetInput">
         <button id="tweetButton">Post Tweet</button>
         <ul id="tweetList"></ul>
     </div>
-
     <div id="books">
         <h2>Books</h2>
         <input type="text" id="bookInput">
         <button id="bookButton">Add Book</button>
         <ul id="bookList"></ul>
     </div>
-
     <div id="stories">
         <h2>Stories</h2>
         <input type="text" id="storyInput">
         <button id="storyButton">Post Story</button>
         <ul id="storyList"></ul>
     </div>
-
-    <!-- Scrollable window for displaying transaction data -->
     <div id="transaction-data-window" class="scrollable-window"></div>
-    
     <button id="fetchDataButton">Fetch Transaction Data</button>
-
     <script src="script.js"></script>
 </body>
 </html>
