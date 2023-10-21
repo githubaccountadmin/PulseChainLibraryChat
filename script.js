@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('connectButton').addEventListener('click', connectWallet);
     document.getElementById('publishButton').addEventListener('click', postContent);
-    document.getElementById('fetchDataButton').addEventListener('click', fetchTransactionData);
+    document.getElementById('loadMoreTransactionsButton').addEventListener('click', fetchTransactionData);
     document.getElementById('transactionCountInput').addEventListener('input', updateTransactionCount);
 
     web3.eth.net.getId().then(checkPulseChain);
