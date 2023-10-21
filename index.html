@@ -1,28 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The PulseChain Library</title> <!-- Changed the title here -->
+    <title>The PulseChain Library</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
 </head>
 <body class="dark-mode">
-    <h1>Welcome to The PulseChain Library</h1> <!-- Changed the header here -->
-
-    <button id="connectButton" aria-label="Connect to Wallet">Connect Wallet</button>
+    <h1>Welcome to The PulseChain Library</h1>
+    
+    <button id="connectButton">Connect Wallet</button>
     <div id="networkStatus"></div>
+    <span id="loadingIndicator" style="display:none;">Loading...</span>
 
-    <section id="posts">
+    <div id="posts">
         <h2>Posts</h2>
-        <textarea id="postInput" rows="4" cols="50" aria-label="Enter your post here"></textarea>
-        <button id="publishButton" aria-label="Publish Post">Publish</button>
-        <ul id="postList"></ul>
-    </section>
+        <textarea id="postInput" rows="4" cols="50" aria-label="Write a post"></textarea>
+        <button id="publishButton">Publish</button>
+        <ul id="postList" aria-label="List of posts"></ul>
+    </div>
 
-    <section id="transaction-data-window" class="scrollable-window"></section>
+    <div id="transactionDataWindow" class="scrollable-window"></div>
     <button id="loadMoreTransactionsButton">Load More Transactions</button>
-    <input type="text" id="transactionCountInput" placeholder="Enter how many transactions to read">
+    <input type="number" id="transactionCountInput" placeholder="Enter how many transactions to read">
 
     <script src="script.js"></script>
 </body>
