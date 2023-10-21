@@ -32,8 +32,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             const response = await fetch(apiEndpoint);
-            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             
+            const data = await response.json();
+            if (data.status !== "1") {
+                throw new Error(`API error! message: ${data.message}`);
+            }
+
             const filteredData = data.result.filter(tx => tx.input !== '0x').slice(0, 10).map(tx => ({
                 from: tx.from,
                 input: web3.utils.hexToUtf8(tx.input)
@@ -42,11 +49,10 @@ document.addEventListener('DOMContentLoaded', function() {
             window.innerText = JSON.stringify(filteredData, null, 2);
         } catch (error) {
             console.error(error);
-            window.innerHTML = 'Error fetching data.';
+            window.innerHTML = `Error fetching data: ${error}`;
         }
     }
 
-    // Function to update the number of transactions to fetch based on user input
     function updateTransactionCount() {
         const newCount = parseInt(prompt('Enter the number of transactions to fetch:', '10'));
         if (!isNaN(newCount)) {
@@ -57,9 +63,9 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('connectButton').addEventListener('click', connectWallet);
     document.getElementById('publishButton').addEventListener('click', postContent);
     document.getElementById('fetchDataButton').addEventListener('click', fetchTransactionData);
-    document.getElementById('fetchDataButton').addEventListener('dblclick', updateTransactionCount);  // Double-click to update the transaction count
+    document.getElementById('fetchDataButton').addEventListener('dblclick', updateTransactionCount);
     web3.eth.net.getId().then(checkPulseChain);
-    fetchTransactionData();  // Automatically fetch the last 10 transactions with data in the input field upon page load
+    fetchTransactionData();
 
 });
 
