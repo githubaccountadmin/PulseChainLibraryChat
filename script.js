@@ -31,6 +31,26 @@ document.addEventListener('DOMContentLoaded', function() {
         connectButton.style.backgroundColor = isConnected ? (networkId === pulseChainId ? "green" : "red") : "grey";
     }
 
+     // Function to set a random title
+    function setRandomTitle() {
+        const titles = [
+            "The Great Library of PulseChain: Home of the Immutable Publishing House",
+            "The Great Library & Publishing House of PulseChain: Your Words, Our Blocks",
+            "PulseChain's Magna Bibliotheca: A Great Library and Publishing House",
+            "The Great Library of PulseChain: Where Publishers Become Historians",
+            "PulseChain Publishing House: An Annex to The Great Library",
+            "The Pulsating Shelves: The Great Library & Publishing House of PulseChain",
+            "The Grand Archive and Publishing House of PulseChain: A Great Library for All",
+            "PulseChain’s Scholarly Publishing House: A Chapter in The Great Library",
+            "The Great Library of PulseChain's Eternal Publishing House: A Living Ledger",
+            "The Great Library & Immutable Publishing House of PulseChain: Where Every Word Counts"
+        ];
+        
+        const titleElement = document.getElementById('postsTitle');
+        const randomIndex = Math.floor(Math.random() * titles.length);
+        titleElement.innerText = titles[randomIndex];
+    }
+    
     // Publish a message to the blockchain
     async function publishMessage() {
         if (!isConnected) await connectWallet();  // Ensure wallet is connected
@@ -112,4 +132,5 @@ document.addEventListener('DOMContentLoaded', function() {
     // Perform initial checks
     checkInitialConnection();
     fetchTransactionData();
+    setRandomTitle();  // Call the function to set a random title
 });
