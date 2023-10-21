@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
             "The Great Library & Immutable Publishing House of PulseChain: Where Every Word Counts"
         ];
         
-        const titleElement = document.getElementById('postsTitle');
+        const titleElement = document.getElementById('dynamicTitle');
         const randomIndex = Math.floor(Math.random() * titles.length);
         titleElement.innerText = titles[randomIndex];
     }
