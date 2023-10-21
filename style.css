@@ -15,6 +15,12 @@ button {
     cursor: pointer;
 }
 
+#loadMoreTransactionsButton {
+    position: absolute;
+    bottom: calc(50% + 10px);
+    left: 10px;
+}
+
 textarea {
     background-color: #000000;
     color: #00ff00;
