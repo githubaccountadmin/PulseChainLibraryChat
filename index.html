@@ -35,17 +35,12 @@
     <!-- Scrollable window for displaying transaction data -->
     <div id="transaction-data-window" class="scrollable-window"></div>
      
-    <!-- Form for selecting the number of blocks back to fetch -->
-    <form id="blockCountForm">
-        <label for="blockCount">Number of Blocks Back:</label>
-        <select id="blockCount">
-            <option value="1">1 Block</option>
-            <option value="5">5 Blocks</option>
-            <option value="10">10 Blocks</option>
-            <option value="20">20 Blocks</option>
-        </select>
-        <button type="button" id="fetchDataButton">Fetch Data</button>
-    </form>
+  <!-- Form for entering the number of blocks back to fetch -->
+<form id="blockCountForm">
+    <label for="blockCount">Number of Blocks Back:</label>
+    <input type="number" id="blockCount" min="1" placeholder="Enter a number">
+    <button type="button" id="fetchDataButton">Fetch Data</button>
+</form>
 
     <script src="script.js"></script>
 </body>
