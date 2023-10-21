@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
-    let transactionCount = 10;  // Default to fetching the last 10 transactions
+    let transactionCount = 10; // Default to fetching the last 10 transactions
 
     async function connectWallet() {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function fetchTransactionData() {
-        const window = document.getElementById('transaction-data-window');
+        const window = document.getElementById('transactionDataWindow');
         window.innerHTML = 'Fetching data...';
 
         const apiEndpoint = 'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc';
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateTransactionCount() {
         const newCount = parseInt(document.getElementById('transactionCountInput').value);
-        if (!isNaN(newCount)) {
+        if (!isNaN(newCount) && newCount > 0) {
             transactionCount = newCount;
         }
     }
@@ -69,5 +69,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
     web3.eth.net.getId().then(checkPulseChain);
     fetchTransactionData();
-
 });
