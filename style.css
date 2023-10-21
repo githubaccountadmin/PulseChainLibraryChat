@@ -25,8 +25,8 @@ button {
 }
 
 #transactionCountInput {
-    left: 200px;
-    bottom: calc(50% + 11px);
+    left: 250px;
+    bottom: calc(50% + 15px);
 }
 
 #publishButton {
@@ -36,9 +36,12 @@ button {
 textarea {
     background-color: #000000;
     color: #00ff00;
-    border: 2px solid #00ff00;
     padding: 10px;
     margin: 4px 2px;
+    width: 100%;  /* Extend to the full width of the container */
+    position: fixed;  /* Make it non-movable */
+    bottom: 55%;  /* Adjust the vertical position */
+    border: 2px solid #00ff00;
 }
 
 .scrollable-window {
