@@ -1,65 +1,65 @@
-// Initialize Web3
-let web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
-
 document.addEventListener('DOMContentLoaded', function() {
-    const connectButton = document.getElementById('connectButton');
-    const publishButton = document.getElementById('publishButton');
-    const fetchDataButton = document.getElementById('fetchDataButton');
-    const blockCountInput = document.getElementById('blockCountInput');
-    const networkStatus = document.getElementById('networkStatus');
+    
+    const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
+    let transactionCount = 10;  // Default to the last 10 transactions
 
-    connectButton.addEventListener('click', connectWallet);
-    publishButton.addEventListener('click', publishPost);
-    fetchDataButton.addEventListener('click', function() {
-        const count = parseInt(blockCountInput.value, 10);
-        fetchBlocks(count);
-    });
-
-    // Display initial network status
-    getNetworkStatus().then(status => networkStatus.innerHTML = status);
-});
-
-// Connect to Wallet
-async function connectWallet() {
-    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-    const network = await web3.eth.net.getNetworkType();
-    const networkStatus = document.getElementById('networkStatus');
-    networkStatus.innerHTML = network === "pulse" ? "Connected to Pulse Network" : "Please switch to the Pulse network";
-}
-
-// Publish Post
-async function publishPost() {
-    const postInput = document.getElementById('postInput');
-    const postValue = postInput.value;
-
-    // Your code to publish a post using web3 can go here.
-}
-
-// Fetch Blocks
-async function fetchBlocks(count) {
-    const latestBlock = await web3.eth.getBlockNumber();
-    const fromBlock = Math.max(latestBlock - count, 0);
-    const transactionDataWindow = document.getElementById('transaction-data-window');
-
-    for (let i = fromBlock; i <= latestBlock; i++) {
-        const block = await web3.eth.getBlock(i, true);
-        displayBlockData(block, transactionDataWindow);
+    async function connectWallet() {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const networkId = await web3.eth.net.getId();
+        checkPulseChain(networkId);
     }
-}
 
-// Display Block Data
-function displayBlockData(block, displayWindow) {
-    for (const tx of block.transactions) {
-        if (tx.input && tx.input !== "0x") {
-            const inputData = web3.utils.hexToUtf8(tx.input);
-            displayWindow.innerHTML += `<p>${inputData}</p>`;
+    function checkPulseChain(networkId) {
+        const networkDisplay = document.getElementById('networkStatus');
+        const pulseChainId = 369;
+        networkDisplay.innerHTML = networkId === pulseChainId ? "Connected to PulseChain" : "Not connected to PulseChain";
+        networkDisplay.style.color = networkId === pulseChainId ? "green" : "red";
+    }
+
+    function postContent() {
+        const contentInput = document.getElementById('postInput');
+        const targetSection = document.getElementById('postList');
+        const newContent = document.createElement('li');
+        newContent.innerText = contentInput.value;
+        targetSection.appendChild(newContent);
+        contentInput.value = '';
+    }
+
+    async function fetchTransactionData() {
+        const window = document.getElementById('transaction-data-window');
+        window.innerHTML = 'Fetching data...';
+        const apiEndpoint = `https://scan.pulsechain.com/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc&limit=${transactionCount}`;
+
+        try {
+            const response = await fetch(apiEndpoint);
+            const data = await response.json();
+            
+            const filteredData = data.result.filter(tx => tx.input !== '0x').slice(0, 10).map(tx => ({
+                from: tx.from,
+                input: web3.utils.hexToUtf8(tx.input)
+            }));
+            
+            window.innerText = JSON.stringify(filteredData, null, 2);
+        } catch (error) {
+            console.error(error);
+            window.innerHTML = 'Error fetching data.';
         }
     }
-}
 
-// Get Network Status
-async function getNetworkStatus() {
-    const network = await web3.eth.net.getNetworkType();
-    return network === "pulse" ? "Connected to Pulse Network" : "Not connected to Pulse Network";
-}
+    // Function to update the number of transactions to fetch based on user input
+    function updateTransactionCount() {
+        const newCount = parseInt(prompt('Enter the number of transactions to fetch:', '10'));
+        if (!isNaN(newCount)) {
+            transactionCount = newCount;
+        }
+    }
+
+    document.getElementById('connectButton').addEventListener('click', connectWallet);
+    document.getElementById('publishButton').addEventListener('click', postContent);
+    document.getElementById('fetchDataButton').addEventListener('click', fetchTransactionData);
+    document.getElementById('fetchDataButton').addEventListener('dblclick', updateTransactionCount);  // Double-click to update the transaction count
+    web3.eth.net.getId().then(checkPulseChain);
+    fetchTransactionData();  // Automatically fetch the last 10 transactions with data in the input field upon page load
+
+});
 
