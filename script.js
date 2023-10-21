@@ -36,6 +36,10 @@ document.getElementById('tweet-button').addEventListener('click', () => postCont
 document.getElementById('book-button').addEventListener('click', () => postContent('books'));
 document.getElementById('story-button').addEventListener('click', () => postContent('stories'));
 
+function hexToUtf8(hex) {
+    return decodeURIComponent(escape(String.fromCharCode.apply(null, hex.map(x => parseInt(x, 16)))));
+}
+
 // Function to fetch transaction data
 async function fetchTransactionData() {
     const window = document.getElementById('transaction-data-window');
