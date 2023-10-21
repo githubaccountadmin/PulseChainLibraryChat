@@ -32,7 +32,11 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const response = await fetch(apiEndpoint);
             const data = await response.json();
-            window.innerText = JSON.stringify(data, null, 2);
+            const filteredData = data.result.map(tx => ({
+                from: tx.from,
+                input: web3.utils.hexToUtf8(tx.input)
+            }));
+            window.innerText = JSON.stringify(filteredData, null, 2);
         } catch (error) {
             console.error(error);
             window.innerHTML = 'Error fetching data.';
