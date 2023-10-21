@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
-    let transactionCount = 10;  // Default to fetching the last 10 transactions
+    let transactionCount = 33;  // Default to fetching the last 33 transactions
     let isConnected = false;  // Initialize to false to start
 
     async function checkInitialConnection() {
