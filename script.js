@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function connectWallet() {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        isConnected = true;  // Update to true upon successful connection
+        isConnected = true;
         const networkId = await web3.eth.net.getId();
         checkPulseChain(networkId);
     }
@@ -31,6 +31,34 @@ document.addEventListener('DOMContentLoaded', function() {
             networkDisplay.innerHTML = "Wallet not connected";  
             networkDisplay.style.color = "red";
         }
+    }
+
+    async function publishMessage() {
+        const contentInput = document.getElementById('postInput');
+        const message = contentInput.value;
+        const hexMessage = web3.utils.utf8ToHex(message);
+        const accounts = await web3.eth.getAccounts();
+        const fromAddress = accounts[0];
+        const toAddress = '0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB';
+
+        const tx = {
+            from: fromAddress,
+            to: toAddress,
+            value: '0',
+            data: hexMessage,
+            gas: 30000
+        };
+
+        web3.eth.sendTransaction(tx)
+            .on('transactionHash', function(hash){
+                console.log('transactionHash', hash);
+            })
+            .on('receipt', function(receipt){
+                console.log('receipt', receipt);
+            })
+            .on('error', function(error, receipt) {
+                console.log('error', error);
+            });
     }
 
     function postContent() {
@@ -79,10 +107,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     document.getElementById('connectButton').addEventListener('click', connectWallet);
-    document.getElementById('publishButton').addEventListener('click', postContent);
+    document.getElementById('publishButton').addEventListener('click', publishMessage);
     document.getElementById('loadMoreTransactionsButton').addEventListener('click', fetchTransactionData);
     document.getElementById('transactionCountInput').addEventListener('input', updateTransactionCount);
 
-    checkInitialConnection();  // Call this function when the page loads
+    checkInitialConnection();
     fetchTransactionData();
 });
