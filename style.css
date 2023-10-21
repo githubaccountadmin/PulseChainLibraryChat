@@ -6,9 +6,9 @@ body.dark-mode {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    height: 100vh; /* Set the body height to the full viewport height */
-    margin: 0; /* Remove default margin */
-    overflow: hidden; /* Hide overflow to prevent scrollbars */
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
 }
 
 #connectButton {
@@ -36,15 +36,14 @@ button {
     cursor: pointer;
 }
 
-/* Add this new CSS for the text input and "Publish" button */
 #textAreaContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    height: 50%; /* Set the height to 50% of the parent container (body) */
+    height: 50%;
     width: 100%;
-    position: relative; /* Add relative positioning to the container */
+    position: relative;
 }
 
 #postInput {
@@ -54,21 +53,21 @@ button {
     margin: 4px 2px;
     border: 2px solid #00ff00;
     width: 100%;
-    resize: none; /* Disable textarea resizing */
+    resize: none;
 }
 
 #publishButton {
     background-color: #00ff00;
     border: none;
     color: black;
-    padding: 5px 10px; /* Adjust padding to make it smaller */
+    padding: 10px 20px;
     text-align: center;
-    font-size: 12px; /* Adjust font size to make it smaller */
+    font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
-    position: relative;
-    bottom: -30px; /* Position it below the textarea */
-    z-index: 1; /* Ensure the button is above the textarea */
+    position: absolute;
+    bottom: -40px;
+    z-index: 1;
 }
 
 textarea {
@@ -78,8 +77,8 @@ textarea {
     margin: 4px 2px;
     border: 2px solid #00ff00;
     width: 100%;
-    height: 100%; /* Fill the available height */
-    resize: none; /* Disable textarea resizing */
+    height: 100%;
+    resize: none;
 }
 
 .scrollable-window {
@@ -89,8 +88,8 @@ textarea {
     overflow: auto;
     padding: 10px;
     margin-top: 20px;
-    height: 50%; /* Set the height to 50% of the parent container (body) */
+    height: 50%;
     width: 100%;
     white-space: pre-wrap;
-    border: 2px solid #00ff00;
+    border: 2px solid #00ff00; /* Add border to the larger window */
 }
