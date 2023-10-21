@@ -33,34 +33,41 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    async function publishMessage() {
-        const contentInput = document.getElementById('postInput');
-        const message = contentInput.value;
-        const hexMessage = web3.utils.utf8ToHex(message);
-        const accounts = await web3.eth.getAccounts();
-        const fromAddress = accounts[0];
-        const toAddress = '0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB';
-
-        const tx = {
-            from: fromAddress,
-            to: toAddress,
-            value: '0',
-            data: hexMessage,
-            gas: 30000
-        };
-
-        web3.eth.sendTransaction(tx)
-            .on('transactionHash', function(hash){
-                console.log('transactionHash', hash);
-            })
-            .on('receipt', function(receipt){
-                console.log('receipt', receipt);
-            })
-            .on('error', function(error, receipt) {
-                console.log('error', error);
-            });
+   async function publishMessage() {
+    // Make sure the wallet is connected
+    if (!isConnected) {
+        await connectWallet();
     }
+    
+    const contentInput = document.getElementById('postInput');
+    const message = contentInput.value;
+    const hexMessage = web3.utils.utf8ToHex(message);
+    
+    // Get user accounts and set the fromAddress
+    const accounts = await web3.eth.getAccounts();
+    const fromAddress = accounts[0];
+    const toAddress = '0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB';
+    
+    const tx = {
+        from: fromAddress,
+        to: toAddress,
+        value: web3.utils.toWei('0', 'ether'), // Optional: You can also set this to '0'
+        data: hexMessage,
+        gas: 30000
+    };
 
+    // This should prompt the wallet to open
+    web3.eth.sendTransaction(tx)
+        .on('transactionHash', function(hash){
+            console.log('transactionHash', hash);
+        })
+        .on('receipt', function(receipt){
+            console.log('receipt', receipt);
+        })
+        .on('error', function(error, receipt) {
+            console.log('error', error);
+        });
+}
     function postContent() {
         const contentInput = document.getElementById('postInput');
         const targetSection = document.getElementById('postList');
