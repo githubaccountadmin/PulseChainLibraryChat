@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-     <title>The PulseChain Press</title>
+    <title>The PulseChain Press</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
 </head>
 <body>
-    <h1>Welcome to The Great Library of the PulseChain Nation</h1>
+    <h1>Welcome to The PulseChain Press</h1>
 
     <button id="connectButton">Connect Wallet</button>
     <div id="networkStatus"></div>
@@ -32,9 +32,21 @@
         <ul id="storyList"></ul>
     </div>
 
-   <!-- Scrollable window for displaying transaction data -->
+    <!-- Scrollable window for displaying transaction data -->
     <div id="transaction-data-window" class="scrollable-window"></div>
      
-     <script src="script.js"></script>
+    <!-- Form for selecting the number of blocks back to fetch -->
+    <form id="blockCountForm">
+        <label for="blockCount">Number of Blocks Back:</label>
+        <select id="blockCount">
+            <option value="1">1 Block</option>
+            <option value="5">5 Blocks</option>
+            <option value="10">10 Blocks</option>
+            <option value="20">20 Blocks</option>
+        </select>
+        <button type="button" id="fetchDataButton">Fetch Data</button>
+    </form>
+
+    <script src="script.js"></script>
 </body>
 </html>
