@@ -29,21 +29,38 @@ button {
     bottom: calc(50% + 15px);
 }
 
-#publishButton {
-    bottom: calc(50% + 60px);
+/* The container that will hold the textarea and the button */
+.movable-container {
+    position: absolute;
+    z-index: 3; /* Ensures it's above all other elements */
+    left: 50%; /* Initially center it horizontally */
+    top: 20%; /* Initially place it vertically */
 }
 
+/* Positioning the button above the textarea */
+button.publish-button {
+    position: relative;
+    top: 0;
+    left: 50%; /* Centering it relative to the textarea */
+    transform: translate(-50%, 0); /* Fine-tuning the centering */
+    background-color: #00ff00;
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+/* The text area */
 textarea {
+    position: relative;
     background-color: #000000;
     color: #00ff00;
     padding: 10px;
     margin: 4px 2px;
-    width: 50%; /* Adjust as needed */
-    position: fixed;
-    bottom: 52%;  /* Positioning it above the 50% mark */
-    left: 25%;  /* Centering it horizontally */
     border: 2px solid #00ff00;
-    z-index: 2;  /* To ensure it appears at the front */
 }
 
 .scrollable-window {
