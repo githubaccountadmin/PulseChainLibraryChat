@@ -1,6 +1,16 @@
 document.addEventListener('DOMContentLoaded', function() {
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
 
+    async function connectWallet() {
+        try {
+            const accounts = await ethereum.enable();
+            const account = accounts[0];
+            console.log(`Connected to account ${account}`);
+        } catch (error) {
+            console.error('User denied account access');
+        }
+    }
+
     function postContent(section) {
         const contentInput = document.getElementById(section + 'Input');
         const targetSection = document.getElementById(section + 'List');
@@ -23,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     document.getElementById('connectButton').addEventListener('click', () => {
-        // Add your code to connect the wallet here
+        connectWallet();
     });
 
     document.getElementById('tweetButton').addEventListener('click', () => postContent('tweet'));
