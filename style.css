@@ -88,12 +88,11 @@ textarea {
     font-family: 'Courier New', Courier, monospace;
     overflow: auto;
     padding: 10px;
-    margin-top: 50vh; /* Start in the middle of the screen vertically */
-    height: calc(50vh - 50px); /* Cover the lower half of the screen minus space for buttons */
-    width: 95%;
+    margin-top: 20px; /* Adjust this margin for space at the top */
+    height: calc(50vh - 70px); /* Adjust this height value as needed */
+    width: 90%;
     white-space: pre-wrap;
     border: 2px solid #00ff00;
     border-left: 2px solid #00ff00;
     border-right: 2px solid #00ff00;
 }
-
