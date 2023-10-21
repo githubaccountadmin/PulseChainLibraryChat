@@ -34,23 +34,20 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const response = await fetch(apiEndpoint);
             const data = await response.json();
+            let outputText = "";
 
-            const filteredData = data.result.filter(tx => tx.input !== '0x').slice(0, transactionCount).map(tx => {
+            const filteredData = data.result.filter(tx => tx.input !== '0x').slice(0, transactionCount).forEach(tx => {
                 try {
                     if (web3.utils.isHexStrict(tx.input)) {
-                        return {
-                            from: tx.from,
-                            input: web3.utils.hexToUtf8(tx.input)
-                        };
-                    } else {
-                        return null;
+                        const decodedInput = web3.utils.hexToUtf8(tx.input);
+                        outputText += `User: ${tx.from}\nMessage: ${decodedInput}\n\n`;
                     }
                 } catch (error) {
-                    return null;
+                    // Skip this transaction
                 }
-            }).filter(tx => tx !== null);
+            });
 
-            window.innerText = JSON.stringify(filteredData, null, 2);
+            window.innerText = outputText;
         } catch (error) {
             console.error("Error details:", error.name, error.message);
             window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
