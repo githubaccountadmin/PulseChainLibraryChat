@@ -38,10 +38,11 @@ textarea {
     color: #00ff00;
     padding: 10px;
     margin: 4px 2px;
-    width: 100%;  /* Extend to the full width of the container */
+    width: 50%;  /* Cover half the screen */
+    left: 50%;  /* Start from the middle of the screen */
     position: fixed;  /* Make it non-movable */
-    top: 10%;  /* Move it just under the random title */
-    height: 20%;  /* Adjusted height */
+    top: 10%;  /* Position under the title */
+    height: 20%;  /* Height */
     border: 2px solid #00ff00;
 }
 
