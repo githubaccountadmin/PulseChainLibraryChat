@@ -1,19 +1,21 @@
+// Listen for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Web3
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
-    let transactionCount = 33;  // Default to fetching the last 33 transactions
-    let isConnected = false;  // Initialize to false to start
+    
+    // Set initial transaction count and connection state
+    let transactionCount = 33;
+    let isConnected = false;
 
+    // Check initial connection to a wallet
     async function checkInitialConnection() {
         const accounts = await web3.eth.getAccounts();
-        if (accounts.length > 0) {
-            isConnected = true;
-            const networkId = await web3.eth.net.getId();
-            checkPulseChain(networkId);
-        } else {
-            checkPulseChain(null);
-        }
+        isConnected = accounts.length > 0;
+        const networkId = isConnected ? await web3.eth.net.getId() : null;
+        checkPulseChain(networkId);
     }
 
+    // Connect to a wallet
     async function connectWallet() {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         isConnected = true;
@@ -21,58 +23,42 @@ document.addEventListener('DOMContentLoaded', function() {
         checkPulseChain(networkId);
     }
 
+    // Check if the current network is PulseChain
     function checkPulseChain(networkId) {
         const connectButton = document.getElementById('connectButton');
-        const pulseChainId = 369;
-        if (isConnected) {  
-            if (networkId === pulseChainId) {
-                connectButton.innerText = "Connected";
-                connectButton.style.backgroundColor = "green";
-            } else {
-                connectButton.innerText = "Not connected to PulseChain";
-                connectButton.style.backgroundColor = "red";
-            }
-        } else {
-            connectButton.innerText = "Connect Wallet";
-            connectButton.style.backgroundColor = "grey";
-        }
+        const pulseChainId = 369;  // PulseChain network ID
+        connectButton.innerText = isConnected ? (networkId === pulseChainId ? "Connected" : "Not connected to PulseChain") : "Connect Wallet";
+        connectButton.style.backgroundColor = isConnected ? (networkId === pulseChainId ? "green" : "red") : "grey";
     }
 
-   async function publishMessage() {
-    // Make sure the wallet is connected
-    if (!isConnected) {
-        await connectWallet();
-    }
-    
-    const contentInput = document.getElementById('postInput');
-    const message = contentInput.value;
-    const hexMessage = web3.utils.utf8ToHex(message);
-    
-    // Get user accounts and set the fromAddress
-    const accounts = await web3.eth.getAccounts();
-    const fromAddress = accounts[0];
-    const toAddress = '0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB';
-    
-    const tx = {
-        from: fromAddress,
-        to: toAddress,
-        value: web3.utils.toWei('0', 'ether'), // Optional: You can also set this to '0'
-        data: hexMessage,
-        gas: 30000
-    };
+    // Publish a message to the blockchain
+    async function publishMessage() {
+        if (!isConnected) await connectWallet();  // Ensure wallet is connected
 
-    // This should prompt the wallet to open
-    web3.eth.sendTransaction(tx)
-        .on('transactionHash', function(hash){
-            console.log('transactionHash', hash);
-        })
-        .on('receipt', function(receipt){
-            console.log('receipt', receipt);
-        })
-        .on('error', function(error, receipt) {
-            console.log('error', error);
-        });
-}
+        const contentInput = document.getElementById('postInput');
+        const message = contentInput.value;
+        const hexMessage = web3.utils.utf8ToHex(message);
+
+        const accounts = await web3.eth.getAccounts();
+        const fromAddress = accounts[0];
+        const toAddress = '0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB';  // Replace with your contract address
+
+        const tx = {
+            from: fromAddress,
+            to: toAddress,
+            value: web3.utils.toWei('0', 'ether'),
+            data: hexMessage,
+            gas: 30000  // Set the gas limit
+        };
+
+        // Send the transaction
+        web3.eth.sendTransaction(tx)
+            .on('transactionHash', hash => console.log('transactionHash', hash))
+            .on('receipt', receipt => console.log('receipt', receipt))
+            .on('error', (error, receipt) => console.log('error', error));
+    }
+
+    // Post content to a list on the web page
     function postContent() {
         const contentInput = document.getElementById('postInput');
         const targetSection = document.getElementById('postList');
@@ -82,17 +68,16 @@ document.addEventListener('DOMContentLoaded', function() {
         contentInput.value = '';
     }
 
+    // Fetch transactions and display them
     async function fetchTransactionData() {
         const window = document.getElementById('transactionDataWindow');
         window.innerHTML = 'Fetching data...';
-
         const apiEndpoint = 'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc';
 
         try {
             const response = await fetch(apiEndpoint);
             const data = await response.json();
             let outputText = "";
-
             data.result.filter(tx => tx.input !== '0x').slice(0, transactionCount).forEach(tx => {
                 try {
                     if (web3.utils.isHexStrict(tx.input)) {
@@ -103,7 +88,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Skip this transaction
                 }
             });
-
             window.innerText = outputText;
         } catch (error) {
             console.error("Error details:", error.name, error.message);
@@ -111,6 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Update the transaction count to fetch
     function updateTransactionCount() {
         const newCount = parseInt(document.getElementById('transactionCountInput').value);
         if (!isNaN(newCount)) {
@@ -118,11 +103,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Event listeners
     document.getElementById('connectButton').addEventListener('click', connectWallet);
     document.getElementById('publishButton').addEventListener('click', publishMessage);
     document.getElementById('loadMoreTransactionsButton').addEventListener('click', fetchTransactionData);
     document.getElementById('transactionCountInput').addEventListener('input', updateTransactionCount);
 
+    // Perform initial checks
     checkInitialConnection();
     fetchTransactionData();
 });
