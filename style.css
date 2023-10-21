@@ -15,60 +15,13 @@ button {
     cursor: pointer;
 }
 
-#loadMoreTransactionsButton, #publishButton, #transactionCountInput {
-    position: absolute;
-    left: 10px;
-}
-
-#loadMoreTransactionsButton {
-    bottom: calc(50% + 10px);
-}
-
-#transactionCountInput {
-    left: 250px;
-    bottom: calc(50% + 15px);
-}
-
-#textAreaContainer {
-    position: relative;
-}
-
-#publishButton {
-    position: absolute;
-    top: -40px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.movable-container {
-    position: absolute;
-    z-index: 3;
-    left: 50%;
-    top: 20%;
-    /* Since we're using absolute positioning for the button, setting the position to relative for the container */
-    position: relative;
-}
-
-button.publish-button {
-    position: absolute;
-    top: -40px; /* Sets the button above the textarea */
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #00ff00;
-    border: none;
-    color: black;
-    padding: 10px 20px;
-    text-align: center;
-    font-size: 16px;
-    cursor: pointer;
-}
-
 textarea {
     background-color: #000000;
     color: #00ff00;
     padding: 10px;
     margin: 4px 2px;
     border: 2px solid #00ff00;
+    width: 100%;
 }
 
 .scrollable-window {
@@ -77,10 +30,36 @@ textarea {
     font-family: 'Courier New', Courier, monospace;
     overflow: auto;
     padding: 10px;
-    height: 48%; /* This should occupy the bottom 50% of the screen */
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+    margin-top: 20px;
+    height: 300px;
+    white-space: pre-wrap;
     border: 2px solid #00ff00;
-    z-index: 1;  /* To ensure it stays behind */
 }
+
+#textAreaContainer {
+    position: relative;
+}
+
+#publishButton {
+    background-color: #00ff00;
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px; /* Adjust the top position as needed */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#postInput {
+    position: absolute;
+    top: 40px; /* Adjust the top position to create space for the button */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%; /* Adjust the width as needed */
+}
+
