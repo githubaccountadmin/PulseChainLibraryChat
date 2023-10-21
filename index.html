@@ -11,31 +11,24 @@
     <button id="connectButton">Connect Wallet</button>
     <div id="networkStatus"></div>
 
-    <div id="inputSection">
-        <div id="tweetInputDiv">
-            <h2>Tweets</h2>
-            <input type="text" id="tweetInput">
-            <button id="tweetButton">Post Tweet</button>
-        </div>
-        <div id="bookInputDiv">
-            <h2>Books</h2>
-            <input type="text" id="bookInput">
-            <button id="bookButton">Add Book</button>
-        </div>
-        <div id="storyInputDiv">
-            <h2>Stories</h2>
-            <input type="text" id="storyInput">
-            <button id="storyButton">Post Story</button>
-        </div>
-    </div>
+    <h2>Tweets, Books, Stories</h2>
+    <input type="text" id="tweet-input">
+    <button id="tweet-button">Post Tweet</button>
+    <ul id="tweets-list"></ul>
+    
+    <input type="text" id="book-input">
+    <button id="book-button">Add Book</button>
+    <ul id="books-list"></ul>
+
+    <input type="text" id="story-input">
+    <button id="story-button">Post Story</button>
+    <ul id="stories-list"></ul>
 
     <!-- Scrollable window for displaying transaction data -->
-    <div id="transaction-data-window" class="scrollable-window">
-        <!-- Default loading of the last 100 blocks -->
-    </div>
+    <div id="transaction-data-window" class="scrollable-window"></div>
 
-    <button type="button" id="fetchDataButton">Load More Blocks</button>
-
-    <script src="script.js"></script>
+    <button id="fetchDataButton">Load More Blocks</button>
+     
+     <script src="script.js"></script>
 </body>
 </html>
