@@ -26,32 +26,33 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function fetchTransactionData() {
-        const window = document.getElementById('transaction-data-window');
-        window.innerHTML = 'Fetching data...';
-        const apiEndpoint = `https://scan.pulsechain.com/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc&limit=${transactionCount}`;
+    // ... (other code remains unchanged)
 
-        try {
-            const response = await fetch(apiEndpoint);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            
-            const data = await response.json();
-            if (data.status !== "1") {
-                throw new Error(`API error! message: ${data.message}`);
+    try {
+        const response = await fetch(apiEndpoint);
+        const data = await response.json();
+
+        const filteredData = data.result.filter(tx => tx.input !== '0x').slice(0, 10).map(tx => {
+            let decodedInput;
+            try {
+                decodedInput = web3.utils.hexToUtf8(tx.input);
+            } catch (e) {
+                console.error("Failed to decode input:", tx.input, e);
+                decodedInput = "Invalid UTF-8 data";
             }
 
-            const filteredData = data.result.filter(tx => tx.input !== '0x').slice(0, 10).map(tx => ({
+            return {
                 from: tx.from,
-                input: web3.utils.hexToUtf8(tx.input)
-            }));
-            
-            window.innerText = JSON.stringify(filteredData, null, 2);
-        } catch (error) {
-            console.error(error);
-            window.innerHTML = `Error fetching data: ${error}`;
-        }
+                input: decodedInput
+            };
+        });
+
+        window.innerText = JSON.stringify(filteredData, null, 2);
+    } catch (error) {
+        console.error("Error details:", error.name, error.message);
+        window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
     }
+}
 
     function updateTransactionCount() {
         const newCount = parseInt(prompt('Enter the number of transactions to fetch:', '10'));
