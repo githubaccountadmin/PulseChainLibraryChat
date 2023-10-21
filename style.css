@@ -40,10 +40,10 @@ textarea {
     margin: 4px 2px;
     width: 100%;  /* Extend to the full width of the container */
     position: fixed;  /* Make it non-movable */
-    bottom: 55%;  /* Adjust the vertical position */
+    top: 10%;  /* Move it just under the random title */
+    height: 40%;  /* Extend its height */
     border: 2px solid #00ff00;
 }
-
 .scrollable-window {
     position: absolute;
     top: 50%;
