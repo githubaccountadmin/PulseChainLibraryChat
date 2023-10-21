@@ -1,7 +1,7 @@
 .dark-mode {
     background-color: #000000;
-    color: #00ff00;
-    font-family: 'Courier New', Courier, monospace;
+    color: #00ff00; /* Classic green text on a black background */
+    font-family: 'Courier New', Courier, monospace; /* Giving it that old-school vibe */
 }
 
 button {
@@ -15,21 +15,20 @@ button {
     cursor: pointer;
 }
 
-textarea {
+input {
     background-color: #00ff00;
     color: black;
     padding: 10px;
     margin: 4px 2px;
-    height: 100px;
-    width: 300px;
 }
 
+/* Styles for the scrollable window */
 .scrollable-window {
     background-color: #000000;
     color: #00ff00;
     font-family: 'Courier New', Courier, monospace;
-    overflow: auto;
+    overflow: auto; /* Add scrollbars when content overflows */
     padding: 10px;
     margin-top: 20px;
-    height: 300px;
+    height: 300px; /* Adjust the height as needed */
 }
