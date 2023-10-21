@@ -15,10 +15,22 @@ button {
     cursor: pointer;
 }
 
-#loadMoreTransactionsButton {
+#loadMoreTransactionsButton, #publishButton, #transactionCountInput {
     position: absolute;
-    bottom: calc(50% + 10px);
     left: 10px;
+}
+
+#loadMoreTransactionsButton {
+    bottom: calc(50% + 10px);
+}
+
+#transactionCountInput {
+    left: 150px;
+    bottom: calc(50% + 10px);
+}
+
+#publishButton {
+    bottom: calc(50% + 60px);
 }
 
 textarea {
