@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const response = await fetch(apiEndpoint);
             const data = await response.json();
-            window.innerHTML = JSON.stringify(data, null, 2);
+            window.innerText = JSON.stringify(data, null, 2);
         } catch (error) {
             console.error(error);
             window.innerHTML = 'Error fetching data.';
