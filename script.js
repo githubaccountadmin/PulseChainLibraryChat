@@ -2,26 +2,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
     let transactionCount = 10;  // Default to fetching the last 10 transactions
-    let isConnected = false;  // New variable to track wallet connection
+    let isConnected = false;  // Initialize to false to start
 
-    async function connectWallet() {
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        isConnected = true;  // Update to true upon successful connection
-        const networkId = await web3.eth.net.getId();
-        checkPulseChain(networkId);
-    }
+async function connectWallet() {
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    isConnected = true;  // Update to true upon successful connection
+    const networkId = await web3.eth.net.getId();
+    checkPulseChain(networkId);
+}
 
-    function checkPulseChain(networkId) {
-        const networkDisplay = document.getElementById('networkStatus');
-        const pulseChainId = 369;
-        if (isConnected) {  // Check if the wallet is connected
-            networkDisplay.innerHTML = networkId === pulseChainId ? "Connected to PulseChain" : "Not connected to PulseChain";
-            networkDisplay.style.color = networkId === pulseChainId ? "green" : "red";
-        } else {
-            networkDisplay.innerHTML = "Wallet not connected";  // Display this when the wallet is not connected
-            networkDisplay.style.color = "red";
-        }
+function checkPulseChain(networkId) {
+    const networkDisplay = document.getElementById('networkStatus');
+    const pulseChainId = 369;
+    if (isConnected) {  
+        networkDisplay.innerHTML = networkId === pulseChainId ? "Connected to PulseChain" : "Not connected to PulseChain";
+        networkDisplay.style.color = networkId === pulseChainId ? "green" : "red";
+    } else {
+        networkDisplay.innerHTML = "Wallet not connected";  
+        networkDisplay.style.color = "red";
     }
+}
 
     function postContent() {
         const contentInput = document.getElementById('postInput');
@@ -73,9 +73,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('loadMoreTransactionsButton').addEventListener('click', fetchTransactionData);
     document.getElementById('transactionCountInput').addEventListener('input', updateTransactionCount);
 
-    web3.eth.net.getId().then(id => {
-        isConnected = true;  // Assume connected initially
-        checkPulseChain(id);
-    });
+    checkPulseChain(null);
     fetchTransactionData();
 });
