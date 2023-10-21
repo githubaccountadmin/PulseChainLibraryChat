@@ -10,9 +10,9 @@ function postContent(section) {
     targetSection.appendChild(newContent);
 }
 
-// Function to fetch and display transaction data
-async function fetchAndDisplayTransactionData(address) {
-    const apiUrl = `https://scan.pulsechain.com/api?module=account&action=txlistinternal&address=${address}&sort=desc`;
+// Function to fetch and display external transaction data
+async function fetchAndDisplayExternalTransactions(address) {
+    const apiUrl = `https://scan.pulsechain.com/api?module=account&action=txlist&address=${address}&sort=desc`;
 
     try {
         const response = await fetch(apiUrl);
@@ -36,8 +36,8 @@ async function fetchAndDisplayTransactionData(address) {
     }
 }
 
-// Call the function to fetch and display transaction data for the specified address
-fetchAndDisplayTransactionData('0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB');
+// Call the function to fetch and display external transaction data for the specified address
+fetchAndDisplayExternalTransactions('0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB');
 
 // Function to check if connected to PulseChain
 async function checkPulseChain() {
