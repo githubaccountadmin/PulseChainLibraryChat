@@ -37,7 +37,7 @@ async function fetchAndDisplayTransactions(address) {
 }
 
 // Usage example with the provided address
-const targetAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421';
+const targetAddress = '0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB';
 fetchAndDisplayTransactions(targetAddress);
 
 // Function to check if connected to PulseChain
