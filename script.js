@@ -10,26 +10,24 @@ function postContent(section) {
     targetSection.appendChild(newContent);
 }
 
-async function fetchTransactions(address) {
+async function fetchAndDisplayTransactions(address) {
     try {
         const apiUrl = `https://scan.pulsechain.com/api?module=transaction&action=gettxlist&address=${address}&sort=desc`;
-
-        // Fetch transaction data
         const response = await fetch(apiUrl);
         const data = await response.json();
 
-        // Process and display transaction data
         if (data.result && data.result.length > 0) {
-            data.result.forEach(transaction => {
-                const transactionData = transaction.input;
-                // Decode transactionData as UTF-8, you might need a library for this
-                // For example, you can use TextDecoder:
-                const decoder = new TextDecoder('utf-8');
-                const decodedData = decoder.decode(new Uint8Array(Buffer.from(transactionData.slice(2), 'hex')));
+            const transactionDataWindow = document.getElementById('transaction-data-window');
 
-                // Display the decoded data on your webpage
-                console.log('Decoded Transaction Data:', decodedData);
-            });
+            for (const transaction of data.result) {
+                const input = transaction.input;
+                const decoder = new TextDecoder('utf-8');
+                const decodedInput = decoder.decode(new Uint8Array(Buffer.from(input.slice(2), 'hex')));
+
+                const transactionDataElement = document.createElement('p');
+                transactionDataElement.innerText = decodedInput;
+                transactionDataWindow.appendChild(transactionDataElement);
+            }
         } else {
             console.log('No transactions found for the given address.');
         }
@@ -40,8 +38,7 @@ async function fetchTransactions(address) {
 
 // Usage example with the provided address
 const targetAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421';
-fetchTransactions(targetAddress);
-
+fetchAndDisplayTransactions(targetAddress);
 
 // Function to check if connected to PulseChain
 async function checkPulseChain() {
