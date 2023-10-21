@@ -1,6 +1,8 @@
-document.addEventListener('DOMContentLoaded', function() {
-    
+document.addEventListener('DOMContentLoaded', async function() {
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
+    
+    // Fetch the last 100 blocks initially
+    fetchBlocks(100);
 
     async function connectWallet() {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
@@ -23,29 +25,33 @@ document.addEventListener('DOMContentLoaded', function() {
         targetSection.appendChild(newContent);
         contentInput.value = '';
     }
-
-    async function fetchTransactionData() {
-        const window = document.getElementById('transaction-data-window');
-        window.innerHTML = 'Fetching data...';
-        const apiEndpoint = 'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc';
-
-        try {
-            const response = await fetch(apiEndpoint);
-            const data = await response.json();
-            const filteredData = data.result.map(tx => ({
-                from: tx.from,
-                input: web3.utils.hexToUtf8(tx.input)
-            }));
-            window.innerText = JSON.stringify(filteredData, null, 2);
-        } catch (error) {
-            console.error(error);
-            window.innerHTML = 'Error fetching data.';
+    
+    async function fetchBlocks(blockCount) {
+        const latestBlock = await web3.eth.getBlockNumber();
+        const fromBlock = Math.max(latestBlock - blockCount, 0);
+        
+        for(let i = fromBlock; i <= latestBlock; i++) {
+            const block = await web3.eth.getBlock(i);
+            displayBlockData(block);
         }
+    }
+
+    function displayBlockData(block) {
+        const window = document.getElementById('transaction-data-window');
+        const blockData = {
+            number: block.number,
+            hash: block.hash,
+            transactions: block.transactions
+        };
+        window.innerHTML += JSON.stringify(blockData, null, 2) + '\n';
     }
 
     document.getElementById('connectButton').addEventListener('click', connectWallet);
     document.getElementById('publishButton').addEventListener('click', postContent);
-    document.getElementById('fetchDataButton').addEventListener('click', fetchTransactionData);
-    web3.eth.net.getId().then(checkPulseChain);
+    document.getElementById('fetchDataButton').addEventListener('click', function() {
+        const count = parseInt(document.getElementById('blockCountInput').value);
+        fetchBlocks(count);
+    });
 
+    web3.eth.net.getId().then(checkPulseChain);
 });
