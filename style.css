@@ -98,17 +98,17 @@ textarea {
 }
 
 #docs-button {
-    background-color: #00ff00;
+    background-color: #00ff00; /* Match the color of the wallet connect button */
     border: none;
     color: black;
     padding: 10px 20px;
     text-align: center;
     font-size: 16px;
-    margin: 4px 2px;
+    margin: 0; /* Remove margin to place it at the top left corner */
     cursor: pointer;
     position: absolute;
-    top: 10px; /* Adjust the top position to your liking */
-    left: 10px; /* Adjust the left position to your liking */
+    top: 0;
+    left: 0;
     z-index: 1;
 }
 
