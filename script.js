@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
-    let transactionCount = 10; // Default to fetching the last 10 transactions
+    let transactionCount = 10;  // Default to fetching the last 10 transactions
 
     async function connectWallet() {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
@@ -25,44 +25,41 @@ document.addEventListener('DOMContentLoaded', function() {
         contentInput.value = '';
     }
 
-   async function fetchTransactionData() {
-    const window = document.getElementById('transactionDataWindow');
-    window.innerHTML = 'Fetching data...';
+    async function fetchTransactionData() {
+        const window = document.getElementById('transactionDataWindow');
+        window.innerHTML = 'Fetching data...';
 
-    const apiEndpoint = 'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc';
+        const apiEndpoint = 'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc';
 
-    try {
-        const response = await fetch(apiEndpoint);
-        const data = await response.json();
-        
-        if (data && data.result) {
+        try {
+            const response = await fetch(apiEndpoint);
+            const data = await response.json();
+
             const filteredData = data.result.filter(tx => tx.input !== '0x').slice(0, transactionCount).map(tx => {
-                let decodedInput;
                 try {
-                    decodedInput = web3.utils.isHexStrict(tx.input) ? web3.utils.hexToUtf8(tx.input) : 'Not a hex string';
+                    if (web3.utils.isHexStrict(tx.input)) {
+                        return {
+                            from: tx.from,
+                            input: web3.utils.hexToUtf8(tx.input)
+                        };
+                    } else {
+                        return null;
+                    }
                 } catch (error) {
-                    console.warn(`Error decoding hex to UTF-8 for tx.input: ${tx.input}`);
-                    console.warn(error);
-                    decodedInput = `Hex data: ${tx.input}`;
+                    return null;
                 }
-                return {
-                    from: tx.from,
-                    input: decodedInput
-                };
-            });
+            }).filter(tx => tx !== null);
+
             window.innerText = JSON.stringify(filteredData, null, 2);
-        } else {
-            window.innerHTML = 'No transaction data found.';
+        } catch (error) {
+            console.error("Error details:", error.name, error.message);
+            window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
         }
-    } catch (error) {
-        console.error("Error details:", error.name, error.message);
-        window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
     }
-}
 
     function updateTransactionCount() {
         const newCount = parseInt(document.getElementById('transactionCountInput').value);
-        if (!isNaN(newCount) && newCount > 0) {
+        if (!isNaN(newCount)) {
             transactionCount = newCount;
         }
     }
@@ -74,4 +71,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
     web3.eth.net.getId().then(checkPulseChain);
     fetchTransactionData();
+
 });
