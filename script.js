@@ -133,4 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
     checkInitialConnection();
     fetchTransactionData();
     setRandomTitle();  // Call the function to set a random title
+
+    // Automatically update the feed every 10 seconds
+    setInterval(fetchTransactionData, 10000);
 });
