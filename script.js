@@ -22,14 +22,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function checkPulseChain(networkId) {
-        const networkDisplay = document.getElementById('networkStatus');
+        const connectButton = document.getElementById('connectButton');
         const pulseChainId = 369;
         if (isConnected) {  
-            networkDisplay.innerHTML = networkId === pulseChainId ? "Connected to PulseChain" : "Not connected to PulseChain";
-            networkDisplay.style.color = networkId === pulseChainId ? "green" : "red";
+            if (networkId === pulseChainId) {
+                connectButton.innerText = "Connected";
+                connectButton.style.backgroundColor = "green";
+            } else {
+                connectButton.innerText = "Not connected to PulseChain";
+                connectButton.style.backgroundColor = "red";
+            }
         } else {
-            networkDisplay.innerHTML = "Wallet not connected";  
-            networkDisplay.style.color = "red";
+            connectButton.innerText = "Connect Wallet";
+            connectButton.style.backgroundColor = "grey";
         }
     }
 
