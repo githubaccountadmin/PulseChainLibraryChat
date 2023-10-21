@@ -60,6 +60,68 @@ textarea {
     border: 2px solid #00ff00;
 }
 
+body.dark-mode {
+    background-color: #000000;
+    color: #00ff00;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh; /* Set the body height to the full viewport height */
+    margin: 0; /* Remove default margin */
+    overflow: hidden; /* Hide overflow to prevent scrollbars */
+}
+
+#connectButton {
+    background-color: #00ff00;
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+button {
+    background-color: #00ff00;
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+textarea {
+    background-color: #000000;
+    color: #00ff00;
+    padding: 10px;
+    margin: 4px 2px;
+    border: 2px solid #00ff00;
+    width: 100%;
+    height: 100%; /* Fill the available height */
+    resize: none; /* Disable textarea resizing */
+}
+
+.scrollable-window {
+    background-color: #000000;
+    color: #00ff00;
+    font-family: 'Courier New', Courier, monospace;
+    overflow: auto;
+    padding: 10px;
+    margin-top: 20px;
+    height: 50%; /* Set the height to 50% of the parent container (body) */
+    width: 100%;
+    white-space: pre-wrap;
+    border: 2px solid #00ff00;
+}
+
 #textAreaContainer {
     display: flex;
     flex-direction: column;
@@ -67,6 +129,7 @@ textarea {
     justify-content: flex-start;
     height: 50%; /* Set the height to 50% of the parent container (body) */
     width: 100%;
+    position: relative; /* Add relative positioning to the container */
 }
 
 #publishButton {
@@ -79,8 +142,10 @@ textarea {
     margin: 4px 2px;
     cursor: pointer;
     position: absolute;
-    top: 100%; /* Position it below the text area */
+    bottom: 0; /* Position it at the bottom of the container */
     left: 50%; /* Center horizontally */
     transform: translateX(-50%); /* Center horizontally */
     z-index: 1; /* Ensure the button is above the textarea */
 }
+
+
