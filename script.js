@@ -44,42 +44,44 @@ function init() {
     }
 
     // Fetch Transaction Data
-    async function fetchTransactionData() {
-        const windowEl = document.getElementById('transaction-data-window');
-        windowEl.textContent = 'Fetching data...';
-        const apiEndpoint = 'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc';
+   async function fetchTransactionData() {
+    const window = document.getElementById('transaction-data-window');
+    window.innerHTML = 'Fetching data...';
 
-        let response, data;
-        try {
-            response = await fetch(apiEndpoint);
-            data = await response.json();
-        } catch (error) {
-            console.error("Fetch Error:", error);
-            windowEl.textContent = `Error fetching data: ${error}`;
-            return;
-        }
+    const apiEndpoint = 'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc';
 
-        if (!Array.isArray(data.result)) {
-            console.error("Invalid data structure", data);
-            windowEl.textContent = "Error: Invalid data structure.";
-            return;
-        }
+    try {
+        const response = await fetch(apiEndpoint);
+        const data = await response.json();
 
-        const filteredData = data.result
-            .filter(tx => tx.input !== '0x')
-            .slice(0, transactionCount)
-            .map(tx => {
-                let decodedInput = 'Invalid UTF-8 data';
-                try {
-                    decodedInput = web3.utils.hexToUtf8(tx.input);
-                } catch (e) {
-                    console.error("Decode Error:", e);
-                }
-                return { from: tx.from, input: decodedInput };
-            });
+        const filteredData = data.result.filter(tx => tx.input !== '0x').slice(0, 10).map(tx => {
+            let decodedInput;
+            try {
+                decodedInput = web3.utils.hexToUtf8(tx.input);
+            } catch (e) {
+                console.error("Failed to decode input:", tx.input, e);
+                decodedInput = "Invalid UTF-8 data";
+            }
 
-        windowEl.textContent = JSON.stringify(filteredData, null, 2);
+            return {
+                from: tx.from,
+                input: decodedInput
+            };
+        });
+
+        // Formatting the data for display
+        let formattedData = '';
+        filteredData.forEach(tx => {
+            formattedData += `From - ${tx.from}\nMessage - ${tx.input}\n\n`;
+        });
+
+        window.innerText = formattedData;
+
+    } catch (error) {
+        console.error("Error details:", error.name, error.message);
+        window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
     }
+}
 
     // Update Transaction Count
     function updateTransactionCount() {
