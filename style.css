@@ -66,10 +66,8 @@ button {
     font-size: 12px; /* Adjust font size to make it smaller */
     margin: 4px 2px;
     cursor: pointer;
-    position: absolute;
-    bottom: 10px; /* Position it slightly above the bottom of the container */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Center horizontally */
+    position: relative;
+    bottom: -30px; /* Position it below the textarea */
     z-index: 1; /* Ensure the button is above the textarea */
 }
 
