@@ -43,6 +43,13 @@ button, #connectButton, #publishButton, #docs-button {
     padding: 10px; /* Add padding for better spacing */
 }
 
+/* Container for text input and publish button */
+.text-container {
+    width: 100%;
+    max-width: 600px; /* Adjust the maximum width as needed */
+    margin: 0 auto; /* Center the container horizontally */
+}
+
 /* Styling for the text input area */
 #postInput, textarea {
     background-color: #000000;
@@ -62,8 +69,8 @@ textarea {
 
 /* Styling for the Publish button */
 #publishButton {
-    position: relative; /* Remove absolute positioning */
     margin-top: 10px; /* Add margin to separate it from the text area */
+    position: relative; /* Remove absolute positioning */
 }
 
 /* Styling for the scrollable transaction data window */
