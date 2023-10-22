@@ -30,13 +30,19 @@ body.dark-mode {
 /* Buttons */
 button, #connectButton, #publishButton, #docs-button {
     background-color: #00ff00;
-    border: none;
+    border: 1px solid black;  /* Added border for better visuals */
+    border-radius: 5px;      /* Rounded corners */
     color: black;
     padding: 10px 20px;
     text-align: center;
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
+    transition: 0.2s;       /* Smooth hover transition */
+}
+
+button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
+    background-color: #00dd00; /* Slightly different hover color */
 }
 
 #connectButton, #docs-button {
@@ -57,9 +63,12 @@ button, #connectButton, #publishButton, #docs-button {
 /* Text Input Area */
 #postInput, textarea {
     width: 100%;
-    height: 300px;
+    height: 300px;     /* Fixed height */
     margin: 10px 0;
     resize: none;
+    border: 1px solid #00ff00; /* Border to match theme */
+    border-radius: 5px;        /* Rounded corners */
+    padding: 10px;             /* Inner padding */
 }
 
 /* Publish Button */
@@ -70,6 +79,9 @@ button, #connectButton, #publishButton, #docs-button {
 /* Transaction Window */
 .scrollable-window {
     margin-top: 20px;
-    height: calc(100vh - 400px); /* Remaining vertical space */
+    height: calc(100vh - 460px); /* Adjusted for remaining space */
     overflow: auto;
+    border: 1px solid #00ff00;  /* Border to match theme */
+    border-radius: 5px;         /* Rounded corners */
+    padding: 10px;              /* Inner padding */
 }
