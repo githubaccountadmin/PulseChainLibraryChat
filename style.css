@@ -1,3 +1,6 @@
+/* CSS for Dark Mode */
+
+/* Styling for the entire page in dark mode */
 body.dark-mode {
     background-color: #000000;
     color: #00ff00;
@@ -11,6 +14,7 @@ body.dark-mode {
     overflow: hidden;
 }
 
+/* Styling for the Connect Wallet button */
 #connectButton {
     background-color: #00ff00;
     border: none;
@@ -25,6 +29,7 @@ body.dark-mode {
     right: 0;
 }
 
+/* Styling for general buttons */
 button {
     background-color: #00ff00;
     border: none;
@@ -36,6 +41,7 @@ button {
     cursor: pointer;
 }
 
+/* Styling for the text input container */
 #textAreaContainer {
     display: flex;
     flex-direction: column;
@@ -46,6 +52,7 @@ button {
     position: relative;
 }
 
+/* Styling for the text input area */
 #postInput {
     background-color: #000000;
     color: #00ff00;
@@ -57,6 +64,7 @@ button {
     resize: none;
 }
 
+/* Styling for the Publish button */
 #publishButton {
     background-color: #00ff00;
     border: none;
@@ -71,6 +79,7 @@ button {
     z-index: 1;
 }
 
+/* Styling for the textarea */
 textarea {
     background-color: #000000;
     color: #00ff00;
@@ -82,6 +91,7 @@ textarea {
     resize: none;
 }
 
+/* Styling for the scrollable transaction data window */
 .scrollable-window {
     background-color: #000000;
     color: #00ff00;
@@ -97,6 +107,7 @@ textarea {
     border-right: 2px solid #00ff00;
 }
 
+/* Styling for the Docs button */
 #docs-button {
     background-color: #00ff00; /* Match the color of the wallet connect button */
     border: none;
@@ -112,7 +123,7 @@ textarea {
     z-index: 1;
 }
 
-/* Additional styles for the button (if needed) */
+/* Additional styles for the Docs button on hover (if needed) */
 #docs-button:hover {
     background-color: #009900; /* Change the background color on hover */
 }
