@@ -8,12 +8,12 @@ body.dark-mode {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100vh;
+    height: calc(100vh - 60px); /* Subtracting the padding from the height to prevent scrolling */
     margin: 0;
     padding-top: 60px;  
-    border: 2px solid #00ff00;
-    border-radius: 10px;
+    border: none; /* Removing the border */
     box-shadow: 0 0 15px #00ff00; /* A subtle glow effect */
+    overflow: hidden; /* Prevent scrolling */
 }
 
 /* Main Title */
@@ -70,9 +70,16 @@ button:active, #connectButton:active, #publishButton:active, #docs-button:active
 
 /* Text Input Area */
 #postInput, textarea {
-    /*... (unchanged) ...*/
-    background-color: #000000; /* Making sure the background matches */
-    color: #00ff00; /* Ensuring text color matches the other window */
+    width: 800px; 
+    height: 300px;  
+    box-sizing: border-box;
+    margin: 10px 0;
+    resize: none;
+    border: 1px solid #00ff00;
+    border-radius: 5px;
+    padding: 10px;
+    overflow: hidden;
+    background-color: #000000; /* Setting the background to match the body */
 }
 
 /* Publish Button */
