@@ -14,8 +14,8 @@ body.dark-mode {
     overflow: hidden;
 }
 
-/* Styling for the Connect Wallet button */
-#connectButton {
+/* Styling for buttons (common styles) */
+button, #connectButton, #publishButton, #docs-button {
     background-color: #00ff00;
     border: none;
     color: black;
@@ -24,25 +24,17 @@ body.dark-mode {
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
+}
+
+/* Styling for the Connect Wallet button */
+#connectButton {
     position: absolute;
     top: 0;
     right: 0;
 }
 
-/* Styling for general buttons */
-button {
-    background-color: #00ff00;
-    border: none;
-    color: black;
-    padding: 10px 20px;
-    text-align: center;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-}
-
 /* Styling for the text input container */
-#textAreaContainer {
+.input-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -53,7 +45,7 @@ button {
 }
 
 /* Styling for the text input area */
-#postInput {
+#postInput, textarea {
     background-color: #000000;
     color: #00ff00;
     padding: 10px;
@@ -64,31 +56,16 @@ button {
     resize: none;
 }
 
+/* Styling for the textarea */
+textarea {
+    height: 100%; /* Adjust the height for textareas */
+}
+
 /* Styling for the Publish button */
 #publishButton {
-    background-color: #00ff00;
-    border: none;
-    color: black;
-    padding: 10px 20px;
-    text-align: center;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
     position: absolute;
     bottom: -40px;
     z-index: 1;
-}
-
-/* Styling for the textarea */
-textarea {
-    background-color: #000000;
-    color: #00ff00;
-    padding: 10px;
-    margin: 4px 2px;
-    border: 2px solid #00ff00;
-    width: 100%;
-    height: 100%;
-    resize: none;
 }
 
 /* Styling for the scrollable transaction data window */
@@ -109,14 +86,6 @@ textarea {
 
 /* Styling for the Docs button */
 #docs-button {
-    background-color: #00ff00; /* Match the color of the wallet connect button */
-    border: none;
-    color: black;
-    padding: 10px 20px;
-    text-align: center;
-    font-size: 16px;
-    margin: 0; /* Remove margin to place it at the top left corner */
-    cursor: pointer;
     position: absolute;
     top: 0;
     left: 0;
