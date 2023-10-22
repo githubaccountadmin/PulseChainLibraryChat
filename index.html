@@ -17,17 +17,20 @@
     <!-- Main header -->
     <h1>Welcome to The Decentralized PulseChain Library</h1>
     
-    <!-- Button to connect the wallet -->
-    <button id="connectButton">Connect Wallet</button>
-    
-    <!-- Display the network status -->
-    <div id="networkStatus"></div>
-    
-    <!-- Loading indicator (hidden by default) -->
-    <span id="loadingIndicator" style="display:none;">Loading...</span>
+    <!-- Container for wallet connection -->
+    <div id="wallet-container">
+        <!-- Button to connect the wallet -->
+        <button id="connectButton">Connect Wallet</button>
+        
+        <!-- Display the network status -->
+        <div id="networkStatus"></div>
+        
+        <!-- Loading indicator (hidden by default) -->
+        <span id="loadingIndicator" style="display:none;">Loading...</span>
+    </div>
 
     <!-- Container for posts -->
-    <div id="posts">
+    <div id="posts-container">
         <!-- Empty h2 tag for the title to be set dynamically -->
         <h2 id="dynamicTitle"></h2>
         
@@ -45,13 +48,16 @@
     </div>
 
     <!-- Container for displaying transaction data -->
-    <div id="transactionDataWindow" class="scrollable-window"></div>
-    
-    <!-- Button to load more transactions -->
-    <button id="loadMoreTransactionsButton">Load More Transactions</button>
-    
-    <!-- Input field for specifying the number of transactions to load -->
-    <input type="number" id="transactionCountInput" placeholder="How Many?">
+    <div id="transaction-container">
+        <!-- Container for transaction data -->
+        <div id="transactionDataWindow" class="scrollable-window"></div>
+        
+        <!-- Button to load more transactions -->
+        <button id="loadMoreTransactionsButton">Load More Transactions</button>
+        
+        <!-- Input field for specifying the number of transactions to load -->
+        <input type="number" id="transactionCountInput" placeholder="How Many?">
+    </div>
 
     <!-- Include the JavaScript code for interactivity -->
     <script src="script.js"></script>
