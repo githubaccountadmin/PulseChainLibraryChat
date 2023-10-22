@@ -1,3 +1,6 @@
+/* CSS for Dark Mode */
+
+/* Styling for the entire page in dark mode */
 body.dark-mode {
     background-color: #000000;
     color: #00ff00;
@@ -11,7 +14,8 @@ body.dark-mode {
     overflow: hidden;
 }
 
-#connectButton {
+/* Styling for buttons (common styles) */
+button, #connectButton, #publishButton, #docs-button {
     background-color: #00ff00;
     border: none;
     color: black;
@@ -20,23 +24,17 @@ body.dark-mode {
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
+}
+
+/* Styling for the Connect Wallet button */
+#connectButton {
     position: absolute;
     top: 0;
     right: 0;
 }
 
-button {
-    background-color: #00ff00;
-    border: none;
-    color: black;
-    padding: 10px 20px;
-    text-align: center;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-}
-
-#textAreaContainer {
+/* Styling for the text input container */
+.input-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -46,7 +44,8 @@ button {
     position: relative;
 }
 
-#postInput {
+/* Styling for the text input area */
+#postInput, textarea {
     background-color: #000000;
     color: #00ff00;
     padding: 10px;
@@ -57,31 +56,19 @@ button {
     resize: none;
 }
 
+/* Styling for the textarea */
+textarea {
+    height: 100%; /* Adjust the height for textareas */
+}
+
+/* Styling for the Publish button */
 #publishButton {
-    background-color: #00ff00;
-    border: none;
-    color: black;
-    padding: 10px 20px;
-    text-align: center;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
     position: absolute;
     bottom: -40px;
     z-index: 1;
 }
 
-textarea {
-    background-color: #000000;
-    color: #00ff00;
-    padding: 10px;
-    margin: 4px 2px;
-    border: 2px solid #00ff00;
-    width: 100%;
-    height: 100%;
-    resize: none;
-}
-
+/* Styling for the scrollable transaction data window */
 .scrollable-window {
     background-color: #000000;
     color: #00ff00;
@@ -97,22 +84,15 @@ textarea {
     border-right: 2px solid #00ff00;
 }
 
+/* Styling for the Docs button */
 #docs-button {
-    background-color: #00ff00; /* Match the color of the wallet connect button */
-    border: none;
-    color: black;
-    padding: 10px 20px;
-    text-align: center;
-    font-size: 16px;
-    margin: 0; /* Remove margin to place it at the top left corner */
-    cursor: pointer;
     position: absolute;
     top: 0;
     left: 0;
     z-index: 1;
 }
 
-/* Additional styles for the button (if needed) */
+/* Additional styles for the Docs button on hover (if needed) */
 #docs-button:hover {
     background-color: #009900; /* Change the background color on hover */
 }
