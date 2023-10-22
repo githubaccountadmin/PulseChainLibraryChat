@@ -100,6 +100,7 @@ textarea {
 #dynamicTitle {
     min-height: 50px; /* Adjust the minimum height as needed */
     max-height: 100px; /* Adjust the maximum height as needed */
+    width: 100%; /* Set a fixed width for the title container */
     position: fixed; /* Add fixed positioning */
     top: 0; /* Position at the top */
     left: 0; /* Position at the left */
