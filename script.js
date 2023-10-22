@@ -156,34 +156,52 @@ document.addEventListener('DOMContentLoaded', function() {
         throw new Error('All API endpoints have failed. Please reload the page to try again.');
     }
 
-   // Fetch and display transactions based on filter selection
-async function fetchTransactionData() {
-    try {
-        const filterValue = document.getElementById("filterSelect").value;
-        const window = document.getElementById("transactionDataWindow");
-        window.innerHTML = '';  // Clear the window content
-
-        const response = await fetch('/fetch-transactions');
-        const data = await response.json();
-        
-        let filteredData = data;
-
-        // Apply filtering logic if the value isn't 'all'
-        if (filterValue !== 'all') {
-            filteredData = data.filter(item => item.tag === filterValue);
+    // Fetch and display transactions based on filter selection
+    async function fetchTransactionData() {
+        try {
+            const filterValue = document.getElementById("filterSelect").value;
+            const window = document.getElementById("transactionDataWindow");
+            window.innerHTML = 'Fetching data...';
+    
+            // Fetch data with fallback from multiple endpoints
+            const data = await fetchDataWithFallback(apiEndpoints);
+            
+            let filteredData = data;
+    
+            // Apply filtering logic if the value isn't 'all'
+            if (filterValue !== 'all') {
+                filteredData = data.filter(item => item.tag === filterValue);
+            }
+    
+            // Limit the number of transactions displayed
+            const transactionCount = 33; // Set your desired transaction count limit
+            filteredData = filteredData.slice(0, transactionCount);
+    
+            let outputText = "";
+            for (let transaction of filteredData) {
+                try {
+                    if (web3.utils.isHexStrict(transaction.input)) {
+                        const decodedInput = web3.utils.hexToUtf8(transaction.input);
+                        if (isValidUtf8(decodedInput)) {
+                            outputText += `User: ${transaction.from}\nMessage: ${decodedInput}\n\n`;
+                        } else {
+                            console.warn(`Skipping transaction from ${transaction.from} due to invalid UTF-8.`);
+                        }
+                    }
+                } catch (error) {
+                    console.error(`Error decoding input for transaction from ${transaction.from} with hash ${transaction.hash}. Skipping...`);
+                }
+            }
+            
+            // Update the UI with the fetched and filtered data
+            window.innerHTML = outputText || 'No valid transactions found.';
+    
+        } catch (error) {
+            console.error('There was an error fetching the transaction data:', error);
+            // Handle the error and provide user feedback
         }
-
-        for (let transaction of filteredData) {
-            const p = document.createElement('p');
-            p.textContent = `ID: ${transaction.id}, Content: ${transaction.content}, Tag: ${transaction.tag}`;
-            window.appendChild(p);
-        }
-
-    } catch (error) {
-        console.error('There was an error fetching the transaction data:', error);
     }
-}
-
+    
     document.getElementById('connectButton').addEventListener('click', connectWallet);
     document.getElementById('postButton').addEventListener('click', postContent);
     document.getElementById('publishButton').addEventListener('click', publishMessage);
