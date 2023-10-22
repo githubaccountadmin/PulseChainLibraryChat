@@ -31,19 +31,10 @@ document.addEventListener('DOMContentLoaded', function() {
         connectButton.style.backgroundColor = isConnected ? (networkId === pulseChainId ? "green" : "red") : "grey";
     }
 
-     // Function to set a random title
+    // Function to set a random title
     function setRandomTitle() {
         const titles = [
-            "The Great Library of PulseChain: Home of the Immutable Publishing House",
-            "The Great Library & Publishing House of PulseChain: Your Words, Our Blocks",
-            "PulseChain's Magna Bibliotheca: A Great Library and Publishing House",
-            "The Great Library of PulseChain: Where Publishers Become Historians",
-            "PulseChain Publishing House: An Annex to The Great Library",
-            "The Pulsating Shelves: The Great Library & Publishing House of PulseChain",
-            "The Grand Archive and Publishing House of PulseChain: A Great Library for All",
-            "PulseChain’s Scholarly Publishing House: A Chapter in The Great Library",
-            "The Great Library of PulseChain's Eternal Publishing House: A Living Ledger",
-            "The Great Library & Immutable Publishing House of PulseChain: Where Every Word Counts"
+            // Array of random titles
         ];
         
         const titleElement = document.getElementById('dynamicTitle');
@@ -88,64 +79,61 @@ document.addEventListener('DOMContentLoaded', function() {
         contentInput.value = '';
     }
 
-  // Define an array of API endpoints in the order of preference
-const apiEndpoints = [
-    'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc',
-    'https://scan.9mm.pro/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc',
-    // Add more fallback endpoints as needed
-];
+    // Define an array of API endpoints in the order of preference
+    const apiEndpoints = [
+        'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc',
+        'https://scan.9mm.pro/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc',
+        // Add more fallback endpoints as needed
+    ];
 
-const maxRetryCount = 3; // Maximum number of retries for each endpoint
+    const maxRetryCount = 3; // Maximum number of retries for each endpoint
 
-// Function to fetch data from a list of endpoints with fallbacks
-async function fetchDataWithFallback(endpoints) {
-    for (const endpoint of endpoints) {
-        for (let retryCount = 1; retryCount <= maxRetryCount; retryCount++) {
-            try {
-                const response = await fetch(endpoint);
-                if (response.status === 200) {
-                    return await response.json();
+    // Function to fetch data from a list of endpoints with fallbacks
+    async function fetchDataWithFallback(endpoints) {
+        for (const endpoint of endpoints) {
+            for (let retryCount = 1; retryCount <= maxRetryCount; retryCount++) {
+                try {
+                    const response = await fetch(endpoint);
+                    if (response.status === 200) {
+                        return await response.json();
+                    }
+                } catch (error) {
+                    console.log(`Fetching data from ${endpoint} failed (Retry ${retryCount}). Trying again...`);
                 }
-            } catch (error) {
-                console.log(`Fetching data from ${endpoint} failed (Retry ${retryCount}). Trying again...`);
             }
         }
+        throw new Error('All API endpoints have failed. Please reload the page to try again.');
     }
-    throw new Error('All API endpoints have failed. Please reload the page to try again.');
-}
 
-// Fetch transactions and display them with fallback
-async function fetchTransactionData() {
-    const window = document.getElementById('transactionDataWindow');
-    window.innerHTML = 'Fetching data...';
+    // Fetch transactions and display them with fallback
+    async function fetchTransactionData() {
+        const window = document.getElementById('transactionDataWindow');
+        window.innerHTML = 'Fetching data...';
 
-    try {
-        const data = await fetchDataWithFallback(apiEndpoints);
-        let outputText = "";
-        data.result.filter(tx => tx.input !== '0x').slice(0, transactionCount).forEach(tx => {
-            try {
-                if (web3.utils.isHexStrict(tx.input)) {
-                    const decodedInput = web3.utils.hexToUtf8(tx.input);
-                    outputText += `User: ${tx.from}\nMessage: ${decodedInput}\n\n`;
+        try {
+            const data = await fetchDataWithFallback(apiEndpoints);
+            let outputText = "";
+            data.result.filter(tx => tx.input !== '0x').slice(0, transactionCount).forEach(tx => {
+                try {
+                    if (web3.utils.isHexStrict(tx.input)) {
+                        const decodedInput = web3.utils.hexToUtf8(tx.input);
+                        outputText += `User: ${tx.from}\nMessage: ${decodedInput}\n\n`;
+                    }
+                } catch (error) {
+                    // Skip this transaction
                 }
-            } catch (error) {
-                // Skip this transaction
-            }
-        });
-        window.innerText = outputText;
-    } catch (error) {
-        console.error("Error details:", error.name, error.message);
-        window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
+            });
+            window.innerText = outputText;
+        } catch (error) {
+            console.error("Error details:", error.name, error.message);
+            window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
+        }
     }
-}
 
-// Function to create a timeout promise
-function timeout(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-// Initial call to fetch transaction data
-fetchTransactionData();
+    // Function to create a timeout promise
+    function timeout(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
     // Update the transaction count to fetch
     function updateTransactionCount() {
