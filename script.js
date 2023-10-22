@@ -156,38 +156,39 @@ document.addEventListener('DOMContentLoaded', function() {
         throw new Error('All API endpoints have failed. Please reload the page to try again.');
     }
 
-    async function fetchTransactionData() {
-        try {
-            const window = document.getElementById('transactionDataWindow');
-            window.innerHTML = 'Fetching data...';
+   // Fetch and display transactions based on filter selection
+async function fetchTransactionData() {
+    try {
+        const filterValue = document.getElementById("filterSelect").value;
+        const window = document.getElementById("transactionWindow");
+        window.innerHTML = '';  // Clear the window content
 
-            const data = await fetchDataWithFallback(apiEndpoints);
-            let outputText = "";
-            data.result.filter(tx => tx.input !== '0x').slice(0, transactionCount).forEach(tx => {
-                try {
-                    if (web3.utils.isHexStrict(tx.input)) {
-                        const decodedInput = web3.utils.hexToUtf8(tx.input);
-                        if (isValidUtf8(decodedInput)) {
-                            outputText += `User: ${tx.from}\nMessage: ${decodedInput}\n\n`;
-                        } else {
-                            console.warn(`Skipping transaction from ${tx.from} due to invalid UTF-8.`);
-                        }
-                    }
-                } catch (error) {
-                    console.error(`Error decoding input for transaction from ${tx.from} with hash ${tx.hash}. Skipping...`);
-                }
-            });
-            window.innerHTML = outputText || 'No valid transactions found.';
-        } catch (error) {
-            console.error('Error fetching transaction data:', error);
-            // Handle the error and provide user feedback
+        const response = await fetch('/fetch-transactions');
+        const data = await response.json();
+        
+        let filteredData = data;
+
+        // Apply filtering logic if the value isn't 'all'
+        if (filterValue !== 'all') {
+            filteredData = data.filter(item => item.tag === filterValue);
         }
+
+        for (let transaction of filteredData) {
+            const p = document.createElement('p');
+            p.textContent = `ID: ${transaction.id}, Content: ${transaction.content}, Tag: ${transaction.tag}`;
+            window.appendChild(p);
+        }
+
+    } catch (error) {
+        console.error('There was an error fetching the transaction data:', error);
     }
+}
 
     document.getElementById('connectButton').addEventListener('click', connectWallet);
     document.getElementById('postButton').addEventListener('click', postContent);
     document.getElementById('publishButton').addEventListener('click', publishMessage);
     document.getElementById('fetchDataButton').addEventListener('click', fetchTransactionData);
+    document.getElementById("applyFilterButton").addEventListener('click', fetchTransactionData);
 
     checkInitialConnection();
     setRandomTitle();
