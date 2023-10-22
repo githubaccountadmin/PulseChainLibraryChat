@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
 async function fetchTransactionData() {
     try {
         const filterValue = document.getElementById("filterSelect").value;
-        const window = document.getElementById("transactionWindow");
+        const window = document.getElementById("transactionDataWindow");
         window.innerHTML = '';  // Clear the window content
 
         const response = await fetch('/fetch-transactions');
