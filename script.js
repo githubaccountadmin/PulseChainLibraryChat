@@ -154,7 +154,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 try {
                     if (web3.utils.isHexStrict(tx.input)) {
                         const decodedInput = web3.utils.hexToUtf8(tx.input);
-                        outputText += `User: ${tx.from}\nMessage: ${decodedInput}\n\n`;
+                        if (isValidUtf8(decodedInput)) {
+                            outputText += `User: ${tx.from}\nMessage: ${decodedInput}\n\n`;
+                        } else {
+                            console.warn(`Skipping transaction from ${tx.from} due to invalid UTF-8 data.`);
+                        }
                     }
                 } catch (error) {
                     // Skip this transaction
