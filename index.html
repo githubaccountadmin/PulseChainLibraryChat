@@ -40,7 +40,7 @@
 
         <!-- Container for entering a new post -->
         <div id="textAreaContainer" style="position: relative;">
-            <!-- NEW: Dropdown for selecting the publish type -->
+            <!-- Dropdown for selecting the publish type -->
             <div class="input-container">
                 <label for="publishType">Select Publish Type:</label>
                 <select id="publishType">
@@ -56,6 +56,19 @@
 
             <!-- Button to publish a new post -->
             <button id="publishButton">Publish</button>
+        </div>
+
+        <!-- Filter by Tag section -->
+        <div class="filter-container">
+            <label for="filterSelect">Filter by Tag:</label>
+            <select id="filterSelect">
+                <option value="all">Show All</option>
+                <option value="messages">Messages</option>
+                <option value="stories">Stories</option>
+                <option value="books">Books</option>
+                <option value="documents">Documents</option>
+            </select>
+            <button id="applyFilterButton">Apply Filter</button>
         </div>
 
         <!-- List of posts -->
