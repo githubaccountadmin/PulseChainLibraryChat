@@ -1,6 +1,6 @@
 /* CSS for Dark Mode */
 
-/* Styling for the entire page in dark mode */
+/* Global Styles */
 body.dark-mode {
     background-color: #000000;
     color: #00ff00;
@@ -8,12 +8,26 @@ body.dark-mode {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
     height: 100vh;
     margin: 0;
+    padding-top: 60px;  /* Space for the fixed title */
 }
 
-/* Styling for buttons (common styles) */
+/* Main Title */
+#dynamicTitle {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #000000;
+    color: #00ff00;
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    z-index: 100;
+}
+
+/* Buttons */
 button, #connectButton, #publishButton, #docs-button {
     background-color: #00ff00;
     border: none;
@@ -25,86 +39,37 @@ button, #connectButton, #publishButton, #docs-button {
     cursor: pointer;
 }
 
-/* Styling for the Connect Wallet button */
-#connectButton {
-    top: 0;
-    right: 0;
+#connectButton, #docs-button {
+    position: fixed;
+    top: 60px; /* Below the title */
 }
 
-/* Styling for the text input container */
+#connectButton { right: 0; }
+#docs-button { left: 0; }
+
+/* Text Input Container */
 .input-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
     width: 100%;
-    height: 400px;
-    padding: 10px;
+    max-width: 800px; /* Limit the maximum width */
+    margin-top: 20px;  /* Add some top margin */
 }
 
-/* Styling for the text input area */
+/* Text Input Area */
 #postInput, textarea {
-    background-color: #000000;
-    color: #00ff00;
-    padding: 10px;
-    margin: 4px 2px;
-    border: 2px solid #00ff00;
     width: 100%;
     height: 300px;
+    margin: 10px 0;
     resize: none;
 }
 
-/* Styling for the textarea */
-textarea {
-    height: 100%;
-}
-
-/* Styling for the Publish button */
+/* Publish Button */
 #publishButton {
     margin-top: 10px;
 }
 
-/* Styling for the scrollable transaction data window */
+/* Transaction Window */
 .scrollable-window {
-    background-color: #000000;
-    color: #00ff00;
-    font-family: 'Courier New', Courier, monospace;
-    overflow: auto;
-    padding: 10px;
     margin-top: 20px;
-    height: calc(50vh - 70px);
-    width: 90%;
-    white-space: pre-wrap;
-    border: 2px solid #00ff00;
-}
-
-/* Styling for the Docs button */
-#docs-button {
-    top: 0;
-    left: 0;
-    z-index: 1;
-}
-
-/* Additional styles for the Docs button on hover */
-#docs-button:hover {
-    background-color: #009900;
-}
-
-.dynamic-title-container {
-    min-height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Styling for the dynamicTitle */
-#dynamicTitle {
-    min-height: 50px;
-    max-height: 100px;
-    width: 100%;
-    background-color: #000000;
-    color: #00ff00;
-    padding: 10px;
-    text-align: center;
-    z-index: 2;
+    height: calc(100vh - 400px); /* Remaining vertical space */
+    overflow: auto;
 }
