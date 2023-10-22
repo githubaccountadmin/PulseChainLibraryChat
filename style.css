@@ -100,4 +100,13 @@ textarea {
 #dynamicTitle {
     min-height: 50px; /* Adjust the minimum height as needed */
     max-height: 100px; /* Adjust the maximum height as needed */
+    position: fixed; /* Add fixed positioning */
+    top: 0; /* Position at the top */
+    left: 0; /* Position at the left */
+    right: 0; /* Position at the right */
+    background-color: #000000; /* Background color */
+    color: #00ff00; /* Text color */
+    padding: 10px; /* Padding for content */
+    text-align: center; /* Center align text */
+    z-index: 2; /* Ensure it's above other elements */
 }
