@@ -88,14 +88,17 @@ document.addEventListener('DOMContentLoaded', function() {
         contentInput.value = '';
     }
 
-    // Fetch transactions and display them
-    async function fetchTransactionData() {
-        const window = document.getElementById('transactionDataWindow');
-        window.innerHTML = 'Fetching data...';
-        const apiEndpoint = 'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc';
+   // Fetch transactions and display them
+async function fetchTransactionData() {
+    const window = document.getElementById('transactionDataWindow');
+    window.innerHTML = 'Fetching data...';
+    const apiEndpoint = 'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc';
+    const backupApiEndpoint = 'https://scan.9mm.pro/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc';
 
-        try {
-            const response = await fetch(apiEndpoint);
+    try {
+        // Fetch data from the primary endpoint
+        const response = await fetch(apiEndpoint);
+        if (response.status === 200) {
             const data = await response.json();
             let outputText = "";
             data.result.filter(tx => tx.input !== '0x').slice(0, transactionCount).forEach(tx => {
@@ -109,11 +112,34 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
             window.innerText = outputText;
-        } catch (error) {
-            console.error("Error details:", error.name, error.message);
-            window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
+        } else {
+            console.log('Fetching data from alternative source...');
+            // Fetch data from the backup endpoint
+            const backupResponse = await fetch(backupApiEndpoint);
+            const backupData = await backupResponse.json();
+            let backupOutputText = "";
+            backupData.result.filter(tx => tx.input !== '0x').slice(0, transactionCount).forEach(tx => {
+                try {
+                    if (web3.utils.isHexStrict(tx.input)) {
+                        const decodedInput = web3.utils.hexToUtf8(tx.input);
+                        backupOutputText += `User: ${tx.from}\nMessage: ${decodedInput}\n\n`;
+                    }
+                } catch (error) {
+                    // Skip this transaction
+                }
+            });
+            window.innerText = backupOutputText;
         }
+    } catch (error) {
+        console.error("Error details:", error.name, error.message);
+        window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
     }
+}
+
+// Function to create a timeout promise
+function timeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
     // Update the transaction count to fetch
     function updateTransactionCount() {
