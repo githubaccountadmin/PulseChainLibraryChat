@@ -10,7 +10,10 @@ body.dark-mode {
     align-items: center;
     height: 100vh;
     margin: 0;
-    padding-top: 60px;  /* Space for the fixed title */
+    padding-top: 60px;  
+    border: 2px solid #00ff00;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #00ff00; /* A subtle glow effect */
 }
 
 /* Main Title */
@@ -30,24 +33,28 @@ body.dark-mode {
 /* Buttons */
 button, #connectButton, #publishButton, #docs-button {
     background-color: #00ff00;
-    border: 1px solid black;  /* Added border for better visuals */
-    border-radius: 5px;      /* Rounded corners */
+    border: 1px solid black;  
+    border-radius: 5px;      
     color: black;
     padding: 10px 20px;
     text-align: center;
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
-    transition: 0.2s;       /* Smooth hover transition */
+    transition: 0.2s;       
 }
 
 button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
-    background-color: #00dd00; /* Slightly different hover color */
+    background-color: #00dd00; 
+}
+
+button:active, #connectButton:active, #publishButton:active, #docs-button:active {
+    transform: scale(0.95); 
 }
 
 #connectButton, #docs-button {
     position: fixed;
-    top: 60px; /* Below the title */
+    top: 60px; 
 }
 
 #connectButton { right: 0; }
@@ -56,22 +63,21 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
 /* Text Input Container */
 .input-container {
     width: 100%;
-    max-width: 800px; /* Limit the maximum width */
-    margin-top: 20px;  /* Add some top margin */
+    max-width: 800px;
+    margin-top: 20px;  
 }
 
 /* Text Input Area */
 #postInput, textarea {
-    width: 100%;
-    max-width: 800px; /* Ensures the width doesn't exceed 800px */
+    width: 800px; 
     height: 300px;  
-    box-sizing: border-box; /* This will ensure padding and borders are included in the total width */
+    box-sizing: border-box;
     margin: 10px 0;
     resize: none;
     border: 1px solid #00ff00;
     border-radius: 5px;
     padding: 10px;
-    overflow: hidden; /* This will hide any overflowing content */
+    overflow: hidden;
 }
 
 /* Publish Button */
@@ -82,9 +88,9 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
 /* Transaction Window */
 .scrollable-window {
     margin-top: 20px;
-    height: calc(100vh - 460px); /* Adjusted for remaining space */
+    height: calc(100vh - 460px); 
     overflow: auto;
-    border: 1px solid #00ff00;  /* Border to match theme */
-    border-radius: 5px;         /* Rounded corners */
-    padding: 10px;              /* Inner padding */
+    border: 1px solid #00ff00;
+    border-radius: 5px;         
+    padding: 10px;              
 }
