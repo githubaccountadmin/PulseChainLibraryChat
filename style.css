@@ -64,20 +64,15 @@ button:active, #connectButton:active, #publishButton:active, #docs-button:active
 .input-container {
     width: 100%;
     max-width: 800px;
-    margin-top: 20px;  
+    margin-top: 20px; 
+    background-color: #000000; /* Setting the box background color */
 }
 
 /* Text Input Area */
 #postInput, textarea {
-    width: 800px; 
-    height: 300px;  
-    box-sizing: border-box;
-    margin: 10px 0;
-    resize: none;
-    border: 1px solid #00ff00;
-    border-radius: 5px;
-    padding: 10px;
-    overflow: hidden;
+    /*... (unchanged) ...*/
+    background-color: #000000; /* Making sure the background matches */
+    color: #00ff00; /* Ensuring text color matches the other window */
 }
 
 /* Publish Button */
@@ -89,8 +84,10 @@ button:active, #connectButton:active, #publishButton:active, #docs-button:active
 .scrollable-window {
     margin-top: 20px;
     height: calc(100vh - 460px); 
-    overflow: auto;
+    overflow: auto; /* Enabling scrolling */
     border: 1px solid #00ff00;
     border-radius: 5px;         
-    padding: 10px;              
+    padding: 10px;
+    background-color: #000000; /* Making sure the background matches */
+    color: #00ff00; /* Ensuring text color matches */
 }
