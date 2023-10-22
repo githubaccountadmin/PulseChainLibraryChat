@@ -40,14 +40,8 @@ button, #connectButton, #publishButton, #docs-button {
     align-items: center;
     justify-content: flex-start;
     width: 100%;
+    height: 400px; /* Set a fixed height for the text input container */
     padding: 10px; /* Add padding for better spacing */
-}
-
-/* Container for text input and publish button */
-.text-container {
-    width: 100%;
-    max-width: 600px; /* Adjust the maximum width as needed */
-    margin: 0 auto; /* Center the container horizontally */
 }
 
 /* Styling for the text input area */
