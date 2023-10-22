@@ -11,7 +11,6 @@ body.dark-mode {
     justify-content: flex-start;
     height: 100vh;
     margin: 0;
-    overflow: hidden;
 }
 
 /* Styling for buttons (common styles) */
@@ -28,7 +27,6 @@ button, #connectButton, #publishButton, #docs-button {
 
 /* Styling for the Connect Wallet button */
 #connectButton {
-    position: absolute;
     top: 0;
     right: 0;
 }
@@ -40,8 +38,8 @@ button, #connectButton, #publishButton, #docs-button {
     align-items: center;
     justify-content: flex-start;
     width: 100%;
-    height: 400px; /* Set a fixed height for the text input container */
-    padding: 10px; /* Add padding for better spacing */
+    height: 400px;
+    padding: 10px;
 }
 
 /* Styling for the text input area */
@@ -52,19 +50,18 @@ button, #connectButton, #publishButton, #docs-button {
     margin: 4px 2px;
     border: 2px solid #00ff00;
     width: 100%;
-    height: 300px; /* Increase the height value to expand the text area downward */
+    height: 300px;
     resize: none;
 }
 
 /* Styling for the textarea */
 textarea {
-    height: 100%; /* Adjust the height for textareas */
+    height: 100%;
 }
 
 /* Styling for the Publish button */
 #publishButton {
-    margin-top: 10px; /* Add margin to separate it from the text area */
-    position: relative; /* Remove absolute positioning */
+    margin-top: 10px;
 }
 
 /* Styling for the scrollable transaction data window */
@@ -79,42 +76,35 @@ textarea {
     width: 90%;
     white-space: pre-wrap;
     border: 2px solid #00ff00;
-    border-left: 2px solid #00ff00;
-    border-right: 2px solid #00ff00;
 }
 
 /* Styling for the Docs button */
 #docs-button {
-    position: absolute;
     top: 0;
     left: 0;
     z-index: 1;
 }
 
-/* Additional styles for the Docs button on hover (if needed) */
+/* Additional styles for the Docs button on hover */
 #docs-button:hover {
     background-color: #009900;
 }
 
 .dynamic-title-container {
-    min-height: 50px;  /* Or whatever height is appropriate */
+    min-height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* Add min-height and max-height to the dynamicTitle */
+/* Styling for the dynamicTitle */
 #dynamicTitle {
-    min-height: 50px; /* Adjust the minimum height as needed */
-    max-height: 100px; /* Adjust the maximum height as needed */
-    width: 100%; /* Set a fixed width for the title container */
-    position: fixed; /* Add fixed positioning */
-    top: 0; /* Position at the top */
-    left: 0; /* Position at the left */
-    right: 0; /* Position at the right */
-    background-color: #000000; /* Background color */
-    color: #00ff00; /* Text color */
-    padding: 10px; /* Padding for content */
-    text-align: center; /* Center align text */
-    z-index: 2; /* Ensure it's above other elements */
+    min-height: 50px;
+    max-height: 100px;
+    width: 100%;
+    background-color: #000000;
+    color: #00ff00;
+    padding: 10px;
+    text-align: center;
+    z-index: 2;
 }
