@@ -9,42 +9,70 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Check initial connection to a wallet
     async function checkInitialConnection() {
-        const accounts = await web3.eth.getAccounts();
-        isConnected = accounts.length > 0;
-        const networkId = isConnected ? await web3.eth.net.getId() : null;
-        checkPulseChain(networkId);
+        try {
+            const accounts = await web3.eth.getAccounts();
+            isConnected = accounts.length > 0;
+            const networkId = isConnected ? await web3.eth.net.getId() : null;
+            checkPulseChain(networkId);
+        } catch (error) {
+            console.error('Error checking initial connection:', error);
+            // Handle the error and provide user feedback
+        }
     }
 
     // Connect to a wallet
     async function connectWallet() {
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        isConnected = true;
-        const networkId = await web3.eth.net.getId();
-        checkPulseChain(networkId);
+        try {
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            isConnected = true;
+            const networkId = await web3.eth.net.getId();
+            checkPulseChain(networkId);
+        } catch (error) {
+            console.error('Error connecting wallet:', error);
+            // Handle the error and provide user feedback
+        }
     }
 
     // Check if the current network is PulseChain
     function checkPulseChain(networkId) {
-        const connectButton = document.getElementById('connectButton');
-        const pulseChainId = 369;  // PulseChain network ID
-        connectButton.innerText = isConnected ? (networkId === pulseChainId ? "Connected" : "Not connected to PulseChain") : "Connect Wallet";
-        connectButton.style.backgroundColor = isConnected ? (networkId === pulseChainId ? "green" : "red") : "grey";
+        try {
+            const connectButton = document.getElementById('connectButton');
+            const pulseChainId = 369;  // PulseChain network ID
+            connectButton.innerText = isConnected ? (networkId === pulseChainId ? "Connected" : "Not connected to PulseChain") : "Connect Wallet";
+            connectButton.style.backgroundColor = isConnected ? (networkId === pulseChainId ? "green" : "red") : "grey";
+        } catch (error) {
+            console.error('Error checking PulseChain network:', error);
+            // Handle the error and provide user feedback
+        }
     }
 
     // Function to set a random title
     function setRandomTitle() {
-        const titles = [
-            // Array of random titles
-        ];
-        
-        const titleElement = document.getElementById('dynamicTitle');
-        const randomIndex = Math.floor(Math.random() * titles.length);
-        titleElement.innerText = titles[randomIndex];
+        try {
+            const titles = [
+                // Array of random titles
+            ];
+            
+            const titleElement = document.getElementById('dynamicTitle');
+            const randomIndex = Math.floor(Math.random() * titles.length);
+            titleElement.innerText = titles[randomIndex];
+        } catch (error) {
+            console.error('Error setting random title:', error);
+            // Handle the error and provide user feedback
+        }
     }
     
     // Publish a message to the blockchain
     async function publishMessage() {
-        if (!isConnected) await connectWallet();  // Ensure wallet is connected
+        if (!isConnected) {
+            try {
+                await connectWallet();  // Ensure wallet is connected
+            } catch (error) {
+                console.error('Error publishing message:', error);
+                // Handle the error and provide user feedback
+                return;
+            }
+        }
 
         const contentInput = document.getElementById('postInput');
         const message = contentInput.value;
@@ -62,21 +90,30 @@ document.addEventListener('DOMContentLoaded', function() {
             gas: 30000000  // Set the gas limit
         };
 
-        // Send the transaction
-        web3.eth.sendTransaction(tx)
-            .on('transactionHash', hash => console.log('transactionHash', hash))
-            .on('receipt', receipt => console.log('receipt', receipt))
-            .on('error', (error, receipt) => console.log('error', error));
+        try {
+            // Send the transaction
+            const receipt = await web3.eth.sendTransaction(tx);
+            console.log('Transaction receipt:', receipt);
+            // Provide user feedback for successful transaction
+        } catch (error) {
+            console.error('Error sending transaction:', error);
+            // Handle the error and provide user feedback
+        }
     }
 
     // Post content to a list on the web page
     function postContent() {
-        const contentInput = document.getElementById('postInput');
-        const targetSection = document.getElementById('postList');
-        const newContent = document.createElement('li');
-        newContent.innerText = contentInput.value;
-        targetSection.appendChild(newContent);
-        contentInput.value = '';
+        try {
+            const contentInput = document.getElementById('postInput');
+            const targetSection = document.getElementById('postList');
+            const newContent = document.createElement('li');
+            newContent.innerText = contentInput.value;
+            targetSection.appendChild(newContent);
+            contentInput.value = '';
+        } catch (error) {
+            console.error('Error posting content:', error);
+            // Handle the error and provide user feedback
+        }
     }
 
     // Define an array of API endpoints in the order of preference
@@ -107,10 +144,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Fetch transactions and display them with fallback
     async function fetchTransactionData() {
-        const window = document.getElementById('transactionDataWindow');
-        window.innerHTML = 'Fetching data...';
-
         try {
+            const window = document.getElementById('transactionDataWindow');
+            window.innerHTML = 'Fetching data...';
+
             const data = await fetchDataWithFallback(apiEndpoints);
             let outputText = "";
             data.result.filter(tx => tx.input !== '0x').slice(0, transactionCount).forEach(tx => {
@@ -121,11 +158,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 } catch (error) {
                     // Skip this transaction
+                    console.error('Error processing transaction:', error);
+                    // Handle the error, but continue processing other transactions
                 }
             });
             window.innerText = outputText;
         } catch (error) {
             console.error("Error details:", error.name, error.message);
+            const window = document.getElementById('transactionDataWindow');
             window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
         }
     }
@@ -137,9 +177,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Update the transaction count to fetch
     function updateTransactionCount() {
-        const newCount = parseInt(document.getElementById('transactionCountInput').value);
-        if (!isNaN(newCount)) {
-            transactionCount = newCount;
+        try {
+            const newCount = parseInt(document.getElementById('transactionCountInput').value);
+            if (!isNaN(newCount)) {
+                transactionCount = newCount;
+            }
+        } catch (error) {
+            console.error('Error updating transaction count:', error);
+            // Handle the error and provide user feedback
         }
     }
 
