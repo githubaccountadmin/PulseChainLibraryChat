@@ -8,9 +8,19 @@ const apiEndpoints = [
 // Define the maximum number of retries for each endpoint
 const maxRetryCount = 3;
 
+// Define function to check if string is valid UTF-8
+function isValidUtf8(str) {
+    try {
+        decodeURIComponent(escape(str));
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
-    
+
     let transactionCount = 33;
     let isConnected = false;
 
@@ -53,19 +63,18 @@ document.addEventListener('DOMContentLoaded', function() {
     function setRandomTitle() {
         try {
             const titles = [
-                // Array of random titles
-            "The Great Library of PulseChain: Home of the Immutable Publishing House",
-            "The Great Library & Publishing House of PulseChain: Your Words, Our Blocks",
-            "PulseChain's Magna Bibliotheca: A Great Library and Publishing House",
-            "The Great Library of PulseChain: Where Publishers Become Historians",
-            "PulseChain Publishing House: An Annex to The Great Library",
-            "The Pulsating Shelves: The Great Library & Publishing House of PulseChain",
-            "The Grand Archive and Publishing House of PulseChain: A Great Library for All",
-            "PulseChain’s Scholarly Publishing House: A Chapter in The Great Library",
-            "The Great Library of PulseChain's Eternal Publishing House: A Living Ledger",
-            "The Great Library & Immutable Publishing House of PulseChain: Where Every Word Counts"
+                "The Great Library of PulseChain: Home of the Immutable Publishing House",
+                "The Great Library & Publishing House of PulseChain: Your Words, Our Blocks",
+                "PulseChain's Magna Bibliotheca: A Great Library and Publishing House",
+                "The Great Library of PulseChain: Where Publishers Become Historians",
+                "PulseChain Publishing House: An Annex to The Great Library",
+                "The Pulsating Shelves: The Great Library & Publishing House of PulseChain",
+                "The Grand Archive and Publishing House of PulseChain: A Great Library for All",
+                "PulseChain’s Scholarly Publishing House: A Chapter in The Great Library",
+                "The Great Library of PulseChain's Eternal Publishing House: A Living Ledger",
+                "The Great Library & Immutable Publishing House of PulseChain: Where Every Word Counts"
             ];
-            
+
             const titleElement = document.getElementById('dynamicTitle');
             const randomIndex = Math.floor(Math.random() * titles.length);
             titleElement.innerText = titles[randomIndex];
@@ -74,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Handle the error and provide user feedback
         }
     }
-    
+
     async function publishMessage() {
         if (!isConnected) {
             try {
@@ -88,7 +97,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const contentInput = document.getElementById('postInput');
         const message = contentInput.value;
-        const hexMessage = web3.utils.utf8ToHex(message);
+        const tagElement = document.getElementById('tagInput');
+        const tag = tagElement.value;
+        const hexMessage = web3.utils.utf8ToHex(message + " [#Tag: " + tag + "]");
 
         const accounts = await web3.eth.getAccounts();
         const fromAddress = accounts[0];
@@ -116,11 +127,13 @@ document.addEventListener('DOMContentLoaded', function() {
     function postContent() {
         try {
             const contentInput = document.getElementById('postInput');
+            const tagElement = document.getElementById('tagInput');
             const targetSection = document.getElementById('postList');
             const newContent = document.createElement('li');
-            newContent.innerText = contentInput.value;
+            newContent.innerText = contentInput.value + " [#Tag: " + tagElement.value + "]";
             targetSection.appendChild(newContent);
             contentInput.value = '';
+            tagElement.value = '';
         } catch (error) {
             console.error('Error posting content:', error);
             // Handle the error and provide user feedback
@@ -157,47 +170,25 @@ document.addEventListener('DOMContentLoaded', function() {
                         if (isValidUtf8(decodedInput)) {
                             outputText += `User: ${tx.from}\nMessage: ${decodedInput}\n\n`;
                         } else {
-                            console.warn(`Skipping transaction from ${tx.from} due to invalid UTF-8 data.`);
+                            console.warn(`Skipping transaction from ${tx.from} due to invalid UTF-8.`);
                         }
                     }
                 } catch (error) {
-                    // Skip this transaction
-                    console.error('Error processing transaction:', error);
-                    // Handle the error, but continue processing other transactions
+                    console.error(`Error decoding input for transaction from ${tx.from} with hash ${tx.hash}. Skipping...`);
                 }
             });
-            window.innerText = outputText;
+            window.innerHTML = outputText || 'No valid transactions found.';
         } catch (error) {
-            console.error("Error details:", error.name, error.message);
-            const window = document.getElementById('transactionDataWindow');
-            window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
-        }
-    }
-
-    function timeout(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
-    function updateTransactionCount() {
-        try {
-            const newCount = parseInt(document.getElementById('transactionCountInput').value);
-            if (!isNaN(newCount)) {
-                transactionCount = newCount;
-            }
-        } catch (error) {
-            console.error('Error updating transaction count:', error);
+            console.error('Error fetching transaction data:', error);
             // Handle the error and provide user feedback
         }
     }
 
     document.getElementById('connectButton').addEventListener('click', connectWallet);
+    document.getElementById('postButton').addEventListener('click', postContent);
     document.getElementById('publishButton').addEventListener('click', publishMessage);
-    document.getElementById('loadMoreTransactionsButton').addEventListener('click', fetchTransactionData);
-    document.getElementById('transactionCountInput').addEventListener('input', updateTransactionCount);
+    document.getElementById('fetchDataButton').addEventListener('click', fetchTransactionData);
 
     checkInitialConnection();
-    fetchTransactionData();
     setRandomTitle();
-    
-    setInterval(fetchTransactionData, 120000); // Automatically update the feed every 10 seconds
 });
