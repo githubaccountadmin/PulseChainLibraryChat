@@ -96,6 +96,13 @@ textarea {
     background-color: #009900;
 }
 
+.dynamic-title-container {
+    min-height: 50px;  /* Or whatever height is appropriate */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* Add min-height and max-height to the dynamicTitle */
 #dynamicTitle {
     min-height: 50px; /* Adjust the minimum height as needed */
