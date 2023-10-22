@@ -95,3 +95,9 @@ textarea {
 #docs-button:hover {
     background-color: #009900;
 }
+
+/* Add min-height and max-height to the dynamicTitle */
+#dynamicTitle {
+    min-height: 50px; /* Adjust the minimum height as needed */
+    max-height: 100px; /* Adjust the maximum height as needed */
+}
