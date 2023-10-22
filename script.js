@@ -203,7 +203,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     document.getElementById('connectButton').addEventListener('click', connectWallet);
-    document.getElementById('postButton').addEventListener('click', postContent);
     document.getElementById('publishButton').addEventListener('click', publishMessage);
     document.getElementById('fetchDataButton').addEventListener('click', fetchTransactionData);
     document.getElementById("applyFilterButton").addEventListener('click', fetchTransactionData);
