@@ -1,31 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- Set the title of the web page -->
     <title>The Decentralized PulseChain Library</title>
+    
+    <!-- Include a stylesheet for styling -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Include the Web3.js library for Ethereum interaction -->
     <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
+    
+    <!-- Link to the documentation page -->
     <a href="docs.html" id="docs-button">Docs</a>
 </head>
 <body class="dark-mode">
+    <!-- Main header -->
     <h1>Welcome to The Decentralized PulseChain Library</h1>
     
-    <button id="connectButton">Connect Wallet</button>
-    <div id="networkStatus"></div>
-    <span id="loadingIndicator" style="display:none;">Loading...</span>
+    <!-- Container for wallet connection -->
+    <div id="wallet-container">
+        <!-- Button to connect the wallet -->
+        <button id="connectButton">Connect Wallet</button>
+        
+        <!-- Display the network status -->
+        <div id="networkStatus"></div>
+        
+        <!-- Loading indicator (hidden by default) -->
+        <span id="loadingIndicator" style="display:none;">Loading...</span>
+    </div>
 
-    <div id="posts">
-        <h2 id="dynamicTitle"></h2> <!-- Empty h2 tag for the title to be set dynamically -->
+    <!-- Container for posts -->
+    <div id="posts-container">
+        <!-- Empty h2 tag for the title to be set dynamically -->
+        <h2 id="dynamicTitle"></h2>
+        
+        <!-- Container for entering a new post -->
         <div id="textAreaContainer" style="position: relative;">
+            <!-- Textarea for entering a new post -->
             <textarea id="postInput" rows="4" cols="50" aria-label="Write a post"></textarea>
+            
+            <!-- Button to publish a new post -->
             <button id="publishButton">Publish</button>
         </div>
+        
+        <!-- List of posts -->
         <ul id="postList" aria-label="List of posts"></ul>
     </div>
 
-    <div id="transactionDataWindow" class="scrollable-window"></div>
-    <button id="loadMoreTransactionsButton">Load More Transactions</button>
-    <input type="number" id="transactionCountInput" placeholder="How Many?">
+    <!-- Container for displaying transaction data -->
+    <div id="transaction-container">
+        <!-- Container for transaction data -->
+        <div id="transactionDataWindow" class="scrollable-window"></div>
+        
+        <!-- Button to load more transactions -->
+        <button id="loadMoreTransactionsButton">Load More Transactions</button>
+        
+        <!-- Input field for specifying the number of transactions to load -->
+        <input type="number" id="transactionCountInput" placeholder="How Many?">
+    </div>
 
+    <!-- Include the JavaScript code for interactivity -->
     <script src="script.js"></script>
 </body>
 </html>
