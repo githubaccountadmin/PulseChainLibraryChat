@@ -39,6 +39,7 @@ button, #connectButton, #publishButton, #docs-button {
     text-overflow: ellipsis;  /* add ellipsis when text is too long */
     white-space: nowrap;  /* keep the text from breaking into multiple lines */
     font-size: 18px; /* adjust the size as needed */
+    text-align: center; /* Center the text */
 }
 
 /* New Wrapper for input and publish button */
