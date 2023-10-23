@@ -190,13 +190,13 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             // Get the selected tag from the dropdown
             const selectedTag = document.getElementById('tagFilter').value;
-            
+    
             // Update this line to get the count from the input box
             const newCount = parseInt(document.getElementById('transactionCountInput').value);
             if (!isNaN(newCount)) {
                 transactionCount = newCount;
             }
-            
+    
             const window = document.getElementById('transactionDataWindow');
             window.innerHTML = 'Fetching data...';
     
@@ -206,22 +206,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 try {
                     if (web3.utils.isHexStrict(tx.input)) {
                         const decodedInput = web3.utils.hexToUtf8(tx.input);
-
+    
                         // Extract the type of the post from the message (if it exists)
                         const typeMatch = decodedInput.match(/\(\*\*\*\*\*([a-zA-Z0-9\s]+)\*\*\*\*\*\)/);
                         const messageType = typeMatch ? typeMatch[1] : "Unknown";
     
+                        // Extract the tag from the message
+                        const tagMatch = decodedInput.match(/\*\*\*\*\*(.*?)\*\*\*\*\*/);
+                        const tag = tagMatch ? tagMatch[1] : "message";
+    
                         // Skip if the selected tag does not match the message's tag
-                        if (selectedTag !== 'All' && messageType !== selectedTag) {
+                        if (selectedTag !== 'All' && tag !== selectedTag) {
                             return;
                         }
     
-                        let outputMessage = `User: ${tx.from}\nMessage: ${decodedInput}\n`;
+                        // Replace 'message' with the extracted tag
+                        const messageText = decodedInput.replace(/\*\*\*\*\*.*?\*\*\*\*\*/, '').trim();
+    
+                        let outputMessage = `User: ${tx.from}\nTag: ${tag}\nMessage: ${messageText}\n`;
     
                         if (typeMatch && typeMatch.length >= 2) {
                             outputMessage += `Type: ${messageType}\n`;
                         }
-                        
+    
                         outputMessage += '\n';
                         outputText += outputMessage;
                     }
@@ -229,9 +236,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Skip this transaction and continue processing other transactions
                 }
             });
-        
+    
             window.innerText = outputText;
-            
+    
         } catch (error) {
             console.error("Error details:", error.name, error.message);
             const window = document.getElementById('transactionDataWindow');
