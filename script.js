@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const window = document.getElementById('transactionDataWindow');
             window.innerHTML = 'Fetching data...';
-
+    
             const data = await fetchDataWithFallback(apiEndpoints);
             let outputText = "";
             data.result.filter(tx => tx.input !== '0x').slice(0, transactionCount).forEach(tx => {
@@ -171,9 +171,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         outputText += `User: ${tx.from}\nMessage: ${decodedInput}\n\n`;
                     }
                 } catch (error) {
-                    // Skip this transaction
+                    // Log the error
                     console.error('Error processing transaction:', error);
-                    // Handle the error, but continue processing other transactions
+                    // Add placeholder text for the message and continue processing other transactions
+                    outputText += `User: ${tx.from}\nMessage: Invalid UTF-8 Data\n\n`;
                 }
             });
             window.innerText = outputText;
