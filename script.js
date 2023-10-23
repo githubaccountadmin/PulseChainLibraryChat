@@ -111,11 +111,13 @@ document.addEventListener('DOMContentLoaded', function() {
         globalHexMessage = web3.utils.utf8ToHex(message);
         // ...
         hidePublishOptions();  // Hide the dropdown after publishing
+        console.log("At the end of handlePublishOption, globalHexMessage is: ", globalHexMessage);
     }
     
     const publishOptions = document.querySelectorAll('.publish-option');
     publishOptions.forEach(option => {
         option.addEventListener('click', function() {
+            console.log("A publish-option was clicked! Invoking handlePublishOption...");
             handlePublishOption(this.innerText);
         });
     });
