@@ -207,27 +207,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (web3.utils.isHexStrict(tx.input)) {
                         let decodedInput = web3.utils.hexToUtf8(tx.input);
     
-                        // Extract the type of the post from the message (if it exists)
-                        const typeMatch = decodedInput.match(/\(\*\*\*\*\*([a-zA-Z0-9\s]+)\*\*\*\*\*\)/);
-                        let messageType = "Message";
-                        if (typeMatch && typeMatch.length >= 2) {
-                            messageType = typeMatch[1];
-                            decodedInput = decodedInput.replace(/\*\*\*\*\*([a-zA-Z0-9\s]+)\*\*\*\*\*/, '').trim();
-                        }
-    
                         // Extract the tag from the message
                         const tagMatch = decodedInput.match(/\*\*\*\*\*(.*?)\*\*\*\*\*/);
-                        const tag = tagMatch ? tagMatch[1] : "message";
+                        const tag = tagMatch ? tagMatch[1] : null;
     
                         // Skip if the selected tag does not match the message's tag
                         if (selectedTag !== 'All' && tag !== selectedTag) {
                             return;
                         }
     
-                        let outputMessage = `User: ${tx.from}\n${messageType}: ${decodedInput}\n`;
-    
-                        outputMessage += '\n';
-                        outputText += outputMessage;
+                        if (tag) {
+                            decodedInput = decodedInput.replace(/\*\*\*\*\*.*?\*\*\*\*\*/, '').trim();
+                            outputText += `User: ${tx.from}\n${tag}: ${decodedInput}\n\n`;
+                        } else {
+                            outputText += `User: ${tx.from}\nMessage: ${decodedInput}\n\n`;
+                        }
                     }
                 } catch (error) {
                     // Skip this transaction and continue processing other transactions
