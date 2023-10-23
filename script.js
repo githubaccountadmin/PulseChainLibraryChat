@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         let messageType = "Message";
                         if (typeMatch && typeMatch.length >= 2) {
                             messageType = typeMatch[1];
-                            decodedInput = decodedInput.replace(/\*\*\*\*\*[a-zA-Z0-9\s]+\*\*\*\*\*/, '').trim();
+                            decodedInput = decodedInput.replace(/\*\*\*\*\*([a-zA-Z0-9\s]+)\*\*\*\*\*/, '').trim();
                         }
                         
                         let outputMessage = `User: ${tx.from}\n${messageType}: ${decodedInput}\n`;
