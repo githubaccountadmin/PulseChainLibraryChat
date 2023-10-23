@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
             from: fromAddress,
             to: toAddress,
             value: web3.utils.toWei('0', 'ether'),
-            data: hexMessage,
+            data: hexMessageToSend,
             gas: 30000000  // Set the gas limit
         };
 
