@@ -68,7 +68,8 @@ button, #connectButton, #publishButton, #docs-button {
 
 /* Common hover effect for all buttons */
 button:hover, #connectButton:hover, #publishButton:hover, #loadMoreTransactionsButton:hover, #docs-button:hover {
-    box-shadow: 0 4px 8px rgba(0, 255, 0, 0.5);
+    background-color: #808080;  /* Gray background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);  /* Blackish shadow */
 }
 
 /* Styling for the text input container */
