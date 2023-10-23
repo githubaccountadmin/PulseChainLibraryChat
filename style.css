@@ -15,7 +15,7 @@ body.dark-mode {
 }
 
 /* Common styling for all buttons */
-button {
+button, #connectButton, #publishButton, #docs-button {
     background-color: #00ff00;
     border: none;
     color: black;
@@ -36,7 +36,7 @@ button {
 /* Styling for the Publish button */
 #publishButton {
     position: absolute;
-    bottom: 0; /* Adjusted from -40px */
+    bottom: 0;
     z-index: 1;
 }
 
@@ -46,12 +46,14 @@ button {
     top: 0;
     left: 0;
     z-index: 1;
+    font-size: 18px; /* Increase font-size for better visibility */
+    padding: 12px 24px; /* Increase padding for larger button */
 }
 
 /* Additional styles for the Docs button on hover */
 #docs-button:hover {
     background-color: #009900;
-    color: black;  /* Added for better contrast */
+    color: black;
 }
 
 /* Styling for the text input container */
