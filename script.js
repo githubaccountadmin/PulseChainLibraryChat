@@ -190,9 +190,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('publishButton').addEventListener('click', publishMessage);
     document.getElementById('loadMoreTransactionsButton').addEventListener('click', fetchTransactionData);
     document.getElementById('transactionCountInput').addEventListener('input', updateTransactionCount);
-    document.getElementById('connectButton').classList.add('not-connected'); // Add the class when not connected
-    document.getElementById('connectButton').classList.remove('not-connected'); // Remove the class when connected
-
 
     checkInitialConnection();
     fetchTransactionData();
