@@ -10,7 +10,6 @@ const maxRetryCount = 3;
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('A click happened! This is just a test.');
-});
     
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
     
