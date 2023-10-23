@@ -8,19 +8,9 @@ const apiEndpoints = [
 // Define the maximum number of retries for each endpoint
 const maxRetryCount = 3;
 
-// Define function to check if string is valid UTF-8
-function isValidUtf8(str) {
-    try {
-        decodeURIComponent(escape(str));
-        return true;
-    } catch (e) {
-        return false;
-    }
-}
-
 document.addEventListener('DOMContentLoaded', function() {
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
-
+    
     let transactionCount = 33;
     let isConnected = false;
 
@@ -61,32 +51,20 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function setRandomTitle() {
-    document.getElementById("dynamicTitle").innerText = "Testing";
-    }
-        
-        // try {
-            // const titles = [
-                // "The Great Library of PulseChain: Home of the Immutable Publishing House",
-                // "The Great Library & Publishing House of PulseChain: Your Words, Our Blocks",
-                // "PulseChain's Magna Bibliotheca: A Great Library and Publishing House",
-                // "The Great Library of PulseChain: Where Publishers Become Historians",
-                // "PulseChain Publishing House: An Annex to The Great Library",
-                // "The Pulsating Shelves: The Great Library & Publishing House of PulseChain",
-                // "The Grand Archive and Publishing House of PulseChain: A Great Library for All",
-                // "PulseChain’s Scholarly Publishing House: A Chapter in The Great Library",
-                // "The Great Library of PulseChain's Eternal Publishing House: A Living Ledger",
-                // "The Great Library & Immutable Publishing House of PulseChain: Where Every Word Counts"
-            // ];
-
-            // const titleElement = document.getElementById('dynamicTitle');
-            // const randomIndex = Math.floor(Math.random() * titles.length);
-            // titleElement.innerText = titles[randomIndex];
-        // } catch (error) {
-            // console.error('Error setting random title:', error);
+        try {
+            const titles = [
+                // Array of random titles
+            ];
+            
+            const titleElement = document.getElementById('dynamicTitle');
+            const randomIndex = Math.floor(Math.random() * titles.length);
+            titleElement.innerText = titles[randomIndex];
+        } catch (error) {
+            console.error('Error setting random title:', error);
             // Handle the error and provide user feedback
-        // }
-    // }
-
+        }
+    }
+    
     async function publishMessage() {
         if (!isConnected) {
             try {
@@ -100,9 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const contentInput = document.getElementById('postInput');
         const message = contentInput.value;
-        const tagElement = document.getElementById('tagInput');
-        const tag = tagElement.value;
-        const hexMessage = web3.utils.utf8ToHex(message + " [#Tag: " + tag + "]");
+        const hexMessage = web3.utils.utf8ToHex(message);
 
         const accounts = await web3.eth.getAccounts();
         const fromAddress = accounts[0];
@@ -130,13 +106,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function postContent() {
         try {
             const contentInput = document.getElementById('postInput');
-            const tagElement = document.getElementById('tagInput');
             const targetSection = document.getElementById('postList');
             const newContent = document.createElement('li');
-            newContent.innerText = contentInput.value + " [#Tag: " + tagElement.value + "]";
+            newContent.innerText = contentInput.value;
             targetSection.appendChild(newContent);
             contentInput.value = '';
-            tagElement.value = '';
         } catch (error) {
             console.error('Error posting content:', error);
             // Handle the error and provide user feedback
@@ -159,57 +133,57 @@ document.addEventListener('DOMContentLoaded', function() {
         throw new Error('All API endpoints have failed. Please reload the page to try again.');
     }
 
-    // Fetch and display transactions based on filter selection
     async function fetchTransactionData() {
         try {
-            const filterValue = document.getElementById("filterSelect").value;
-            const window = document.getElementById("transactionDataWindow");
+            const window = document.getElementById('transactionDataWindow');
             window.innerHTML = 'Fetching data...';
-    
-            // Fetch data with fallback from multiple endpoints
+
             const data = await fetchDataWithFallback(apiEndpoints);
-            
-            let filteredData = data;
-    
-            // Apply filtering logic if the value isn't 'all'
-            if (filterValue !== 'all') {
-                filteredData = data.filter(item => item.tag === filterValue);
-            }
-    
-            // Limit the number of transactions displayed
-            const transactionCount = 33; // Set your desired transaction count limit
-            filteredData = filteredData.slice(0, transactionCount);
-    
             let outputText = "";
-            for (let transaction of filteredData) {
+            data.result.filter(tx => tx.input !== '0x').slice(0, transactionCount).forEach(tx => {
                 try {
-                    if (web3.utils.isHexStrict(transaction.input)) {
-                        const decodedInput = web3.utils.hexToUtf8(transaction.input);
-                        if (isValidUtf8(decodedInput)) {
-                            outputText += `User: ${transaction.from}\nMessage: ${decodedInput}\n\n`;
-                        } else {
-                            console.warn(`Skipping transaction from ${transaction.from} due to invalid UTF-8.`);
-                        }
+                    if (web3.utils.isHexStrict(tx.input)) {
+                        const decodedInput = web3.utils.hexToUtf8(tx.input);
+                        outputText += `User: ${tx.from}\nMessage: ${decodedInput}\n\n`;
                     }
                 } catch (error) {
-                    console.error(`Error decoding input for transaction from ${transaction.from} with hash ${transaction.hash}. Skipping...`);
+                    // Skip this transaction
+                    console.error('Error processing transaction:', error);
+                    // Handle the error, but continue processing other transactions
                 }
-            }
-            
-            // Update the UI with the fetched and filtered data
-            window.innerHTML = outputText || 'No valid transactions found.';
-    
+            });
+            window.innerText = outputText;
         } catch (error) {
-            console.error('There was an error fetching the transaction data:', error);
+            console.error("Error details:", error.name, error.message);
+            const window = document.getElementById('transactionDataWindow');
+            window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
+        }
+    }
+
+    function timeout(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function updateTransactionCount() {
+        try {
+            const newCount = parseInt(document.getElementById('transactionCountInput').value);
+            if (!isNaN(newCount)) {
+                transactionCount = newCount;
+            }
+        } catch (error) {
+            console.error('Error updating transaction count:', error);
             // Handle the error and provide user feedback
         }
     }
-    
+
     document.getElementById('connectButton').addEventListener('click', connectWallet);
     document.getElementById('publishButton').addEventListener('click', publishMessage);
-    document.getElementById('fetchDataButton').addEventListener('click', fetchTransactionData);
-    document.getElementById("applyFilterButton").addEventListener('click', fetchTransactionData);
+    document.getElementById('loadMoreTransactionsButton').addEventListener('click', fetchTransactionData);
+    document.getElementById('transactionCountInput').addEventListener('input', updateTransactionCount);
 
     checkInitialConnection();
+    fetchTransactionData();
     setRandomTitle();
+    
+    setInterval(fetchTransactionData, 120000); // Automatically update the feed every 10 seconds
 });
