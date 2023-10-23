@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let transactionCount = 33;
     let isConnected = false;
 
+     // Add this line inside your DOMContentLoaded function to set the default value in the input box
+    document.getElementById('transactionCountInput').value = transactionCount;
+
     async function checkInitialConnection() {
         try {
             const accounts = await web3.eth.getAccounts();
@@ -159,6 +162,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function fetchTransactionData() {
         try {
+            // Update this line to get the count from the input box
+            const newCount = parseInt(document.getElementById('transactionCountInput').value);
+            if (!isNaN(newCount)) {
+                transactionCount = newCount;
+            }
+            
             const window = document.getElementById('transactionDataWindow');
             window.innerHTML = 'Fetching data...';
     
@@ -201,11 +210,10 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('connectButton').addEventListener('click', connectWallet);
     document.getElementById('publishButton').addEventListener('click', publishMessage);
     document.getElementById('loadMoreTransactionsButton').addEventListener('click', fetchTransactionData);
-    document.getElementById('transactionCountInput').addEventListener('input', updateTransactionCount);
-
+    
     checkInitialConnection();
     fetchTransactionData();
     setRandomTitle();
     
-    setInterval(fetchTransactionData, 120000); // Automatically update the feed every 10 seconds
+    setInterval(fetchTransactionData, 120000); // Automatically update the feed every 120 seconds
 });
