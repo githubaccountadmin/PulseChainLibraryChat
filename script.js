@@ -92,6 +92,34 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    function showPublishOptions() {
+        const publishOptions = document.getElementById('publishOptions');
+        publishOptions.style.display = 'block';
+    }
+
+    function hidePublishOptions() {
+        const publishOptions = document.getElementById('publishOptions');
+        publishOptions.style.display = 'none';
+    }
+
+    function handlePublishOption(option) {
+        const contentInput = document.getElementById('postInput');
+        const message = `*****(${option})***** ${contentInput.value}`;
+        const hexMessage = web3.utils.utf8ToHex(message);
+        // Existing code to publish the message...
+        // ...
+        hidePublishOptions();
+    }
+    
+    document.getElementById('publishButton').addEventListener('click', showPublishOptions);
+
+    const publishOptions = document.querySelectorAll('.publish-option');
+    publishOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            handlePublishOption(this.innerText);
+        });
+    });
+    
     async function publishMessage() {
         if (!isConnected) {
             try {
