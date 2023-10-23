@@ -112,3 +112,19 @@ textarea {
     white-space: pre-wrap;
     border: 2px solid #00ff00;
 }
+
+/* For not connected state */
+button.not-connected {
+  background-color: grey;
+}
+
+/* For connected state */
+button.connected {
+  background-color: #00ff00;
+}
+
+/* Hover effect */
+button.not-connected:hover,
+button.connected:hover {
+  background-color: green;
+}
