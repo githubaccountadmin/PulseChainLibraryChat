@@ -104,7 +104,9 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("handlePublishOption called with option: ", option);
         const contentInput = document.getElementById('postInput');
         const message = `*****(${option})***** ${contentInput.value}`;
+        console.log("About to update globalHexMessage: ", globalHexMessage);
         globalHexMessage = web3.utils.utf8ToHex(message);
+        console.log("Updated globalHexMessage: ", globalHexMessage);
         // ...
         hidePublishOptions();  // Hide the dropdown after publishing
         console.log("At the end of handlePublishOption, globalHexMessage is: ", globalHexMessage);
