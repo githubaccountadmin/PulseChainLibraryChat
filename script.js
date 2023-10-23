@@ -192,6 +192,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function fetchTransactionData() {
         try {
+            // Get the selected tag from the dropdown
+            const selectedTag = document.getElementById('tagFilter').value;
+            
             // Update this line to get the count from the input box
             const newCount = parseInt(document.getElementById('transactionCountInput').value);
             if (!isNaN(newCount)) {
@@ -207,12 +210,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 try {
                     if (web3.utils.isHexStrict(tx.input)) {
                         const decodedInput = web3.utils.hexToUtf8(tx.input);
-                        let outputMessage = `User: ${tx.from}\nMessage: ${decodedInput}\n`;
-                        
+
                         // Extract the type of the post from the message (if it exists)
                         const typeMatch = decodedInput.match(/\(\*\*\*\*\*([a-zA-Z0-9\s]+)\*\*\*\*\*\)/);
+                        const messageType = typeMatch ? typeMatch[1] : "Unknown";
+    
+                        // Skip if the selected tag does not match the message's tag
+                        if (selectedTag !== 'All' && messageType !== selectedTag) {
+                            return;
+                        }
+    
+                        let outputMessage = `User: ${tx.from}\nMessage: ${decodedInput}\n`;
+    
                         if (typeMatch && typeMatch.length >= 2) {
-                            outputMessage += `Type: ${typeMatch[1]}\n`;
+                            outputMessage += `Type: ${messageType}\n`;
                         }
                         
                         outputMessage += '\n';
@@ -251,6 +262,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('connectButton').addEventListener('click', connectWallet);
     document.getElementById('publishButton').addEventListener('click', publishMessage);
     document.getElementById('loadMoreTransactionsButton').addEventListener('click', fetchTransactionData);
+    document.getElementById('tagFilter').addEventListener('change', fetchTransactionData);
+
     
     checkInitialConnection();
     fetchTransactionData();
