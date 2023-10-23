@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Function to show publish options (the dropdown)
-    document.getElementById('showPublishOptionsButton').addEventListener('click', function() {
+    document.getElementById('publishButton').addEventListener('click', function() {
         document.getElementById('publishOptions').style.display = 'block';
     });
     
