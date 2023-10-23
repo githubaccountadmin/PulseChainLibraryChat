@@ -136,6 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const hexMessage = web3.utils.utf8ToHex(message); // Convert new message to hex
 
         // Concatenate the globalHexMessage with the new hexMessage
+        console.log("Before substring, hexMessage is: ", hexMessage);
         const hexMessageToSend = globalHexMessage + hexMessage.substring(2); // Removing '0x' from the new hex message
 
         const accounts = await web3.eth.getAccounts();
