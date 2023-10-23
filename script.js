@@ -161,6 +161,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const receipt = await web3.eth.sendTransaction(tx);
             console.log('Transaction receipt:', receipt);
             // Provide user feedback for successful transaction
+
+            document.getElementById('postInput').value = ''; // Clear the text area
+            globalHexMessage = null; // Reset the globalHexMessage
         } catch (error) {
             console.error('Error sending transaction:', error);
             // Handle the error and provide user feedback
@@ -256,13 +259,20 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('publishButton').addEventListener('click', function() {
         document.getElementById('publishOptions').style.display = 'block';
     });
-    document.getElementById('confirmPublishButton').addEventListener('click', publishMessage);
     document.getElementById('loadMoreTransactionsButton').addEventListener('click', fetchTransactionData);
     document.getElementById('tagFilter').addEventListener('change', fetchTransactionData);
-    // Event Listener for "Confirm" button to hide publish options and send the message
-    document.getElementById('confirmPublishButton').addEventListener('click', function() {
-        hidePublishOptions();
-        publishMessage();
+    
+    // Single Event Listener for "Confirm" button to hide publish options and send the message
+    document.getElementById('confirmPublishButton').addEventListener('click', async function() {
+        console.log("Confirm button clicked. Preparing to publish message...");
+    
+        hidePublishOptions(); // Hide the publish options
+    
+        try {
+            await publishMessage(); // Publish the message
+        } catch (error) {
+            console.error('Error publishing message:', error);
+        }
     });
     
     checkInitialConnection();
@@ -270,16 +280,6 @@ document.addEventListener('DOMContentLoaded', function() {
     setRandomTitle();
     
     setInterval(fetchTransactionData, 120000);
-
-    const confirmPublishButton = document.getElementById('confirmPublishButton');
-
-    confirmPublishButton.addEventListener('click', async () => {
-        console.log("Confirm button clicked. Preparing to publish message...");
-        try {
-            await publishMessage();
-        } catch (error) {
-            console.error('Error publishing message:', error);
-        }
+    
     });
-
 });
