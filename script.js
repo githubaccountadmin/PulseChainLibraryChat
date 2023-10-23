@@ -2,22 +2,16 @@
 const apiEndpoints = [
     'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc',
     'https://scan.9mm.pro/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc',
-    // Add more fallback endpoints as needed
 ];
 
-// Define the maximum number of retries for each endpoint
 const maxRetryCount = 3;
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('A click happened! This is just a test.');
-    
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
-    
     let transactionCount = 33;
     let isConnected = false;
     let globalHexMessage = '';
-
-     // Add this line inside your DOMContentLoaded function to set the default value in the input box
+    
     document.getElementById('transactionCountInput').value = transactionCount;
 
     async function checkInitialConnection() {
@@ -259,14 +253,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     document.getElementById('connectButton').addEventListener('click', connectWallet);
-    document.getElementById('publishButton').addEventListener('click', publishOptions);
+    document.getElementById('publishButton').addEventListener('click', function() {
+        document.getElementById('publishOptions').style.display = 'block';
+    });
     document.getElementById('confirmPublishButton').addEventListener('click', publishMessage);
     document.getElementById('loadMoreTransactionsButton').addEventListener('click', fetchTransactionData);
     document.getElementById('tagFilter').addEventListener('change', fetchTransactionData);
-        
+
     checkInitialConnection();
     fetchTransactionData();
     setRandomTitle();
     
-    setInterval(fetchTransactionData, 120000); // Automatically update the feed every 120 seconds
+    setInterval(fetchTransactionData, 120000);
 });
