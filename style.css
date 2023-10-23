@@ -38,7 +38,7 @@ button, #connectButton, #publishButton, #docs-button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 90%; /* same as scrollable-window */
+    width: 1000px; /* same as scrollable-window */
 }
 
 /* Styling for the Publish button */
@@ -99,7 +99,7 @@ textarea {
     padding: 10px;
     margin-top: 20px;
     height: calc(50vh - 70px);
-    width: 90%; /* same as input-container and input-wrapper */
+    width: 1000px; /* same as input-container and input-wrapper */
     white-space: pre-wrap;
     border: 2px solid #00ff00;
 }
