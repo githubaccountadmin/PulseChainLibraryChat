@@ -33,16 +33,17 @@ button, #connectButton, #publishButton, #docs-button {
     right: 0;
 }
 
-/* Styling for the input wrapper */
+/* New Wrapper for input and publish button */
 .input-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 90%; /* same as scrollable-window */
 }
 
 /* Styling for the Publish button */
 #publishButton {
-    margin-top: 10px;
+    margin-top: 10px; /* Some space between the text area and button */
     z-index: 1;
 }
 
@@ -69,7 +70,7 @@ button, #connectButton, #publishButton, #docs-button {
     align-items: center;
     justify-content: flex-start;
     height: 50%;
-    width: 100%;
+    width: 90%; //* same as scrollable-window */
     position: relative;
 }
 
@@ -80,7 +81,7 @@ button, #connectButton, #publishButton, #docs-button {
     padding: 10px;
     margin: 4px 2px;
     border: 2px solid #00ff00;
-    width: 100%;
+    width: calc(100% - 24px); /* Adjusting for padding and border */
     height: 300px;
     resize: none;
 }
@@ -98,7 +99,7 @@ textarea {
     padding: 10px;
     margin-top: 20px;
     height: calc(50vh - 70px);
-    width: 90%;
+    width: 90%; /* same as input-container and input-wrapper */
     white-space: pre-wrap;
     border: 2px solid #00ff00;
 }
