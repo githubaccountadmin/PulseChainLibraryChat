@@ -205,13 +205,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 try {
                     if (web3.utils.isHexStrict(tx.input)) {
                         const decodedInput = web3.utils.hexToUtf8(tx.input);
-                        outputText += `User: ${tx.from}\nMessage: ${decodedInput}\n\n`;
+                        let outputMessage = `User: ${tx.from}\nMessage: ${decodedInput}\n`;
+                        
+                        // Extract the type of the post from the message (if it exists)
+                        const typeMatch = decodedInput.match(/\(\*\*\*\*\*([a-zA-Z0-9\s]+)\*\*\*\*\*\)/);
+                        if (typeMatch && typeMatch.length >= 2) {
+                            outputMessage += `Type: ${typeMatch[1]}\n`;
+                        }
+                        
+                        outputMessage += '\n';
+                        outputText += outputMessage;
                     }
                 } catch (error) {
                     // Skip this transaction and continue processing other transactions
                 }
             });
+        
             window.innerText = outputText;
+            
         } catch (error) {
             console.error("Error details:", error.name, error.message);
             const window = document.getElementById('transactionDataWindow');
