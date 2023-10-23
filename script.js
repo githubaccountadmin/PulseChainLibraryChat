@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     document.getElementById('connectButton').addEventListener('click', connectWallet);
-    document.getElementById('publishButton').addEventListener('click', showPublishOptions);
+    document.getElementById('publishButton').addEventListener('click', publishOptions);
     document.getElementById('confirmPublishButton').addEventListener('click', publishMessage);
     document.getElementById('loadMoreTransactionsButton').addEventListener('click', fetchTransactionData);
     document.getElementById('tagFilter').addEventListener('change', fetchTransactionData);
