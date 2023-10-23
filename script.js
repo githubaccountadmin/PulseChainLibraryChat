@@ -112,16 +112,14 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("At the end of handlePublishOption, globalHexMessage is: ", globalHexMessage);
     }
     
-    const publishOptions = document.querySelectorAll('.publish-option');
-    publishOptions.forEach(option => {
-        option.addEventListener('click', function() {
-            console.log("A publish-option was clicked! Invoking handlePublishOption...");
-            try {
-                handlePublishOption(this.innerText);
-            } catch (error) {
-                console.error('Error in handlePublishOption:', error);
-            }
-        });
+    const publishOptionSelect = document.getElementById('publishOptionSelect');
+    publishOptionSelect.addEventListener('change', function() {
+        console.log("A publish-option was selected! Invoking handlePublishOption...");
+        try {
+            handlePublishOption(this.value);
+        } catch (error) {
+            console.error('Error in handlePublishOption:', error);
+        }
     });
     
     async function publishMessage() {
