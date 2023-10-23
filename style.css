@@ -34,10 +34,11 @@ button, #connectButton, #publishButton, #docs-button {
 }
 
 .fixed-width-title {
-    max-width: 1300px;  /* or whatever size fits your layout */
+    max-width: 1000px;  /* or whatever size fits your layout */
     overflow: hidden;  /* hide text that exceeds the maximum width */
     text-overflow: ellipsis;  /* add ellipsis when text is too long */
     white-space: nowrap;  /* keep the text from breaking into multiple lines */
+    font-size: 18px; /* adjust the size as needed */
 }
 
 /* New Wrapper for input and publish button */
