@@ -217,7 +217,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
     
                         if (tag) {
-                            decodedInput = decodedInput.replace(/\*\*\*\*\*.*?\*\*\*\*\*/, '').trim();
+                            decodedInput = decodedInput.replace(/\*\*\*\*\*/g, '').trim(); // Remove all the asterisks
+                            decodedInput = decodedInput.replace(/\((.*?)\)/g, '').trim(); // Remove all the parentheses
                             outputText += `User: ${tx.from}\n${tag}: ${decodedInput}\n\n`;
                         } else {
                             outputText += `User: ${tx.from}\nMessage: ${decodedInput}\n\n`;
@@ -236,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function() {
             window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
         }
     }
-
+    
     function timeout(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
