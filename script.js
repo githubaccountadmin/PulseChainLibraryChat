@@ -96,22 +96,12 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('showPublishOptionsButton').addEventListener('click', function() {
         document.getElementById('publishOptions').style.display = 'block';
     });
-
+    
     // Function to hide publish options (the dropdown)
     function hidePublishOptions() {
         document.getElementById('publishOptions').style.display = 'none';
     }
     
-    function showPublishOptions() {
-        const publishOptions = document.getElementById('publishOptions');
-        publishOptions.style.display = 'block';
-    }
-
-    function hidePublishOptions() {
-        const publishOptions = document.getElementById('publishOptions');
-        publishOptions.style.display = 'none';
-    }
-
     // Update handlePublishOption function to call hidePublishOptions() after publishing
     function handlePublishOption(option) {
         const contentInput = document.getElementById('postInput');
