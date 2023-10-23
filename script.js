@@ -173,20 +173,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function postContent() {
-        try {
-            const contentInput = document.getElementById('postInput');
-            const targetSection = document.getElementById('postList');
-            const newContent = document.createElement('li');
-            newContent.innerText = contentInput.value;
-            targetSection.appendChild(newContent);
-            contentInput.value = '';
-        } catch (error) {
-            console.error('Error posting content:', error);
-            // Handle the error and provide user feedback
-        }
-    }
-
     async function fetchDataWithFallback(endpoints) {
         for (const endpoint of endpoints) {
             for (let retryCount = 1; retryCount <= maxRetryCount; retryCount++) {
