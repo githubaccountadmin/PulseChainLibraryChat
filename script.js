@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
         globalHexMessage = web3.utils.utf8ToHex(message);
         console.log("Updated globalHexMessage: ", globalHexMessage);
         // ...
-        hidePublishOptions();  // Hide the dropdown after publishing
+        // hidePublishOptions();  // Hide the dropdown after publishing
         console.log("At the end of handlePublishOption, globalHexMessage is: ", globalHexMessage);
     }
     
