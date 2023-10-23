@@ -92,6 +92,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    // Function to show publish options (the dropdown)
+    document.getElementById('showPublishOptionsButton').addEventListener('click', function() {
+        document.getElementById('publishOptions').style.display = 'block';
+    });
+
+    // Function to hide publish options (the dropdown)
+    function hidePublishOptions() {
+        document.getElementById('publishOptions').style.display = 'none';
+    }
+    
     function showPublishOptions() {
         const publishOptions = document.getElementById('publishOptions');
         publishOptions.style.display = 'block';
@@ -102,13 +112,14 @@ document.addEventListener('DOMContentLoaded', function() {
         publishOptions.style.display = 'none';
     }
 
+    // Update handlePublishOption function to call hidePublishOptions() after publishing
     function handlePublishOption(option) {
         const contentInput = document.getElementById('postInput');
         const message = `*****(${option})***** ${contentInput.value}`;
         const hexMessage = web3.utils.utf8ToHex(message);
         // Existing code to publish the message...
         // ...
-        hidePublishOptions();
+        hidePublishOptions();  // Hide the dropdown after publishing
     }
     
     document.getElementById('publishButton').addEventListener('click', showPublishOptions);
