@@ -112,8 +112,6 @@ document.addEventListener('DOMContentLoaded', function() {
         hidePublishOptions();  // Hide the dropdown after publishing
     }
     
-    document.getElementById('publishButton').addEventListener('click', showPublishOptions);
-
     const publishOptions = document.querySelectorAll('.publish-option');
     publishOptions.forEach(option => {
         option.addEventListener('click', function() {
@@ -260,11 +258,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     document.getElementById('connectButton').addEventListener('click', connectWallet);
-    document.getElementById('publishButton').addEventListener('click', publishMessage);
+    document.getElementById('publishButton').addEventListener('click', showPublishOptions);
+    document.getElementById('confirmPublishButton').addEventListener('click', publishMessage);
     document.getElementById('loadMoreTransactionsButton').addEventListener('click', fetchTransactionData);
     document.getElementById('tagFilter').addEventListener('change', fetchTransactionData);
-
-    
+        
     checkInitialConnection();
     fetchTransactionData();
     setRandomTitle();
