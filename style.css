@@ -14,8 +14,8 @@ body.dark-mode {
     overflow: hidden;
 }
 
-/* Styling for buttons (common styles) */
-button, #connectButton, #publishButton, #docs-button {
+/* Common styling for all buttons */
+button {
     background-color: #00ff00;
     border: none;
     color: black;
@@ -31,6 +31,27 @@ button, #connectButton, #publishButton, #docs-button {
     position: absolute;
     top: 0;
     right: 0;
+}
+
+/* Styling for the Publish button */
+#publishButton {
+    position: absolute;
+    bottom: 0; /* Adjusted from -40px */
+    z-index: 1;
+}
+
+/* Styling for the Docs button */
+#docs-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+/* Additional styles for the Docs button on hover */
+#docs-button:hover {
+    background-color: #009900;
+    color: black;  /* Added for better contrast */
 }
 
 /* Styling for the text input container */
@@ -52,47 +73,24 @@ button, #connectButton, #publishButton, #docs-button {
     margin: 4px 2px;
     border: 2px solid #00ff00;
     width: 100%;
-    height: 300px; /* Increase the height value to expand the text area downward */
+    height: 300px;
     resize: none;
 }
 
 /* Styling for the textarea */
 textarea {
-    height: 100%; /* Adjust the height for textareas */
-}
-
-/* Styling for the Publish button */
-#publishButton {
-    position: absolute;
-    bottom: -40px;
-    z-index: 1;
+    height: 100%;
 }
 
 /* Styling for the scrollable transaction data window */
 .scrollable-window {
     background-color: #000000;
     color: #00ff00;
-    font-family: 'Courier New', Courier, monospace;
     overflow: auto;
     padding: 10px;
-    margin-top: 20px; /* Adjust this margin for space at the top */
-    height: calc(50vh - 70px); /* Adjust this height value as needed */
+    margin-top: 20px;
+    height: calc(50vh - 70px);
     width: 90%;
     white-space: pre-wrap;
     border: 2px solid #00ff00;
-    border-left: 2px solid #00ff00;
-    border-right: 2px solid #00ff00;
-}
-
-/* Styling for the Docs button */
-#docs-button {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-}
-
-/* Additional styles for the Docs button on hover (if needed) */
-#docs-button:hover {
-    background-color: #009900; /* Change the background color on hover */
 }
