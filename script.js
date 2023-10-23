@@ -105,6 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Update handlePublishOption function to call hidePublishOptions() after publishing
     function handlePublishOption(option) {
+        console.log("handlePublishOption called with option: ", option);
         const contentInput = document.getElementById('postInput');
         const message = `*****(${option})***** ${contentInput.value}`;
         globalHexMessage = web3.utils.utf8ToHex(message);
@@ -131,13 +132,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
+        console.log("globalHexMessage before concatenation: ", globalHexMessage);
         const contentInput = document.getElementById('postInput');
         const message = contentInput.value;
         const hexMessage = web3.utils.utf8ToHex(message); // Convert new message to hex
 
         // Concatenate the globalHexMessage with the new hexMessage
-        console.log("Before substring, hexMessage is: ", hexMessage);
+        console.log("Before substring, hexMessage is: ", hexMessage); // checks to display hexMessage in console...can deleted later
         const hexMessageToSend = globalHexMessage + hexMessage.substring(2); // Removing '0x' from the new hex message
+        console.log("hexMessageToSend: ", hexMessageToSend);
 
         const accounts = await web3.eth.getAccounts();
         const fromAddress = accounts[0];
