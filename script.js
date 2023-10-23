@@ -171,10 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         outputText += `User: ${tx.from}\nMessage: ${decodedInput}\n\n`;
                     }
                 } catch (error) {
-                    // Log the error
-                    console.error('Error processing transaction:', error);
-                    // Add placeholder text for the message and continue processing other transactions
-                    outputText += `User: ${tx.from}\nMessage: Invalid UTF-8 Data\n\n`;
+                    // Skip this transaction and continue processing other transactions
                 }
             });
             window.innerText = outputText;
