@@ -123,6 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function publishMessage() {
         if (!isConnected) {
+            alert('Please connect your wallet before publishing a message.');  // Show a warning message
             try {
                 await connectWallet();  // Ensure wallet is connected
             } catch (error) {
