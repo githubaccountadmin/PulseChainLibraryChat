@@ -217,9 +217,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
     
                         if (tag) {
-                            decodedInput = decodedInput.replace(/\*\*\*\*\*/g, '').trim(); // Remove all the asterisks
-                            decodedInput = decodedInput.replace(/\((.*?)\)/g, '').trim(); // Remove all the parentheses
-                            outputText += `User: ${tx.from}\n${tag}: ${decodedInput}\n\n`;
+                            decodedInput = tag; // Replace the entire message with the 'tag'
+                            outputText += `User: ${tx.from}\n${decodedInput}\n\n`;
                         } else {
                             outputText += `User: ${tx.from}\nMessage: ${decodedInput}\n\n`;
                         }
