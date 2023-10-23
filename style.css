@@ -66,10 +66,9 @@ button, #connectButton, #publishButton, #docs-button {
     padding: 12px 24px; /* Increase padding for larger button */
 }
 
-/* Additional styles for the Docs button on hover */
-#docs-button:hover {
-    background-color: #009900;
-    color: black;
+/* Common hover effect for all buttons */
+button:hover, #connectButton:hover, #publishButton:hover, #loadMoreTransactionsButton:hover, #docs-button:hover {
+    box-shadow: 0 4px 8px rgba(0, 255, 0, 0.5);
 }
 
 /* Styling for the text input container */
