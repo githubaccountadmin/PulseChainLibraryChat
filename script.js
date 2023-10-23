@@ -9,6 +9,9 @@ const apiEndpoints = [
 const maxRetryCount = 3;
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('A click happened! This is just a test.');
+});
+    
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
     
     let transactionCount = 33;
@@ -118,7 +121,11 @@ document.addEventListener('DOMContentLoaded', function() {
     publishOptions.forEach(option => {
         option.addEventListener('click', function() {
             console.log("A publish-option was clicked! Invoking handlePublishOption...");
-            handlePublishOption(this.innerText);
+            try {
+                handlePublishOption(this.innerText);
+            } catch (error) {
+                console.error('Error in handlePublishOption:', error);
+            }
         });
     });
     
