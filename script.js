@@ -281,5 +281,4 @@ document.addEventListener('DOMContentLoaded', function() {
     
     setInterval(fetchTransactionData, 120000);
     
-    });
 });
