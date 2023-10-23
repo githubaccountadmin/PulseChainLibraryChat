@@ -265,4 +265,16 @@ document.addEventListener('DOMContentLoaded', function() {
     setRandomTitle();
     
     setInterval(fetchTransactionData, 120000);
+
+    const confirmPublishButton = document.getElementById('confirmPublishButton');
+
+    confirmPublishButton.addEventListener('click', async () => {
+        console.log("Confirm button clicked. Preparing to publish message...");
+        try {
+            await publishMessage();
+        } catch (error) {
+            console.error('Error publishing message:', error);
+        }
+    });
+
 });
