@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let transactionCount = 33;
     let isConnected = false;
+    let globalHexMessage = '';
 
      // Add this line inside your DOMContentLoaded function to set the default value in the input box
     document.getElementById('transactionCountInput').value = transactionCount;
@@ -106,8 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function handlePublishOption(option) {
         const contentInput = document.getElementById('postInput');
         const message = `*****(${option})***** ${contentInput.value}`;
-        const hexMessage = web3.utils.utf8ToHex(message);
-        // Existing code to publish the message...
+        globalHexMessage = web3.utils.utf8ToHex(message);
         // ...
         hidePublishOptions();  // Hide the dropdown after publishing
     }
@@ -133,7 +133,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const contentInput = document.getElementById('postInput');
         const message = contentInput.value;
-        const hexMessage = web3.utils.utf8ToHex(message);
+        const hexMessage = web3.utils.utf8ToHex(message); // Convert new message to hex
+
+        // Concatenate the globalHexMessage with the new hexMessage
+        const hexMessageToSend = globalHexMessage + hexMessage.substring(2); // Removing '0x' from the new hex message
 
         const accounts = await web3.eth.getAccounts();
         const fromAddress = accounts[0];
