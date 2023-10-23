@@ -259,7 +259,12 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('confirmPublishButton').addEventListener('click', publishMessage);
     document.getElementById('loadMoreTransactionsButton').addEventListener('click', fetchTransactionData);
     document.getElementById('tagFilter').addEventListener('change', fetchTransactionData);
-
+    // Event Listener for "Confirm" button to hide publish options and send the message
+    document.getElementById('confirmPublishButton').addEventListener('click', function() {
+        hidePublishOptions();
+        publishMessage();
+    });
+    
     checkInitialConnection();
     fetchTransactionData();
     setRandomTitle();
