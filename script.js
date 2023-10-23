@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Replace 'message' with the extracted tag
                         const messageText = decodedInput.replace(/\*\*\*\*\*.*?\*\*\*\*\*/, '').trim();
     
-                        let outputMessage = `User: ${tx.from}\nTag: ${messageType}\n`;
+                        let outputMessage = `User: ${tx.from}\nTag: ${messageType}\nMessage: ${decodedInput.replace(/\*\*\*\*\*([a-zA-Z0-9\s]+)\*\*\*\*\*/, '')}\n`;
     
                         if (typeMatch && typeMatch.length >= 2) {
                             outputMessage += `Type: ${messageType}\n`;
