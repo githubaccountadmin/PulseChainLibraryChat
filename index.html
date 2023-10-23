@@ -9,13 +9,13 @@
     
     <!-- Include the Web3.js library for Ethereum interaction -->
     <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
-    
-    <!-- Link to the documentation page -->
-    <a href="docs.html" id="docs-button">Docs</a>
 </head>
 <body class="dark-mode">
     <!-- Main header -->
     <h1>Welcome to The Decentralized PulseChain Library</h1>
+    
+    <!-- Link to the documentation page -->
+    <a href="docs.html" id="docs-button">Docs</a>
     
     <!-- Container for wallet connection -->
     <div id="wallet-container">
@@ -34,15 +34,18 @@
         <!-- Empty h2 tag for the title to be set dynamically -->
         <h2 id="dynamicTitle"></h2>
         
-        <!-- Container for entering a new post -->
-        <div id="textAreaContainer" style="position: relative;">
-            <!-- Textarea for entering a new post -->
-            <textarea id="postInput" rows="4" cols="50" aria-label="Write a post"></textarea>
+        <!-- New Wrapper for input and publish button -->
+        <div class="input-wrapper">
+            <!-- Container for entering a new post -->
+            <div id="textAreaContainer" style="position: relative;">
+                <!-- Textarea for entering a new post -->
+                <textarea id="postInput" rows="4" cols="50" aria-label="Write a post"></textarea>
+            </div>
             
             <!-- Button to publish a new post -->
             <button id="publishButton">Publish</button>
         </div>
-        
+
         <!-- List of posts -->
         <ul id="postList" aria-label="List of posts"></ul>
     </div>
