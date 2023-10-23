@@ -42,6 +42,20 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const connectButton = document.getElementById('connectButton');
             const pulseChainId = 369;  // PulseChain network ID
+
+            // Add hover effect for connectButton
+            connectButton.addEventListener('mouseover', function() {
+                if (!isConnected) {
+                    this.style.backgroundColor = 'green';
+                }
+            });
+
+            connectButton.addEventListener('mouseout', function() {
+                if (!isConnected) {
+                    this.style.backgroundColor = 'grey';
+                }
+            });
+            
             connectButton.innerText = isConnected ? (networkId === pulseChainId ? "Connected" : "Not connected to PulseChain") : "Connect Wallet";
             connectButton.style.backgroundColor = isConnected ? (networkId === pulseChainId ? "green" : "red") : "grey";
         } catch (error) {
