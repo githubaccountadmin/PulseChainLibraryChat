@@ -55,13 +55,25 @@
                     </select>
                     <button id="confirmPublishButton">Confirm</button>
                 </div>
-
+            </div>
+        </div>
         <!-- List of posts -->
         <ul id="postList" aria-label="List of posts"></ul>
     </div>
 
     <!-- Container for displaying transaction data -->
     <div id="transaction-container">
+        <!-- Filter by Tag Dropdown -->
+        <label for="tagFilter">Filter by Tag:</label>
+        <select id="tagFilter">
+          <option value="All">All</option>
+          <option value="Message">Message</option>
+          <option value="Story (News)">Story (News)</option>
+          <option value="Books">Books</option>
+          <option value="Documents">Documents</option>
+          <option value="Extra">Extra</option>
+        </select>
+        
         <!-- Container for transaction data -->
         <div id="transactionDataWindow" class="scrollable-window"></div>
         
