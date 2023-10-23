@@ -21,3 +21,26 @@ Vision:
 We envision a dynamic, transparent, and decentralized community where users can express themselves freely, share wisdom, and collaborate across multiple forms of text-based content. The Decentralized PulseChain Library aims to be a cornerstone in this landscape, upholding values of security, transparency, and creative freedom.
 
 Join us on this transformative journey as we continue to redefine the way text-based content is created, shared, and preserved on the PulseChain blockchain.
+
+
+
+
+Highlights:
+
+    Unlimited Text-Based Content: Create, publish, and share any form of text-based content, from quick messages to extensive documents.
+
+    Real-Time Content Feed: Discover fresh and engaging content in real-time, directly from the blockchain.
+
+    Decentralized Repository: Your content is stored securely and transparently on the PulseChain blockchain, free from any central authority.
+
+    Block Gas Limit Awareness: While you can publish as much text as you want, the system is designed to respect the blockchain's block gas limit for efficiency.
+
+    Transaction Feed Window: Stay informed with a live feed of recent transactions and content, all available at the bottom of the user interface.
+
+    Customizable Tags: Sort and discover content more easily with customizable tags, allowing you to focus on what interests you.
+
+    Censorship-Resistant: With its decentralized nature, the platform ensures that your content is immutable and resistant to censorship.
+
+    User-Centric Design: Intuitive and accessible user interface to ensure seamless interaction, whether you're a blockchain veteran or a newbie.
+
+    Transparency and Openness: All transactions are visible, and all content is accessible to everyone, embodying the true spirit of decentralization.
