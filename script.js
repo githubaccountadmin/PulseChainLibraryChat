@@ -205,11 +205,15 @@ document.addEventListener('DOMContentLoaded', function() {
             data.result.filter(tx => tx.input !== '0x').slice(0, transactionCount).forEach(tx => {
                 try {
                     if (web3.utils.isHexStrict(tx.input)) {
-                        const decodedInput = web3.utils.hexToUtf8(tx.input);
+                        let decodedInput = web3.utils.hexToUtf8(tx.input);
     
                         // Extract the type of the post from the message (if it exists)
                         const typeMatch = decodedInput.match(/\(\*\*\*\*\*([a-zA-Z0-9\s]+)\*\*\*\*\*\)/);
-                        const messageType = typeMatch ? typeMatch[1] : "Unknown";
+                        let messageType = "Message";
+                        if (typeMatch && typeMatch.length >= 2) {
+                            messageType = typeMatch[1];
+                            decodedInput = decodedInput.replace(/\*\*\*\*\*([a-zA-Z0-9\s]+)\*\*\*\*\*/, '').trim();
+                        }
     
                         // Extract the tag from the message
                         const tagMatch = decodedInput.match(/\*\*\*\*\*(.*?)\*\*\*\*\*/);
@@ -220,15 +224,6 @@ document.addEventListener('DOMContentLoaded', function() {
                             return;
                         }
     
-                        // Replace 'message' with the extracted tag
-                        const messageText = decodedInput.replace(/\*\*\*\*\*.*?\*\*\*\*\*/, '').trim();
-    
-                        let messageType = "Message";
-                        if (typeMatch && typeMatch.length >= 2) {
-                            messageType = typeMatch[1];
-                            decodedInput = decodedInput.replace(/\*\*\*\*\*([a-zA-Z0-9\s]+)\*\*\*\*\*/, '').trim();
-                        }
-                        
                         let outputMessage = `User: ${tx.from}\n${messageType}: ${decodedInput}\n`;
     
                         outputMessage += '\n';
