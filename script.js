@@ -123,20 +123,23 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const publishOptionSelect = document.getElementById('publishOptionSelect');
 
-    publishOptionSelect.addEventListener('change', function() {
+    function handleDropdownChange() {
         console.log("A publish-option was selected! Invoking handlePublishOption...");
         try {
-            handlePublishOption(this.value);
+            handlePublishOption(publishOptionSelect.value);
         } catch (error) {
             console.error('Error in handlePublishOption:', error);
         }
-    });
-
-    // Add this event listener to handle the default case
+    }
+    
+    publishOptionSelect.addEventListener('change', handleDropdownChange);
+    
+    // Add this event listener to handle the initial click on the dropdown
     publishOptionSelect.addEventListener('click', function() {
         if (this.value === "") {
             console.log("No option selected. Defaulting to 'Message'...");
             handlePublishOption("Message");
+            handleDropdownChange(); // Manually trigger the change event
         }
     });
     
