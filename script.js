@@ -255,11 +255,16 @@ document.addEventListener('DOMContentLoaded', function() {
     
                         if (tag) {
                             decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
-                            outputText += `<div class="transaction"><p>Publisher: ${tx.from} - Published a ${tag} ${decodedInput}</p></div>`;
+                            if (tag.toLowerCase() === 'other') {
+                                outputText += `<div class="transaction"><p>Publisher: ${tx.from} - Published ${tag} ${decodedInput}</p></div>`;
+                            } else {
+                                outputText += `<div class="transaction"><p>Publisher: ${tx.from} - Published a ${tag} ${decodedInput}</p></div>`;
+                            }
                             console.log("Added .transaction class to element:", tx.from);
                         } else {
                             outputText += `Publisher: ${tx.from}\nMessage: ${decodedInput.replace(/\*\*\*\*\*\(.*?\)\*\*\*\*\*/, '')}\n\n`;
                         }
+
                     }
                 } catch (error) {
                     // Skip this transaction and continue processing other transactions
