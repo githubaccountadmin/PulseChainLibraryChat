@@ -122,11 +122,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const publishOptionSelect = document.getElementById('publishOptionSelect');
     
-    // Add this event listener to handle the initial click on the dropdown
+   // Add this event listener to handle the initial click on the dropdown
     publishOptionSelect.addEventListener('click', function() {
         if (this.value === "") {
             console.log("No option selected. Defaulting to 'Message'...");
             handlePublishOption("Message");
+            // Update globalHexMessage directly here
+            globalHexMessage = web3.utils.utf8ToHex("*****(Message)*****");
+            console.log("Updated globalHexMessage: ", globalHexMessage);
         }
     });
     
