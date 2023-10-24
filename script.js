@@ -311,8 +311,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const selectedOption = publishOptionSelect.value;
     
         if (selectedOption === "") {
-            // If no option is selected, set it to "Message"
+            // If no option is selected, set it to "Message" and trigger the change event
             publishOptionSelect.value = "Message";
+            const event = new Event('change');
+            publishOptionSelect.dispatchEvent(event);
         }
     
         try {
