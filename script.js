@@ -133,9 +133,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     
-        // Automatically select the first option ("Message") in the dropdown
+        // Check if no option is selected, and if so, set it to "Message"
         const publishOptionSelect = document.getElementById('publishOptionSelect');
-        publishOptionSelect.selectedIndex = 0;
+        if (publishOptionSelect.selectedIndex === 0) {
+            publishOptionSelect.selectedIndex = 1; // Set to the "Message" option (index 1)
+        }
     
         console.log("globalHexMessage before concatenation: ", globalHexMessage);
         const contentInput = document.getElementById('postInput');
@@ -153,9 +155,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
         // Get the current nonce for your account
         const nonce = await web3.eth.getTransactionCount(fromAddress, 'latest');
-        
-        console.log("Nonce: ", nonce);
     
+        
         const tx = {
             from: fromAddress,
             to: toAddress,
@@ -164,8 +165,6 @@ document.addEventListener('DOMContentLoaded', function() {
             gas: 30000000,  // Set the gas limit appropriately
             nonce: nonce, // Include the nonce in the transaction
         };
-    
-        console.log("Transaction Object: ", tx);
     
         try {
             // Send the transaction
