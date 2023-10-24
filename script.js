@@ -281,13 +281,15 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('confirmPublishButton').addEventListener('click', async function() {
         console.log("Confirm button clicked. Preparing to publish message...");
     
-        // Check if no option is selected, and if so, set it to "Message"
-        const publishOptionSelect = document.getElementById('publishOptionSelect');
-        if (publishOptionSelect.selectedIndex === 0) {
-            publishOptionSelect.selectedIndex = 1; // Set to the "Message" option (index 1)
-        }
-    
         hidePublishOptions(); // Hide the publish options
+    
+        const publishOptionSelect = document.getElementById('publishOptionSelect');
+        const selectedOption = publishOptionSelect.value;
+    
+        if (selectedOption === "") {
+            // If no option is selected, set it to "Message"
+            publishOptionSelect.value = "Message";
+        }
     
         try {
             await publishMessage(); // Publish the message
