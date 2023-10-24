@@ -158,50 +158,46 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     
-        console.log("globalHexMessage before concatenation: ", globalHexMessage);
         const contentInput = document.getElementById('postInput');
         const message = contentInput.value;
     
-        // Check if globalHexMessage is empty and set it to "Message" if so
-        if (!globalHexMessage) {
-            const selectedOption = publishOptionSelect.value || "Message"; // Default to "Message" if nothing is selected
-            globalHexMessage = web3.utils.utf8ToHex(`*****(${selectedOption})***** ${message}`);
-        } else {
-            const hexMessage = web3.utils.utf8ToHex(message); // Convert the new message to hex
+        // Check if message is empty
+        if (!message.trim()) {
+            console.error('Message is empty.');
+            return;
+        }
     
-            // Concatenate the globalHexMessage with the new hexMessage
-            console.log("Before substring, hexMessage is: ", hexMessage);
-            const hexMessageToSend = globalHexMessage + hexMessage.substring(2); // Removing '0x' from the new hex message
-            console.log("hexMessageToSend: ", hexMessageToSend);
+        const selectedOption = publishOptionSelect.value || "Message"; // Default to "Message" if nothing is selected
+        const fullMessage = `*****(${selectedOption})***** ${message}`;
+        
+        const hexMessage = web3.utils.utf8ToHex(fullMessage);
     
-            const accounts = await web3.eth.getAccounts();
-            const fromAddress = accounts[0];
-            const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421'; // Replace with your contract address
+        const accounts = await web3.eth.getAccounts();
+        const fromAddress = accounts[0];
+        const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421'; // Replace with your contract address
     
-            // Get the current nonce for your account
-            const nonce = await web3.eth.getTransactionCount(fromAddress, 'latest');
+        // Get the current nonce for your account
+        const nonce = await web3.eth.getTransactionCount(fromAddress, 'latest');
     
-            const tx = {
-                from: fromAddress,
-                to: toAddress,
-                value: web3.utils.toWei('0', 'ether'),
-                data: hexMessageToSend,
-                gas: 30000000, // Set the gas limit appropriately
-                nonce: nonce, // Include the nonce in the transaction
-            };
+        const tx = {
+            from: fromAddress,
+            to: toAddress,
+            value: web3.utils.toWei('0', 'ether'),
+            data: hexMessage,
+            gas: 30000000, // Set the gas limit appropriately
+            nonce: nonce, // Include the nonce in the transaction
+        };
     
-            try {
-                // Send the transaction
-                const receipt = await web3.eth.sendTransaction(tx);
-                console.log('Transaction receipt:', receipt);
-                // Provide user feedback for a successful transaction
+        try {
+            // Send the transaction
+            const receipt = await web3.eth.sendTransaction(tx);
+            console.log('Transaction receipt:', receipt);
+            // Provide user feedback for a successful transaction
     
-                contentInput.value = ''; // Clear the text area
-                globalHexMessage = null; // Reset the globalHexMessage
-            } catch (error) {
-                console.error('Error sending transaction:', error);
-                // Handle the error and provide user feedback
-            }
+            contentInput.value = ''; // Clear the text area
+        } catch (error) {
+            console.error('Error sending transaction:', error);
+            // Handle the error and provide user feedback
         }
     }
 
