@@ -271,6 +271,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Set the selected index of the publishOptionSelect to 0 when the page loads
+    window.addEventListener('load', function() {
+        const publishOptionSelect = document.getElementById('publishOptionSelect');
+        publishOptionSelect.selectedIndex = 0;
+    });
+    
     document.getElementById('connectButton').addEventListener('click', connectWallet);
     document.getElementById('publishButton').addEventListener('click', function() {
         document.getElementById('publishOptions').style.display = 'block';
