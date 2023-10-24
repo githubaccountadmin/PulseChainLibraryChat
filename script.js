@@ -148,9 +148,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function publishMessage() {
         if (!isConnected) {
-            alert('Please connect your wallet before publishing a message.');  // Show a warning message
+            alert('Please connect your wallet before publishing a message.'); // Show a warning message
             try {
-                await connectWallet();  // Ensure the wallet is connected
+                await connectWallet(); // Ensure the wallet is connected
             } catch (error) {
                 console.error('Error publishing message:', error);
                 // Handle the error and provide user feedback
@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
             const accounts = await web3.eth.getAccounts();
             const fromAddress = accounts[0];
-            const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421';  // Replace with your contract address
+            const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421'; // Replace with your contract address
     
             // Get the current nonce for your account
             const nonce = await web3.eth.getTransactionCount(fromAddress, 'latest');
@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 to: toAddress,
                 value: web3.utils.toWei('0', 'ether'),
                 data: hexMessageToSend,
-                gas: 30000000,  // Set the gas limit appropriately
+                gas: 30000000, // Set the gas limit appropriately
                 nonce: nonce, // Include the nonce in the transaction
             };
     
@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('Transaction receipt:', receipt);
                 // Provide user feedback for a successful transaction
     
-                document.getElementById('postInput').value = ''; // Clear the text area
+                contentInput.value = ''; // Clear the text area
                 globalHexMessage = null; // Reset the globalHexMessage
             } catch (error) {
                 console.error('Error sending transaction:', error);
