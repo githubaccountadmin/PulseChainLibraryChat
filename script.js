@@ -270,12 +270,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Set the selected index of the publishOptionSelect to 0 when the page loads
-    window.addEventListener('load', function() {
-        const publishOptionSelect = document.getElementById('publishOptionSelect');
-        publishOptionSelect.selectedIndex = 0;
-    });
-    
     document.getElementById('connectButton').addEventListener('click', connectWallet);
     document.getElementById('publishButton').addEventListener('click', function() {
         document.getElementById('publishOptions').style.display = 'block';
@@ -286,6 +280,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Single Event Listener for "Confirm" button to hide publish options and send the message
     document.getElementById('confirmPublishButton').addEventListener('click', async function() {
         console.log("Confirm button clicked. Preparing to publish message...");
+    
+        // Check if no option is selected, and if so, set it to "Message"
+        const publishOptionSelect = document.getElementById('publishOptionSelect');
+        if (publishOptionSelect.selectedIndex === 0) {
+            publishOptionSelect.selectedIndex = 1; // Set to the "Message" option (index 1)
+        }
     
         hidePublishOptions(); // Hide the publish options
     
