@@ -110,7 +110,7 @@ textarea {
     height: calc(50vh - 170px);
     width: 1000px; /* same as input-container and input-wrapper */
     white-space: pre-wrap;
-    border: 2px solid #00ff00;
+    border: 2px solid #00ff00; /* Add a border around each transaction */
 }
 
 /* Styling for the transactions */
