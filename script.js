@@ -146,7 +146,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const accounts = await web3.eth.getAccounts();
         const fromAddress = accounts[0];
-        const toAddress = '0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB';  // Replace with your contract address
+        const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421';  // Replace with your contract address
+        // const toAddress = '0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB';  // Replace with your contract address
 
         const tx = {
             from: fromAddress,
