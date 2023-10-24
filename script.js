@@ -149,8 +149,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
         // Get the current nonce for your account
         const nonce = await web3.eth.getTransactionCount(fromAddress, 'latest');
-
         
+        console.log("Nonce: ", nonce);
+    
         const tx = {
             from: fromAddress,
             to: toAddress,
@@ -159,6 +160,8 @@ document.addEventListener('DOMContentLoaded', function() {
             gas: 30000000,  // Set the gas limit appropriately
             nonce: nonce, // Include the nonce in the transaction
         };
+    
+        console.log("Transaction Object: ", tx);
     
         try {
             // Send the transaction
@@ -201,6 +204,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 transactionCount = newCount;
             }
     
+            console.log("Selected Tag: ", selectedTag);
+            console.log("Transaction Count: ", transactionCount);
+    
             const window = document.getElementById('transactionDataWindow');
             window.innerHTML = 'Fetching data...';
     
@@ -220,6 +226,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             return;
                         }
     
+                        console.log("Decoded Input: ", decodedInput);
+                        console.log("Tag: ", tag);
+    
                         if (tag) {
                             decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
                             outputText += `User: ${tx.from}\n${tag}: ${decodedInput}\n\n`;
@@ -229,6 +238,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 } catch (error) {
                     // Skip this transaction and continue processing other transactions
+                    console.error('Error processing transaction:', error);
                 }
             });
     
