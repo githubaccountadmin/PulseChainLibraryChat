@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
                         if (tag) {
                             decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
-                            outputText += `<div class="transaction"><p>User: ${tx.from}</p><p>${tag}: ${decodedInput}</p></div>`;
+                            outputText += `<div class="transaction"><p>User: ${tx.from} - ${tag ? `${tag}: ` : 'Message'}</p><br><p>${decodedInput}</p></div>`;
                             console.log("Added .transaction class to element:", tx.from);
                         } else {
                             outputText += `User: ${tx.from}\nMessage: ${decodedInput.replace(/\*\*\*\*\*\(.*?\)\*\*\*\*\*/, '')}\n\n`;
