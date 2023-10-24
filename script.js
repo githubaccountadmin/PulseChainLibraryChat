@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!isConnected) {
             alert('Please connect your wallet before publishing a message.');  // Show a warning message
             try {
-                await connectWallet();  // Ensure wallet is connected
+                await connectWallet();  // Ensure the wallet is connected
             } catch (error) {
                 console.error('Error publishing message:', error);
                 // Handle the error and provide user feedback
@@ -161,16 +161,13 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("globalHexMessage before concatenation: ", globalHexMessage);
         const contentInput = document.getElementById('postInput');
         const message = contentInput.value;
-        
+    
         // Check if globalHexMessage is empty and set it to "Message" if so
         if (!globalHexMessage) {
-            const selectedOption = publishOptionSelect.value;
-            if (selectedOption === "") {
-                selectedOption = "Message"; // Default to "Message" if nothing is selected
-            }
+            const selectedOption = publishOptionSelect.value || "Message"; // Default to "Message" if nothing is selected
             globalHexMessage = web3.utils.utf8ToHex(`*****(${selectedOption})***** ${message}`);
         } else {
-            const hexMessage = web3.utils.utf8ToHex(message); // Convert new message to hex
+            const hexMessage = web3.utils.utf8ToHex(message); // Convert the new message to hex
     
             // Concatenate the globalHexMessage with the new hexMessage
             console.log("Before substring, hexMessage is: ", hexMessage);
