@@ -111,22 +111,27 @@ textarea {
     width: 1000px; /* same as input-container and input-wrapper */
     white-space: pre-wrap;
     border: 2px solid #00ff00; /* Add a border around each transaction */
-
-    /* Style the scroll bar */
-    scrollbar-width: thin;
-    scrollbar-color: #00ff00 #000000; /* thumb and track colors */
 }
 
-/* Styling for the scroll bar thumb */
+/* Style the scroll bar (webkit) */
+.scrollable-window::-webkit-scrollbar {
+    width: 10px; /* Set the width of the scrollbar */
+}
+
+/* Style the thumb (webkit) */
 .scrollable-window::-webkit-scrollbar-thumb {
     background-color: #00ff00; /* Thumb color */
     border-radius: 10px; /* Rounded corners for the thumb */
 }
 
-/* Styling for the scroll bar track */
+/* Style the track (webkit) */
 .scrollable-window::-webkit-scrollbar-track {
     background-color: #000000; /* Track color */
 }
+
+/* Style the scrollbar (firefox) */
+.scrollable-window scrollbar-color: #00ff00 #000000;
+.scrollable-window scrollbar-width: thin;
 
 /* Styling for the transactions */
 .transaction {
