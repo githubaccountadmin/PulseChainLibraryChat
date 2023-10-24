@@ -130,8 +130,10 @@ textarea {
 }
 
 /* Style the scrollbar (firefox) */
-.scrollable-window scrollbar-color: #00ff00 #000000;
-.scrollable-window scrollbar-width: thin;
+.scrollable-window {
+    scrollbar-color: #00ff00 #000000;
+    scrollbar-width: thin;
+}
 
 /* Styling for the transactions */
 .transaction {
