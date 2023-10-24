@@ -122,6 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
     const publishOptionSelect = document.getElementById('publishOptionSelect');
+
     publishOptionSelect.addEventListener('change', function() {
         console.log("A publish-option was selected! Invoking handlePublishOption...");
         try {
@@ -130,6 +131,17 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error in handlePublishOption:', error);
         }
     });
+
+// Add this event listener to handle the default case
+publishOptionSelect.addEventListener('click', function() {
+    if (this.value === "") {
+        console.log("No option selected. Defaulting to 'Message'...");
+        handlePublishOption("Message");
+    }
+});
+
+This addition listens for a click event on the dropdown, and if no option is selected (i.e., this.value is an empty string), it defaults to "Message" by calling handlePublishOption("Message"). This should ensure that the default tag is added even if nothing is selected from the dropdown menu.
+
     
     // Add a boolean flag to prevent multiple executions
     let isPublishing = false;
