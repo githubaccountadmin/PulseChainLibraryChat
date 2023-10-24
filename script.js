@@ -104,8 +104,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function handlePublishOption(option) {
         console.log("handlePublishOption called with option: ", option);
         const contentInput = document.getElementById('postInput');
-        
-        if (option === null || option === undefined || option === '') {
+    
+        // Trim leading and trailing white spaces and check if the resulting string is empty
+        if (!option || option.trim() === '') {
             // If no option is selected, default to "Message"
             option = "Message";
             publishOptionSelect.value = "Message"; // Set the select element to "Message"
@@ -118,6 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // ...
         console.log("At the end of handlePublishOption, globalHexMessage is: ", globalHexMessage);
     }
+
     
     const publishOptionSelect = document.getElementById('publishOptionSelect');
     publishOptionSelect.addEventListener('change', function() {
