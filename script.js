@@ -119,27 +119,24 @@ document.addEventListener('DOMContentLoaded', function() {
         // ...
         console.log("At the end of handlePublishOption, globalHexMessage is: ", globalHexMessage);
     }
-
     
     const publishOptionSelect = document.getElementById('publishOptionSelect');
-
-    function handleDropdownChange() {
-        console.log("A publish-option was selected! Invoking handlePublishOption...");
-        try {
-            handlePublishOption(publishOptionSelect.value);
-        } catch (error) {
-            console.error('Error in handlePublishOption:', error);
-        }
-    }
-    
-    publishOptionSelect.addEventListener('change', handleDropdownChange);
     
     // Add this event listener to handle the initial click on the dropdown
     publishOptionSelect.addEventListener('click', function() {
         if (this.value === "") {
             console.log("No option selected. Defaulting to 'Message'...");
             handlePublishOption("Message");
-            handleDropdownChange(); // Manually trigger the change event
+        }
+    });
+    
+    // Event listener for changes in the dropdown menu
+    publishOptionSelect.addEventListener('change', function() {
+        console.log("A publish-option was selected! Invoking handlePublishOption...");
+        try {
+            handlePublishOption(publishOptionSelect.value);
+        } catch (error) {
+            console.error('Error in handlePublishOption:', error);
         }
     });
     
