@@ -137,8 +137,8 @@ button.connected:hover {
   background-color: green;
 }
 
-/* Styling for the Filter by Tag dropdown and Publish options dropdown */
-#tagFilter, #publishOptions {
+/* Styling for the Filter by Tag dropdown */
+#tagFilter {
     background-color: #000000; /* Background color */
     color: #00ff00; /* Text color */
     border: 2px solid #00ff00; /* Border color */
@@ -146,9 +146,34 @@ button.connected:hover {
     font-size: 16px; /* Font size */
 }
 
-/* Styling for dropdown options within the Filter by Tag dropdown and Publish options dropdown */
-#tagFilter option, #publishOptionSelect option {
+/* Styling for dropdown options */
+#tagFilter option {
     background-color: #000000; /* Background color */
     color: #00ff00; /* Text color */
+    font-size: 16px; /* Font size */
+}
+
+/* Styling for the Publish options dropdown */
+#publishOptions {
+    background-color: #000000 !important; /* Background color */
+    color: #00ff00; /* Text color */
+    border: 2px solid #00ff00; /* Border color */
+    padding: 5px; /* Padding */
+    font-size: 16px; /* Font size */
+}
+
+/* Styling for dropdown options within the Publish options */
+#publishOptionSelect option {
+    background-color: #000000; /* Background color */
+    color: #00ff00; /* Text color */
+    font-size: 16px; /* Font size */
+}
+
+/* Styling for the initial state of the Publish options dropdown */
+#publishOptions[style*="display: block"] {
+    background-color: #000000 !important; /* Background color */
+    color: #00ff00; /* Text color */
+    border: 2px solid #00ff00; /* Border color */
+    padding: 5px; /* Padding */
     font-size: 16px; /* Font size */
 }
