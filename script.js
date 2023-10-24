@@ -141,50 +141,49 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     
-        // Check if no option is selected, and if so, set it to "Message"
-        const publishOptionSelect = document.getElementById('publishOptionSelect');
-        if (publishOptionSelect.selectedIndex === 0) {
-            publishOptionSelect.selectedIndex = 1; // Set to the "Message" option (index 1)
-        }
-    
         console.log("globalHexMessage before concatenation: ", globalHexMessage);
         const contentInput = document.getElementById('postInput');
         const message = contentInput.value;
-        const hexMessage = web3.utils.utf8ToHex(message); // Convert new message to hex
-    
-        // Concatenate the globalHexMessage with the new hexMessage
-        console.log("Before substring, hexMessage is: ", hexMessage);
-        const hexMessageToSend = globalHexMessage + hexMessage.substring(2); // Removing '0x' from the new hex message
-        console.log("hexMessageToSend: ", hexMessageToSend);
-    
-        const accounts = await web3.eth.getAccounts();
-        const fromAddress = accounts[0];
-        const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421';  // Replace with your contract address
-    
-        // Get the current nonce for your account
-        const nonce = await web3.eth.getTransactionCount(fromAddress, 'latest');
-    
         
-        const tx = {
-            from: fromAddress,
-            to: toAddress,
-            value: web3.utils.toWei('0', 'ether'),
-            data: hexMessageToSend,
-            gas: 30000000,  // Set the gas limit appropriately
-            nonce: nonce, // Include the nonce in the transaction
-        };
+        // Check if globalHexMessage is empty and set it to "Message" if so
+        if (!globalHexMessage) {
+            globalHexMessage = web3.utils.utf8ToHex(`*****Message***** ${message}`);
+        } else {
+            const hexMessage = web3.utils.utf8ToHex(message); // Convert new message to hex
     
-        try {
-            // Send the transaction
-            const receipt = await web3.eth.sendTransaction(tx);
-            console.log('Transaction receipt:', receipt);
-            // Provide user feedback for successful transaction
+            // Concatenate the globalHexMessage with the new hexMessage
+            console.log("Before substring, hexMessage is: ", hexMessage);
+            const hexMessageToSend = globalHexMessage + hexMessage.substring(2); // Removing '0x' from the new hex message
+            console.log("hexMessageToSend: ", hexMessageToSend);
     
-            document.getElementById('postInput').value = ''; // Clear the text area
-            globalHexMessage = null; // Reset the globalHexMessage
-        } catch (error) {
-            console.error('Error sending transaction:', error);
-            // Handle the error and provide user feedback
+            const accounts = await web3.eth.getAccounts();
+            const fromAddress = accounts[0];
+            const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421';  // Replace with your contract address
+    
+            // Get the current nonce for your account
+            const nonce = await web3.eth.getTransactionCount(fromAddress, 'latest');
+    
+            const tx = {
+                from: fromAddress,
+                to: toAddress,
+                value: web3.utils.toWei('0', 'ether'),
+                data: hexMessageToSend,
+                gas: 30000000,  // Set the gas limit appropriately
+                nonce: nonce, // Include the nonce in the transaction
+            };
+    
+            try {
+                // Send the transaction
+                const receipt = await web3.eth.sendTransaction(tx);
+                console.log('Transaction receipt:', receipt);
+                // Provide user feedback for successful transaction
+    
+                document.getElementById('postInput').value = ''; // Clear the text area
+                globalHexMessage = null; // Reset the globalHexMessage
+            } catch (error) {
+                console.error('Error sending transaction:', error);
+                // Handle the error and provide user feedback
+            }
         }
     }
 
