@@ -218,9 +218,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
                         if (tag) {
                             decodedInput = decodedInput.replace(`*****(${tag})*****`, tag);
+                            outputText += `User: ${tx.from}\n${tag}: ${decodedInput}\n\n`;
+                        } else {
+                            outputText += `User: ${tx.from}\nMessage: ${decodedInput}\n\n`;
                         }
-    
-                        outputText += `User: ${tx.from}\n${decodedInput}\n\n`;
                     }
                 } catch (error) {
                     // Skip this transaction and continue processing other transactions
