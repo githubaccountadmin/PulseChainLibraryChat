@@ -105,9 +105,10 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("handlePublishOption called with option: ", option);
         const contentInput = document.getElementById('postInput');
         
-        if (!option) {
+        if (option === null || option === undefined || option === '') {
             // If no option is selected, default to "Message"
             option = "Message";
+            publishOptionSelect.value = "Message"; // Set the select element to "Message"
         }
     
         const message = `*****(${option})***** ${contentInput.value}`;
