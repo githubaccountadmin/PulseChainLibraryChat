@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         let decodedInput = web3.utils.hexToUtf8(tx.input);
     
                         // Extract the tag from the message
-                        const tagMatch = decodedInput.match(/\*\*\*\*\*(.*?)\*\*\*\*\*/);
+                        const tagMatch = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/);
                         const tag = tagMatch ? tagMatch[1] : null;
     
                         // Skip if the selected tag does not match the message's tag
