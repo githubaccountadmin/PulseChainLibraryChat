@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Check if globalHexMessage is empty and set it to "Message" if so
         if (!globalHexMessage) {
             globalHexMessage = web3.utils.utf8ToHex(`*****(Message)***** ${message}`);
-        }
+        } else {
     
         const hexMessage = web3.utils.utf8ToHex(message); // Convert the new message to hex
     
