@@ -205,7 +205,7 @@ button.connected:hover {
 
 #publishOptions {
     position: absolute;
-    top: 400px; /* Adjust this value to align vertically */
-    left: 900px; /* Adjust this value to control the horizontal position */
+    top: 440px; /* Adjust this value to align vertically */
+    left: 1000px; /* Adjust this value to control the horizontal position */
     /* Additional styling properties as needed */
 }
