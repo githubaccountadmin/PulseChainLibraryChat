@@ -133,6 +133,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     
+        // Automatically select the first option ("Message") in the dropdown
+        const publishOptionSelect = document.getElementById('publishOptionSelect');
+        publishOptionSelect.selectedIndex = 0;
+    
         console.log("globalHexMessage before concatenation: ", globalHexMessage);
         const contentInput = document.getElementById('postInput');
         const message = contentInput.value;
