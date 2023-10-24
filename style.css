@@ -113,11 +113,12 @@ textarea {
     border: 2px solid #00ff00;
 }
 
-/* Styling for individual transactions */
+/* Styling for the transactions */
 .transaction {
-    border: 2px solid #00ff00;
-    padding: 10px;
-    margin: 10px 0;
+    border: 2px solid #00ff00; /* Add a border around each transaction */
+    padding: 10px; /* Add padding to separate transactions */
+    margin: 10px 0; /* Add margin to space out transactions */
+    white-space: pre-wrap; /* Preserve line breaks and spaces */
 }
 
 /* For not connected state */
