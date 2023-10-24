@@ -164,7 +164,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Check if globalHexMessage is empty and set it to "Message" if so
         if (!globalHexMessage) {
-            globalHexMessage = web3.utils.utf8ToHex(`*****(Message)***** ${message}`);
+            const selectedOption = publishOptionSelect.value;
+            if (selectedOption === "") {
+                selectedOption = "Message"; // Default to "Message" if nothing is selected
+            }
+            globalHexMessage = web3.utils.utf8ToHex(`*****(${selectedOption})***** ${message}`);
         } else {
             const hexMessage = web3.utils.utf8ToHex(message); // Convert new message to hex
     
