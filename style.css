@@ -135,7 +135,7 @@ textarea {
 
 /* Styling for the transactions */
 .transaction {
-    border: 2px solid #00ff00; /* Add a border around each transaction */
+    border: 2px solid #00ff00 !important; /* Add a border around each transaction */
     padding: 10px; /* Add padding to separate transactions */
     margin: 10px 0; /* Add margin to space out transactions */
     white-space: pre-wrap; /* Preserve line breaks and spaces */
@@ -182,4 +182,14 @@ button.connected:hover {
     border: 2px solid #00ff00; /* Border color */
     padding: 5px; /* Padding */
     font-size: 16px; /* Font size */
+}
+
+/* Styling for the "How many" field */
+#transactionCountInput {
+    background-color: #000000; /* Background color */
+    color: #00ff00; /* Text color */
+    border: 2px solid #00ff00; /* Border color */
+    padding: 5px; /* Padding */
+    font-size: 16px; /* Font size */
+    width: 50px; /* Adjust the width as needed */
 }
