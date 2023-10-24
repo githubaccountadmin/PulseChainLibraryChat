@@ -168,3 +168,12 @@ button.connected:hover {
     color: #00ff00; /* Text color */
     font-size: 16px; /* Font size */
 }
+
+/* Styling for the initial state of the Publish options dropdown */
+#publishButton + #publishOptions {
+    background-color: #000000; /* Background color */
+    color: #00ff00; /* Text color */
+    border: 2px solid #00ff00; /* Border color */
+    padding: 5px; /* Padding */
+    font-size: 16px; /* Font size */
+}
