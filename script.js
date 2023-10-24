@@ -256,6 +256,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         if (tag) {
                             decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
                             outputText += `<div class="transaction"><p>User: ${tx.from}</p><p>${tag}: ${decodedInput}</p></div>`;
+                            console.log("Added .transaction class to element:", tx.from);
                         } else {
                             outputText += `User: ${tx.from}\nMessage: ${decodedInput.replace(/\*\*\*\*\*\(.*?\)\*\*\*\*\*/, '')}\n\n`;
                         }
@@ -266,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
     
-            window.innerText = outputText;
+            window.innerHTML = outputText;
     
         } catch (error) {
             console.error("Error details:", error.name, error.message);
