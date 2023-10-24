@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('Transaction receipt:', receipt);
                 // Provide user feedback for a successful transaction
     
-                contentInput.value = ''; // Clear the text area
+                document.getElementById('postInput').value = ''; // Clear the text area
                 globalHexMessage = null; // Reset the globalHexMessage
             } catch (error) {
                 console.error('Error sending transaction:', error);
