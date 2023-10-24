@@ -304,25 +304,27 @@ document.addEventListener('DOMContentLoaded', function() {
     // Single Event Listener for "Confirm" button to hide publish options and send the message
     document.getElementById('confirmPublishButton').addEventListener('click', async function() {
         console.log("Confirm button clicked. Preparing to publish message...");
+        
+        // Disable the confirm button to prevent multiple clicks
+        this.disabled = true;
     
         hidePublishOptions(); // Hide the publish options
     
         const publishOptionSelect = document.getElementById('publishOptionSelect');
         const selectedOption = publishOptionSelect.value;
     
-        // If no option is selected, set it to "Message"
         if (selectedOption === "") {
+            // If no option is selected, set it to "Message"
             publishOptionSelect.value = "Message";
         }
-    
-        // Always trigger the change event to ensure handlePublishOption is called
-        const event = new Event('change');
-        publishOptionSelect.dispatchEvent(event);
     
         try {
             await publishMessage(); // Publish the message
         } catch (error) {
             console.error('Error publishing message:', error);
+        } finally {
+            // Re-enable the confirm button after the message is sent
+            this.disabled = false;
         }
     });
     
