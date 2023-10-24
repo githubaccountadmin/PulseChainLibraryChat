@@ -198,14 +198,14 @@ button.connected:hover {
 
 #confirmPublishButton {
     position: absolute;
-    top: 90px; /* Adjust this value to align vertically */
-    left: 500px; /* Adjust this value to control the horizontal position */
+    top: 80px; /* Adjust this value to align vertically */
+    left: 300px; /* Adjust this value to control the horizontal position */
     /* Additional styling properties as needed */
 }
 
 #publishOptions {
     position: absolute;
-    top: 470px; /* Adjust this value to align vertically */
+    top: 469px; /* Adjust this value to align vertically */
     left: 1111px; /* Adjust this value to control the horizontal position */
     /* Additional styling properties as needed */
 }
