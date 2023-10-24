@@ -143,10 +143,14 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     
+        // Show a loading indicator
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        loadingIndicator.style.display = 'block';
+    
         console.log("globalHexMessage before concatenation: ", globalHexMessage);
         const contentInput = document.getElementById('postInput');
         const message = contentInput.value;
-        
+    
         // Check if globalHexMessage is empty and set it to "Message" if so
         if (!globalHexMessage) {
             globalHexMessage = web3.utils.utf8ToHex(`*****Message***** ${message}`);
@@ -185,6 +189,9 @@ document.addEventListener('DOMContentLoaded', function() {
             } catch (error) {
                 console.error('Error sending transaction:', error);
                 // Handle the error and provide user feedback
+            } finally {
+                // Hide the loading indicator when the process is complete
+                loadingIndicator.style.display = 'none';
             }
         }
     }
