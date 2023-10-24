@@ -217,11 +217,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
     
                         if (tag) {
-                            decodedInput = tag; // Replace the entire message with the 'tag'
-                            outputText += `User: ${tx.from}\n${decodedInput}\n\n`;
-                        } else {
-                            outputText += `User: ${tx.from}\nMessage: ${decodedInput}\n\n`;
+                            decodedInput = decodedInput.replace(`*****(${tag})*****`, tag);
                         }
+    
+                        outputText += `User: ${tx.from}\n${decodedInput}\n\n`;
                     }
                 } catch (error) {
                     // Skip this transaction and continue processing other transactions
