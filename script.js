@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
                         if (tag) {
                             decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
-                            outputText += `User: ${tx.from}\n${tag}: ${decodedInput}\n\n`;
+                            outputText += `<div class="transaction"><p>User: ${tx.from}</p><p>${tag}: ${decodedInput}</p></div>`;
                         } else {
                             outputText += `User: ${tx.from}\nMessage: ${decodedInput.replace(/\*\*\*\*\*\(.*?\)\*\*\*\*\*/, '')}\n\n`;
                         }
