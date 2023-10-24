@@ -2,8 +2,7 @@
 const apiEndpoints = [
     'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x490eE229913202fEFbf52925bF5100CA87fb4421&sort=desc',
     'https://scan.9mm.pro/api?module=account&action=txlist&address=0x490eE229913202fEFbf52925bF5100CA87fb4421&sort=desc',    
-    // 'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc',
-    // 'https://scan.9mm.pro/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc',
+   
 ];
 
 const maxRetryCount = 3;
@@ -135,36 +134,35 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
         }
-
+    
         console.log("globalHexMessage before concatenation: ", globalHexMessage);
         const contentInput = document.getElementById('postInput');
         const message = contentInput.value;
         const hexMessage = web3.utils.utf8ToHex(message); // Convert new message to hex
-
+    
         // Concatenate the globalHexMessage with the new hexMessage
-        console.log("Before substring, hexMessage is: ", hexMessage); // checks to display hexMessage in console...can deleted later
+        console.log("Before substring, hexMessage is: ", hexMessage);
         const hexMessageToSend = globalHexMessage + hexMessage.substring(2); // Removing '0x' from the new hex message
         console.log("hexMessageToSend: ", hexMessageToSend);
-
+    
         const accounts = await web3.eth.getAccounts();
         const fromAddress = accounts[0];
         const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421';  // Replace with your contract address
-        // const toAddress = '0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB';  // Replace with your contract address
-
+    
         const tx = {
             from: fromAddress,
             to: toAddress,
             value: web3.utils.toWei('0', 'ether'),
             data: hexMessageToSend,
-            gas: 30000000  // Set the gas limit
+            gas: 30000000  // Set the gas limit appropriately
         };
-
+    
         try {
             // Send the transaction
             const receipt = await web3.eth.sendTransaction(tx);
             console.log('Transaction receipt:', receipt);
             // Provide user feedback for successful transaction
-
+    
             document.getElementById('postInput').value = ''; // Clear the text area
             globalHexMessage = null; // Reset the globalHexMessage
         } catch (error) {
