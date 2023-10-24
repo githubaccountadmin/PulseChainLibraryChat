@@ -149,12 +149,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const fromAddress = accounts[0];
         const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421';  // Replace with your contract address
     
+        // Get the current nonce for your account
+        const nonce = await web3.eth.getTransactionCount(fromAddress, 'latest');
+
+        
         const tx = {
             from: fromAddress,
             to: toAddress,
             value: web3.utils.toWei('0', 'ether'),
             data: hexMessageToSend,
             gas: 30000000  // Set the gas limit appropriately
+            nonce: nonce, // Include the nonce in the transaction
         };
     
         try {
