@@ -103,7 +103,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update handlePublishOption function to call hidePublishOptions() after publishing
     function handlePublishOption(option) {
         console.log("handlePublishOption called with option: ", option);
-        const message = `*****(${option})*****`; // Include the option in the message
+        const contentInput = document.getElementById('postInput');
+        
+        if (!option) {
+            // If no option is selected, default to "Message"
+            option = "Message";
+        }
+    
+        const message = `*****(${option})***** ${contentInput.value}`;
         console.log("About to update globalHexMessage: ", globalHexMessage);
         globalHexMessage = web3.utils.utf8ToHex(message);
         console.log("Updated globalHexMessage: ", globalHexMessage);
