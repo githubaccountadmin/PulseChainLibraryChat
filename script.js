@@ -193,9 +193,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Send the transaction
                 const receipt = await web3.eth.sendTransaction(tx);
                 console.log('Transaction receipt:', receipt);
-                // Provide user feedback for successful transaction
+                // Provide user feedback for a successful transaction
     
-                document.getElementById('postInput').value = ''; // Clear the text area
+                contentInput.value = ''; // Clear the text area
                 globalHexMessage = null; // Reset the globalHexMessage
             } catch (error) {
                 console.error('Error sending transaction:', error);
