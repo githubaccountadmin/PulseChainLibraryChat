@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     
         const selectedOption = publishOptionSelect.value || "Message"; // Default to "Message" if nothing is selected
-        const fullMessage = `${message}\n\n*****(${selectedOption})*****`;
+        const fullMessage = `\n\n${message}\n\n*****(${selectedOption})*****`;
     
         const hexMessage = web3.utils.utf8ToHex(fullMessage);
     
