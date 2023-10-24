@@ -131,7 +131,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // Add a boolean flag to prevent multiple executions
+    let isPublishing = false;
+    
     async function publishMessage() {
+        // Check if a publishing process is already in progress
+        if (isPublishing) {
+            return;
+        }
+    
+        isPublishing = true; // Set the flag to indicate publishing is in progress
+    
         if (!isConnected) {
             alert('Please connect your wallet before publishing a message.');  // Show a warning message
             try {
@@ -139,6 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } catch (error) {
                 console.error('Error publishing message:', error);
                 // Handle the error and provide user feedback
+                isPublishing = false; // Reset the flag
                 return;
             }
         }
@@ -199,9 +210,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } catch (error) {
             console.error('Error in publishMessage:', error);
+        } finally {
+            isPublishing = false; // Reset the flag
+            console.log("Ending publishMessage...");
         }
-    
-        console.log("Ending publishMessage...");
     }
 
     async function fetchDataWithFallback(endpoints) {
