@@ -195,17 +195,3 @@ button.connected:hover {
     font-size: 16px; /* Font size */
     width: 50px; /* Adjust the width as needed */
 }
-
-#confirmPublishButton {
-    position: absolute;
-    top: 80px; /* Adjust this value to align vertically */
-    left: 300px; /* Adjust this value to control the horizontal position */
-    /* Additional styling properties as needed */
-}
-
-#publishOptions {
-    position: absolute;
-    top: 469px; /* Adjust this value to align vertically */
-    left: 1111px; /* Adjust this value to control the horizontal position */
-    /* Additional styling properties as needed */
-}
