@@ -91,7 +91,6 @@ async function publishMessage() {
 document.addEventListener('DOMContentLoaded', function() {
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
     let transactionCount = 33;
-    let isConnected = false;
     let globalHexMessage = '';
     const savedPublisherName = localStorage.getItem('publisherName');
     if (savedPublisherName) {
