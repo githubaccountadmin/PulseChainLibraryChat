@@ -302,6 +302,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const setNameButton = document.getElementById('setNameButton');
     const userNameDisplay = document.getElementById('userNameDisplay');
     
+    // Get the content input field and publish button
+    const postInput = document.getElementById('postInput');
+    const publishButton = document.getElementById('publishButton');
+
+    
     // Add an event listener to the "Set Name" button
     setNameButton.addEventListener('click', () => {
         const userName = userNameInput.value;
@@ -315,6 +320,25 @@ document.addEventListener('DOMContentLoaded', function() {
         // Clear the input field after capturing the name
         userNameInput.value = '';
     });
+    
+    // Function to append the user's name to the content and publish
+    function publishContent() {
+        const content = postInput.value;
+        const userName = userNameDisplay.textContent.replace('Hello, ', ''); // Extract the user's name
+        
+        // Append the user's name and content together
+        const fullContent = `User: ${userName}\n${content}`;
+    
+        // You can now proceed to publish the fullContent to the blockchain or display it as needed
+        // ...
+    
+        // Clear the content input field after publishing
+        postInput.value = '';
+    }
+    
+    // Add an event listener to the "Publish" button
+    publishButton.addEventListener('click', publishContent);
+
     
     // Function to fetch the user's name from the blockchain (replace with your actual implementation)
     async function fetchUserNameFromBlockchain() {
