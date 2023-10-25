@@ -13,6 +13,12 @@ let isConnected = true;
 // Web3 Initialization moved to global scope
 const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
 
+async function initialize() {
+  await fetchUserNameFromBlockchain();  // Assuming this returns a Promise
+  await setMainAddress();
+  // Now you can safely proceed to other operations
+}
+
 // Move setMainAddress outside of publishMessage
 async function setMainAddress() {
     try {
