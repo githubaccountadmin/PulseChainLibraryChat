@@ -429,21 +429,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add an event listener to the "Publish" button
     publishButton.addEventListener('click', publishContent);
     
-    async function fetchData(apiUrl, params) {
-        // Perform your API call here using the apiUrl and params
-        // ...
-        return null;  // Return null if no data is found
-    }
-    
     function extractPublisherName(message) {
-        // Find the position of the '*****' tag in the message
-        const tagIndex = message.lastIndexOf("*****");
-        
-        // If the tag is not found, return null
-        if (tagIndex === -1) return null;
-        
-        // Extract and return the publisher name from the message, starting from the position right after the '*****' tag
-        return message.substring(tagIndex + 5).trim();  // +5 to skip the tag itself
+        // Look for any of the 5 tags followed by 'Publisher: '
+        const publisherMatch = message.match(/\*\*\*\*\*(Message|Story|Book|Document|Other)\*\*\*\*\*.*Publisher: (.+)/);
+        // Extract and return the publisher name
+        return publisherMatch ? publisherMatch[2].trim() : null;
     }
     
     async function fetchUserNameFromBlockchain(walletAddress, mainAddress) {
