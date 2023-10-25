@@ -340,7 +340,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // You can now proceed to publish or display fullContent
         // ...
     
-        postInput.value = ''; // Clear the text box after publishing
+        // postInput.value = ''; // Clear the text box after publishing
     }
     
     // Add an event listener to the "Publish" button
