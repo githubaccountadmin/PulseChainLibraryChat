@@ -408,28 +408,34 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     async function fetchUserNameFromBlockchain(walletAddress, mainAddress) {
+        console.log("Starting fetchUserNameFromBlockchain..."); // Log the start of the function
         const apis = [
-            'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x490eE229913202fEFbf52925bF5100CA87fb4421&sort=desc',
-            'https://scan.9mm.pro/api?module=account&action=txlist&address=0x490eE229913202fEFbf52925bF5100CA87fb4421&sort=desc'
+            `https://scan.pulsechain.com/api?module=account&action=txlist&address=${walletAddress}&sort=desc`,
+            `https://scan.9mm.pro/api?module=account&action=txlist&address=${walletAddress}&sort=desc`
         ];
       
         for (const apiUrl of apis) {
             try {
+                console.log(`Fetching data from ${apiUrl}`); // Log the API URL being fetched
                 const transactions = await fetchData(apiUrl, { 
                     from: walletAddress, 
                     to: mainAddress 
                 });
           
                 if (transactions && transactions.length > 0) {
+                    console.log("Transactions found"); // Log if transactions are found
                     for (const tx of transactions) {
                         const message = tx.data || tx.input;
                         const publisherName = extractPublisherName(message);
                         
                         if (publisherName) {
+                            console.log(`Publisher name found: ${publisherName}`); // Log the publisher name if found
                             document.getElementById('publisherNameInput').value = publisherName;
                             return;
                         }
                     }
+                } else {
+                    console.log("No transactions found"); // Log if no transactions are found
                 }
             } catch (error) {
                 console.log(`Failed to fetch data from ${apiUrl}: ${error}`);
