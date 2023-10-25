@@ -321,19 +321,25 @@ document.addEventListener('DOMContentLoaded', function() {
         userNameInput.value = '';
     });
     
-    // Function to publish content with the user's name
+   // Function to publish content with the user's name
     function publishContent() {
         const content = postInput.value;
         const userName = userNameDisplay.textContent.replace('Hello, ', '');
         const selectedTag = document.getElementById('publishOptionSelect').value;
-        
+    
         // Append the user's name to the content after the tag
         const fullContent = `${content}\n${userName ? `User Name: ${userName}` : ''}\n${selectedTag ? `Tag: ${selectedTag}` : ''}`;
+    
+        // Check if the content is empty before proceeding
+        if (!content.trim()) {
+            alert('Message cannot be empty');
+            return;
+        }
     
         // You can now proceed to publish or display fullContent
         // ...
     
-        postInput.value = '';
+        postInput.value = ''; // Clear the text box after publishing
     }
     
     // Add an event listener to the "Publish" button
