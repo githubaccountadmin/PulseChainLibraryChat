@@ -8,6 +8,14 @@ const apiEndpoints = [
 const maxRetryCount = 3;
 
 let timer = null;
+let mainAddress;
+
+async function setMainAddress() {
+    const addresses = await publishMessage();
+    mainAddress = addresses.toAddress;
+}
+
+setMainAddress();
 
 document.addEventListener('DOMContentLoaded', function() {
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
