@@ -307,13 +307,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const publishButton = document.getElementById('publishButton');
     
     // Function to set user name
-    function setUserName() {
-      const userName = userNameInput.value.trim();
+    function setPublisherName() {
+      const publisherName = publisherNameInput.value.trim();
     
-      if (userName) {
-        userNameInput.value = userName; // Show the username inside the input field
+      if (publisherName) {
+        publisherNameInput.value = publisherName; // Show the publisher name inside the input field
       } else {
-        alert('Please enter a valid user name.');
+        alert('Please enter a valid publisher name.');
       }
     }
     
@@ -322,20 +322,23 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Function to publish content with the user's name
     function publishContent() {
+      console.log("Publish button clicked"); // Debugging log
+      
       const content = postInput.value;
       
       let parts = [content.trim()];
-      
+    
       // Add the tag
       const selectedTag = document.getElementById('publishOptionSelect').value;
       if (selectedTag) {
         parts.push(`*****(${selectedTag})*****`);
       }
     
-      // Add the username
-      const userName = userNameInput.value;  // Note that we're getting it directly from the input field
-      if (userName) {
-        parts.push(`User Name: ${userName}`);
+      // Add the publisher name
+      const publisherName = publisherNameInput.value;
+      console.log("Publisher name is:", publisherName); // Debugging log
+      if (publisherName) {
+        parts.push(`Publisher: ${publisherName}`);
       }
     
       const fullContent = parts.join(' ');
@@ -347,6 +350,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     
       // You can now proceed to publish or display fullContent
+      // ...
       // postInput.value = ''; // This clears the textbox after publishing
     }
     
