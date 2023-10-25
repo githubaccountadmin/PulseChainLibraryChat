@@ -7,20 +7,22 @@ const apiEndpoints = [
 
 const maxRetryCount = 3;
 
+let timer = null;
+
 document.addEventListener('DOMContentLoaded', function() {
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
     let transactionCount = 33;
     let isConnected = false;
     let globalHexMessage = '';
     const savedPublisherName = localStorage.getItem('publisherName');
-      if (savedPublisherName) {
+    if (savedPublisherName) {
         document.getElementById('publisherNameInput').value = savedPublisherName;
-      }
+    }
     
-      const savedWalletAddress = localStorage.getItem('walletAddress');
-      if (savedWalletAddress) {
-        // Do something with the saved wallet address if needed
-      }
+    const savedWalletAddress = localStorage.getItem('walletAddress');
+    if (savedWalletAddress) {
+    // Do something with the saved wallet address if needed
+    }
     
     // After setting up the savedWalletAddress and savedPublisherName from localStorage
     if (savedWalletAddress) {
@@ -82,8 +84,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // Handle the error and provide user feedback
         }
     }
-
-    let timer = null;
 
     function startUserNameFetchTimer(walletAddress, mainAddress) {
         // If a timer already exists, clear it
