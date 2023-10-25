@@ -6,7 +6,6 @@ const apiEndpoints = [
 ];
 
 const maxRetryCount = 3;
-
 let timer = null;
 let mainAddress;
 
@@ -219,11 +218,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add a boolean flag to prevent multiple executions
     let isPublishing = false;
     
-    console.log("publishMessage() has been called!");
     async function publishMessage() {
-        console.log('Returned from publishMessage:', returnedValue);
-        if (!isConnected) {
-            alert('Please connect your wallet before publishing a message.'); // Show a warning message
+        try {
+          if (!isConnected) {
+            alert('Please connect your wallet first.');
+            return;
+          }
             try {
                 await connectWallet(); // Ensure the wallet is connected
             } catch (error) {
@@ -241,8 +241,6 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Message is empty.');
             return;
         }
-
-        setMainAddress();
     
         const selectedOption = publishOptionSelect.value || "Message"; // Default to "Message" if nothing is selected
         
@@ -257,14 +255,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const accounts = await web3.eth.getAccounts();
         const fromAddress = accounts[0];
         const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421'; // Replace with the main contract address to send transactions to
-        console.log("Inside publishMessage: toAddress is ", toAddress);
-        return {
-            fromAddress: fromAddress,
-            toAddress: toAddress
-        };
-    } catch (error) {
-        console.error('Error in publishMessage:', error);
-    }
         
         // Get the current nonce for your account
         const nonce = await web3.eth.getTransactionCount(fromAddress, 'latest');
@@ -285,15 +275,14 @@ document.addEventListener('DOMContentLoaded', function() {
             // Provide user feedback for a successful transaction
     
             contentInput.value = ''; // Clear the text area
-        } catch (error) {
-            console.error('Error sending transaction:', error);
-            // Handle the error and provide user feedback
-        }
-
         return {
             fromAddress: fromAddress,
             toAddress: toAddress
         };
+    }   catch (error) {
+        console.error('Error sending transaction:', error);
+                // Handle the error and provide user feedback
+        }
     }
 
     async function fetchDataWithFallback(endpoints) {
