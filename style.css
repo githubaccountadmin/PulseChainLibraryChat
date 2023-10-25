@@ -33,8 +33,10 @@ button, #connectButton, #publishButton, #docs-button {
     right: 0;
 }
 
+/* New styling for publisher-name-container */
 #publisher-name-container {
     position: absolute;
+    top: 60px;  /* Height of connectButton + gap */
     right: 0;
 }
 
