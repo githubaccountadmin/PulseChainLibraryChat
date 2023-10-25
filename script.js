@@ -65,6 +65,31 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    let timer = null;
+
+    function startUserNameFetchTimer(walletAddress, mainAddress) {
+        // If a timer already exists, clear it
+        if (timer !== null) {
+            clearInterval(timer);
+        }
+        
+        // Create an asynchronous function to use await within it
+        const fetchUserNameIfEmpty = async () => {
+            const publisherNameInput = document.getElementById('publisherNameInput');
+            
+            // Only fetch the user name if the input box is empty
+            if (!publisherNameInput.value) {
+                await fetchUserNameFromBlockchain(walletAddress, mainAddress);
+            }
+        };
+    
+        // Immediately call the function when startUserNameFetchTimer is called
+        fetchUserNameIfEmpty();
+    
+        // Then set up the timer to call it every 2 minutes (120000 milliseconds)
+        timer = setInterval(fetchUserNameIfEmpty, 120000);
+    }
+    
     function setRandomTitle() {
         try {
             const titles = [
