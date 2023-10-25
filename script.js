@@ -12,6 +12,15 @@ document.addEventListener('DOMContentLoaded', function() {
     let transactionCount = 33;
     let isConnected = false;
     let globalHexMessage = '';
+    const savedPublisherName = localStorage.getItem('publisherName');
+      if (savedPublisherName) {
+        document.getElementById('publisherNameInput').value = savedPublisherName;
+      }
+    
+      const savedWalletAddress = localStorage.getItem('walletAddress');
+      if (savedWalletAddress) {
+        // Do something with the saved wallet address if needed
+      }
     
     document.getElementById('transactionCountInput').value = transactionCount;
 
@@ -27,20 +36,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Saving wallet address to localStorage when connecting
     async function connectWallet() {
-        try {
-            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            isConnected = true;
-            const networkId = await web3.eth.net.getId();
-            checkPulseChain(networkId);
-    
-            const walletAddress = accounts[0];
-            startUserNameFetchTimer(walletAddress, walletAddress);  // Passing wallet address as both params
-            
-        } catch (error) {
-            console.error('Error connecting wallet:', error);
-            // Handle the error and provide user feedback
-        }
+      try {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        isConnected = true;
+        const walletAddress = accounts[0];
+        localStorage.setItem('walletAddress', walletAddress);  // Save to localStorage
+        const networkId = await web3.eth.net.getId();
+        checkPulseChain(networkId);
+      } catch (error) {
+        console.error('Error connecting wallet:', error);
+        // Handle the error and provide user feedback
+      }
     }
 
     function checkPulseChain(networkId) {
@@ -94,6 +102,22 @@ document.addEventListener('DOMContentLoaded', function() {
         timer = setInterval(fetchUserNameIfEmpty, 120000);
     }
     
+    // Save to localStorage when setting publisher name
+    function setPublisherName() {
+      const publisherName = publisherNameInput.value.trim();
+    
+      if (publisherName) {
+        publisherNameInput.value = publisherName; // Keep the publisher name inside the input field
+        localStorage.setItem('publisherName', publisherName);  // Save to localStorage
+    
+        // Add a flash effect
+        publisherNameInput.classList.add("flash");
+        setTimeout(() => publisherNameInput.classList.remove("flash"), 500); // Remove flash effect after 500ms
+      } else {
+        alert('Please enter a valid publisher name.');
+      }
+    }
+
     function setRandomTitle() {
         try {
             const titles = [
