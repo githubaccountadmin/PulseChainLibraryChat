@@ -311,8 +311,11 @@ document.addEventListener('DOMContentLoaded', function() {
       const publisherName = publisherNameInput.value.trim();
     
       if (publisherName) {
-        publisherNameDisplay.innerHTML = `Hello, ${publisherName}`; // Show the publisher name below the input field
-        publisherNameInput.value = ''; // Clear the name box
+        publisherNameInput.value = publisherName; // Keep the publisher name inside the input field
+        
+        // Add a flash effect
+        publisherNameInput.classList.add("flash");
+        setTimeout(() => publisherNameInput.classList.remove("flash"), 500); // Remove flash effect after 500ms
       } else {
         alert('Please enter a valid publisher name.');
       }
