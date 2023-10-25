@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
         const accounts = await web3.eth.getAccounts();
         const fromAddress = accounts[0];
-        const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421'; // Replace with your contract address
+        const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421'; // Replace with the main contract address to send transactions to
     
         // Get the current nonce for your account
         const nonce = await web3.eth.getTransactionCount(fromAddress, 'latest');
@@ -264,6 +264,11 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error sending transaction:', error);
             // Handle the error and provide user feedback
         }
+
+        return {
+            fromAddress: fromAddress,
+            toAddress: toAddress
+        };
     }
 
     async function fetchDataWithFallback(endpoints) {
