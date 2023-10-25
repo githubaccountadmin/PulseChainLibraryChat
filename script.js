@@ -321,18 +321,18 @@ document.addEventListener('DOMContentLoaded', function() {
         userNameInput.value = '';
     });
     
-    // Function to append the user's name to the content and publish
+    // Function to publish content with the user's name
     function publishContent() {
         const content = postInput.value;
-        const userName = userNameDisplay.textContent.replace('Hello, ', ''); // Extract the user's name
+        const userName = userNameDisplay.textContent.replace('Hello, ', '');
+        const selectedTag = document.getElementById('publishOptionSelect').value;
         
-        // Append the user's name and content together
-        const fullContent = `User: ${userName}\n${content}`;
+        // Append the user's name to the content after the tag
+        const fullContent = `${content}\n${userName ? `User Name: ${userName}` : ''}\n${selectedTag ? `Tag: ${selectedTag}` : ''}`;
     
-        // You can now proceed to publish the fullContent to the blockchain or display it as needed
+        // You can now proceed to publish or display fullContent
         // ...
     
-        // Clear the content input field after publishing
         postInput.value = '';
     }
     
