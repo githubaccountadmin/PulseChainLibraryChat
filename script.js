@@ -464,10 +464,8 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("Starting fetchUserNameFromBlockchain..."); // Log the start of the function
         const apis = [
             `https://scan.pulsechain.com/api?module=account&action=txlist&address=${walletAddress}&sort=desc`,
-            `https://scan.9mm.pro/api?module=account&action=txlist&address=${walletAddress}&sort=desc`
         ];
       
-        for (const apiUrl of apis) {
             try {
                 console.log(`Fetching data from ${apiUrl}`); // Log the API URL being fetched
                 
