@@ -215,6 +215,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let isPublishing = false;
     
     async function publishMessage() {
+        console.log('Returned from publishMessage:', returnedValue);
         if (!isConnected) {
             alert('Please connect your wallet before publishing a message.'); // Show a warning message
             try {
