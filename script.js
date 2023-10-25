@@ -10,6 +10,9 @@ let timer = null;
 let mainAddress;
 let isConnected = true;
 
+// Web3 Initialization moved to global scope
+const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
+
 // Move setMainAddress outside of publishMessage
 async function setMainAddress() {
     try {
@@ -89,7 +92,6 @@ async function publishMessage() {
 }
     
 document.addEventListener('DOMContentLoaded', function() {
-    const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
     let transactionCount = 33;
     let globalHexMessage = '';
     const savedPublisherName = localStorage.getItem('publisherName');
