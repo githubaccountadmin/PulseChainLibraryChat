@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
                         // Build the output text
                         if (tag) {
-                            outputText += `<div class="transaction"><p>Publisher: ${publisherName} - Published a ${tag}<br>${decodedInput.trim()}</p></div>`;
+                            outputText += `<div class="transaction"><p>Publisher: ${publisherName} - Published a ${tag}<br><br>${decodedInput.trim()}</p></div>`;
                         } else {
                             outputText += `<div class="transaction"><p>Publisher: ${publisherName} - Message: ${decodedInput.trim()}</p></div>`;
                         }
