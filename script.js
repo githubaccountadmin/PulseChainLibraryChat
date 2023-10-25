@@ -297,6 +297,39 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Get the user's name input field, "Set Name" button, and display area
+    const userNameInput = document.getElementById('userNameInput');
+    const setNameButton = document.getElementById('setNameButton');
+    const userNameDisplay = document.getElementById('userNameDisplay');
+    
+    // Add an event listener to the "Set Name" button
+    setNameButton.addEventListener('click', () => {
+        const userName = userNameInput.value;
+        
+        // Display the user's name
+        userNameDisplay.textContent = `Hello, ${userName}!`;
+    
+        // You can store the user's name as needed (e.g., in local storage or a variable)
+        // ...
+    
+        // Clear the input field after capturing the name
+        userNameInput.value = '';
+    });
+    
+    // Function to fetch the user's name from the blockchain (replace with your actual implementation)
+    async function fetchUserNameFromBlockchain() {
+        // Fetch the user's name from the blockchain
+        // ...
+    
+        // Display the fetched name
+        userNameDisplay.textContent = `Hello, ${fetchedUserName}!`;
+    }
+    
+    // Call the fetchUserNameFromBlockchain function when needed
+    // e.g., when the user connects to the site
+    // fetchUserNameFromBlockchain();
+
+    
     document.getElementById('connectButton').addEventListener('click', connectWallet);
     document.getElementById('publishButton').addEventListener('click', function() {
         document.getElementById('publishOptions').style.display = 'block';
