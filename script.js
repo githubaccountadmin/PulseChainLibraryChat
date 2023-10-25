@@ -12,7 +12,9 @@ let mainAddress;
 
 async function setMainAddress() {
     const addresses = await publishMessage();
+    console.log("Inside setMainAddress: addresses returned are ", addresses);
     mainAddress = addresses.toAddress;
+    console.log("Inside setMainAddress: mainAddress is now ", mainAddress);
 }
 
 setMainAddress();
@@ -250,7 +252,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const accounts = await web3.eth.getAccounts();
         const fromAddress = accounts[0];
         const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421'; // Replace with the main contract address to send transactions to
-    
+        console.log("Inside publishMessage: toAddress is ", toAddress);
+        return {
+            fromAddress: fromAddress,
+            toAddress: toAddress
+        };
+        
         // Get the current nonce for your account
         const nonce = await web3.eth.getTransactionCount(fromAddress, 'latest');
     
