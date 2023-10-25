@@ -370,19 +370,50 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add an event listener to the "Publish" button
     publishButton.addEventListener('click', publishContent);
     
-    // Function to fetch the user's name from the blockchain (replace with your actual implementation)
-    async function fetchUserNameFromBlockchain() {
-        // Fetch the user's name from the blockchain
+    async function fetchData(apiUrl, params) {
+        // Perform your API call here using the apiUrl and params
         // ...
-    
-        // Display the fetched name
-        userNameDisplay.textContent = `Hello, ${fetchedUserName}!`;
+        return null;  // Return null if no data is found
     }
     
-    // Call the fetchUserNameFromBlockchain function when needed
-    // e.g., when the user connects to the site
-    // fetchUserNameFromBlockchain();
-
+    function extractPublisherName(message) {
+        // Extract and return the publisher name from the message
+        // ...
+        return null;  // Return null if no publisher name is found
+    }
+    
+    async function fetchUserNameFromBlockchain(walletAddress, mainAddress) {
+        const apis = [
+            'https://scan.pulsechain.com/api?module=account&action=txlist&address=' + walletAddress + '&sort=desc',
+            'https://scan.9mm.pro/api?module=account&action=txlist&address=' + walletAddress + '&sort=desc'
+        ];
+      
+        for (const apiUrl of apis) {
+            try {
+                const transactions = await fetchData(apiUrl, { 
+                    from: walletAddress, 
+                    to: mainAddress 
+                });
+          
+                if (transactions && transactions.length > 0) {
+                    for (const tx of transactions) {
+                        const message = tx.data || tx.input;
+                        const publisherName = extractPublisherName(message);
+                        
+                        if (publisherName) {
+                            document.getElementById('publisherNameInput').value = publisherName;
+                            return;
+                        }
+                    }
+                }
+            } catch (error) {
+                console.log(`Failed to fetch data from ${apiUrl}: ${error}`);
+            }
+        }
+      
+        // If no publisher name is found, display the wallet address
+        document.getElementById('publisherNameInput').value = walletAddress;
+    }
     
     document.getElementById('connectButton').addEventListener('click', connectWallet);
     document.getElementById('publishButton').addEventListener('click', function() {
