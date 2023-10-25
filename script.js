@@ -430,7 +430,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add an event listener to the "Publish" button
     publishButton.addEventListener('click', publishContent);
     
-    async function extractPublisherName() {
+    async function extractPublisherName(message) {
         console.log('extractPublisherName called');  // Debugging line 1
         const message = await fetchUserNameFromBlockchain();  // I'm assuming this function fetches the necessary message data
     
@@ -470,18 +470,23 @@ document.addEventListener('DOMContentLoaded', function() {
         for (const apiUrl of apis) {
             try {
                 console.log(`Fetching data from ${apiUrl}`); // Log the API URL being fetched
-                const transactions = await fetchData(apiUrl, { 
-                    from: walletAddress, 
-                    to: mainAddress 
-                });
+                
+                // Here we'll use fetch() directly to get the data
+                const response = await fetch(apiUrl);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const jsonData = await response.json();
+                const transactions = jsonData.result;  // Assuming 'result' contains the list of transactions
                 
                 console.log("Fetched data: ", transactions);  // Log fetched data
         
                 if (transactions && transactions.length > 0) {
                     console.log("Transactions found"); 
+                    
                     for (const tx of transactions) {
                         const message = tx.data || tx.input;
-                        const publisherName = extractPublisherName(message);
+                        
+                        // Call extractPublisherName with the fetched message
+                        const publisherName = await extractPublisherName(message);
                         
                         console.log("Examined transaction: ", tx);  // Log examined transaction
                         
