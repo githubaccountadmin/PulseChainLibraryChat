@@ -270,12 +270,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 return {
                     fromAddress: fromAddress,
                     toAddress: toAddress
-                };
-            } catch (error) {
-                  console.error('Error sending transaction:', error);
-                  // Handle the error and provide user feedback
-            }        
-        }
+            };
+        } catch (error) {
+            console.error('Error sending transaction:', error);
+            // Handle the error and provide user feedback
+        }        
     }
     
     async function fetchDataWithFallback(endpoints) {
