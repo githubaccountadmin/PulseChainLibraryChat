@@ -79,6 +79,7 @@ async function publishMessage() {
         
             // Provide user feedback for a successful transaction
             contentInput.value = ''; // Clear the text area
+            console.log("Returning addresses:", { fromAddress: fromAddress, toAddress: toAddress });
             return {
                 fromAddress: fromAddress,
                 toAddress: toAddress
