@@ -499,7 +499,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             } catch (error) {
                 console.log(`Failed to fetch data from ${apiUrl}: ${error}`);
-                continue;  // continue to next apiUrl
             }
         }
         // If no publisher name is found, display the wallet address
