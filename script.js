@@ -346,6 +346,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     
       const fullContent = parts.join(' ');
+      console.log("Full content is:", fullContent);  // Add this line for debugging
     
       // Check if the content is empty before proceeding
       if (!fullContent.trim()) {
