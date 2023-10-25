@@ -195,3 +195,7 @@ button.connected:hover {
     font-size: 16px; /* Font size */
     width: 50px; /* Adjust the width as needed */
 }
+
+.flash {
+  border: 3px solid green; /* You can customize the color as you like */
+}
