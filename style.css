@@ -33,6 +33,11 @@ button, #connectButton, #publishButton, #docs-button {
     right: 0;
 }
 
+#publisher-name-container {
+    position: absolute;
+    right: 0;
+}
+
 .fixed-width-title {
     max-width: 1000px;  /* or whatever size fits your layout */
     overflow: hidden;  /* hide text that exceeds the maximum width */
