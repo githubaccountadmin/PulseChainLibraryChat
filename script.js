@@ -22,6 +22,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Do something with the saved wallet address if needed
       }
     
+    // After setting up the savedWalletAddress and savedPublisherName from localStorage
+    if (savedWalletAddress) {
+        // Trigger the username fetch for the saved wallet address
+        startUserNameFetchTimer(savedWalletAddress, /* mainAddress, if needed */);
+    }
+    
     document.getElementById('transactionCountInput').value = transactionCount;
 
     async function checkInitialConnection() {
