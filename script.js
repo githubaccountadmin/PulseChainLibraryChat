@@ -33,6 +33,10 @@ document.addEventListener('DOMContentLoaded', function() {
             isConnected = true;
             const networkId = await web3.eth.net.getId();
             checkPulseChain(networkId);
+    
+            const walletAddress = accounts[0];
+            startUserNameFetchTimer(walletAddress, walletAddress);  // Passing wallet address as both params
+            
         } catch (error) {
             console.error('Error connecting wallet:', error);
             // Handle the error and provide user feedback
