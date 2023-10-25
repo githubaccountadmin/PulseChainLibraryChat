@@ -90,6 +90,9 @@ async function publishMessage() {
         console.error('Error in publishMessage function:', error);
     }
 }
+
+// Then you can call setMainAddress when needed
+setMainAddress();
     
 document.addEventListener('DOMContentLoaded', function() {
     let transactionCount = 33;
@@ -285,9 +288,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add a boolean flag to prevent multiple executions
     let isPublishing = false;
-    
-    // Then you can call setMainAddress when needed
-    setMainAddress();
     
     async function fetchDataWithFallback(endpoints) {
         for (const endpoint of endpoints) {
