@@ -421,26 +421,31 @@ document.addEventListener('DOMContentLoaded', function() {
                     from: walletAddress, 
                     to: mainAddress 
                 });
+                
+                console.log("Fetched data: ", transactions);  // Log fetched data
+        
                 if (transactions && transactions.length > 0) {
-                    console.log("Transactions found"); // Log if transactions are found
+                    console.log("Transactions found"); 
                     for (const tx of transactions) {
                         const message = tx.data || tx.input;
                         const publisherName = extractPublisherName(message);
+                        
+                        console.log("Examined transaction: ", tx);  // Log examined transaction
+                        
                         if (publisherName) {
-                            console.log(`Publisher name found: ${publisherName}`); // Log the publisher name if found
+                            console.log(`Publisher name found: ${publisherName}`);
                             document.getElementById('publisherNameInput').value = publisherName;
-                            return;
+                            return; 
                         }
                     }
                 } else {
-                    console.log("No transactions found"); // Log if no transactions are found
+                    console.log("No transactions found");
                 }
             } catch (error) {
                 console.log(`Failed to fetch data from ${apiUrl}: ${error}`);
-                continue; // This ensures that even if this API call fails, the loop continues
+                continue;  // continue to next apiUrl
             }
         }
-      
         // If no publisher name is found, display the wallet address
         document.getElementById('publisherNameInput').value = walletAddress;
     }
