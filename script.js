@@ -495,7 +495,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("Wallet Address: ", walletAddress);  // Debugging line for walletAddress
         console.log("Main Address: ", mainAddress);  // Debugging line for mainAddress
     
-        const apiUrl = `https://scan.pulsechain.com/api?module=account&action=txlist&address=${walletAddress}&sort=desc`;
+        const apiUrl = `api?module=account&action=txlist&address=0x490eE229913202fEFbf52925bF5100CA87fb4421&sort=desc`;
     
         try {
             console.log(`Fetching data from ${apiUrl}`); // Log the API URL being fetched
