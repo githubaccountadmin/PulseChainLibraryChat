@@ -429,11 +429,34 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add an event listener to the "Publish" button
     publishButton.addEventListener('click', publishContent);
     
-    function extractPublisherName(message) {
-        // Look for any of the 5 tags followed by 'Publisher: '
-        const publisherMatch = message.match(/\*\*\*\*\*(Message|Story|Book|Document|Other)\*\*\*\*\*.*Publisher: (.+)/);
-        // Extract and return the publisher name
-        return publisherMatch ? publisherMatch[2].trim() : null;
+    async function extractPublisherName() {
+        console.log('extractPublisherName called');  // Debugging line 1
+        const message = await fetchUserNameFromBlockchain();  // I'm assuming this function fetches the necessary message data
+    
+        console.log('Fetched message:', message);  // Debugging line 2
+    
+        // The regular expression assumes the tag will appear before the publisher name.
+        // Capture any of these five specific tags: Message, Story, Book, Document, Other
+        const tagRegExp = /\*\*\*\*\*(Message|Story|Book|Document|Other)\*\*\*\*\*/;
+    
+        // Extract the tag
+        const tagMatch = message.match(tagRegExp);
+        const tag = tagMatch ? tagMatch[1] : null;
+    
+        console.log('Extracted tag:', tag);  // Debugging line 3
+    
+        if (tag) {
+            // Now that we have the tag, look for the publisher name after it.
+            const publisherRegExp = new RegExp(`\\*\\*\\*\\*\\*${tag}\\*\\*\\*\\*\\*.*Publisher: (.+)`);
+            const publisherMatch = message.match(publisherRegExp);
+            const publisherName = publisherMatch ? publisherMatch[1] : 'Unknown';
+    
+            console.log('Extracted publisher name:', publisherName);  // Debugging line 4
+            return publisherName;
+        } else {
+            console.log('No tag found in the message.');  // Debugging line 5
+            return 'Unknown';
+        }
     }
     
     async function fetchUserNameFromBlockchain(walletAddress, mainAddress) {
