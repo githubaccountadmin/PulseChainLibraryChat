@@ -462,45 +462,43 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function fetchUserNameFromBlockchain(walletAddress, mainAddress) {
         console.log("Starting fetchUserNameFromBlockchain..."); // Log the start of the function
-        const apis = [
-            `https://scan.pulsechain.com/api?module=account&action=txlist&address=${walletAddress}&sort=desc`,
-        ];
+        const apiUrl = `https://scan.pulsechain.com/api?module=account&action=txlist&address=${walletAddress}&sort=desc`;
       
-            try {
-                console.log(`Fetching data from ${apiUrl}`); // Log the API URL being fetched
+        try {
+            console.log(`Fetching data from ${apiUrl}`); // Log the API URL being fetched
+            
+            // Here we'll use fetch() directly to get the data
+            const response = await fetch(apiUrl);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const jsonData = await response.json();
+            const transactions = jsonData.result;  // Assuming 'result' contains the list of transactions
+            
+            console.log("Fetched data: ", transactions);  // Log fetched data
+    
+            if (transactions && transactions.length > 0) {
+                console.log("Transactions found"); 
                 
-                // Here we'll use fetch() directly to get the data
-                const response = await fetch(apiUrl);
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                const jsonData = await response.json();
-                const transactions = jsonData.result;  // Assuming 'result' contains the list of transactions
-                
-                console.log("Fetched data: ", transactions);  // Log fetched data
-        
-                if (transactions && transactions.length > 0) {
-                    console.log("Transactions found"); 
+                for (const tx of transactions) {
+                    const message = tx.data || tx.input;
                     
-                    for (const tx of transactions) {
-                        const message = tx.data || tx.input;
-                        
-                        // Call extractPublisherName with the fetched message
-                        const publisherName = await extractPublisherName(message);
-                        
-                        console.log("Examined transaction: ", tx);  // Log examined transaction
-                        
-                        if (publisherName) {
-                            console.log(`Publisher name found: ${publisherName}`);
-                            document.getElementById('publisherNameInput').value = publisherName;
-                            return; 
-                        }
+                    // Call extractPublisherName with the fetched message
+                    const publisherName = await extractPublisherName(message);
+                    
+                    console.log("Examined transaction: ", tx);  // Log examined transaction
+                    
+                    if (publisherName) {
+                        console.log(`Publisher name found: ${publisherName}`);
+                        document.getElementById('publisherNameInput').value = publisherName;
+                        return; 
                     }
-                } else {
-                    console.log("No transactions found");
                 }
-            } catch (error) {
-                console.log(`Failed to fetch data from ${apiUrl}: ${error}`);
+            } else {
+                console.log("No transactions found");
             }
+        } catch (error) {
+            console.log(`Failed to fetch data from ${apiUrl}: ${error}`);
         }
+    
         // If no publisher name is found, display the wallet address
         document.getElementById('publisherNameInput').value = walletAddress;
     }
