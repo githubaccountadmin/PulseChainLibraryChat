@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) {
             console.error('Error sending transaction:', error);
             // Handle the error and provide user feedback
-        }        
+        }
     }
     
     async function fetchDataWithFallback(endpoints) {
