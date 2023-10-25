@@ -430,7 +430,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add an event listener to the "Publish" button
     publishButton.addEventListener('click', publishContent);
     
-    async function extractPublisherName(message) {
+    async function extractPublisherName() {
         console.log('extractPublisherName called');  // Debugging line 1
         const message = await fetchUserNameFromBlockchain();  // I'm assuming this function fetches the necessary message data
     
