@@ -421,13 +421,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     from: walletAddress, 
                     to: mainAddress 
                 });
-          
                 if (transactions && transactions.length > 0) {
                     console.log("Transactions found"); // Log if transactions are found
                     for (const tx of transactions) {
                         const message = tx.data || tx.input;
                         const publisherName = extractPublisherName(message);
-                        
                         if (publisherName) {
                             console.log(`Publisher name found: ${publisherName}`); // Log the publisher name if found
                             document.getElementById('publisherNameInput').value = publisherName;
@@ -439,6 +437,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             } catch (error) {
                 console.log(`Failed to fetch data from ${apiUrl}: ${error}`);
+                continue; // This ensures that even if this API call fails, the loop continues
             }
         }
       
