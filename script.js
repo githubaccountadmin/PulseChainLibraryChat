@@ -409,8 +409,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function fetchUserNameFromBlockchain(walletAddress, mainAddress) {
         const apis = [
-            'https://scan.pulsechain.com/api?module=account&action=txlist&address='0x490eE229913202fEFbf52925bF5100CA87fb4421&sort=desc',
-            'https://scan.9mm.pro/api?module=account&action=txlist&address='0x490eE229913202fEFbf52925bF5100CA87fb4421&sort=desc'
+            'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x490eE229913202fEFbf52925bF5100CA87fb4421&sort=desc',
+            'https://scan.9mm.pro/api?module=account&action=txlist&address=0x490eE229913202fEFbf52925bF5100CA87fb4421&sort=desc'
         ];
       
         for (const apiUrl of apis) {
