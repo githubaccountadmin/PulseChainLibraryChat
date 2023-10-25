@@ -436,9 +436,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function extractPublisherName(message) {
-        // Extract and return the publisher name from the message
-        // ...
-        return null;  // Return null if no publisher name is found
+        // Find the position of the '*****' tag in the message
+        const tagIndex = message.lastIndexOf("*****");
+        
+        // If the tag is not found, return null
+        if (tagIndex === -1) return null;
+        
+        // Extract and return the publisher name from the message, starting from the position right after the '*****' tag
+        return message.substring(tagIndex + 5).trim();  // +5 to skip the tag itself
     }
     
     async function fetchUserNameFromBlockchain(walletAddress, mainAddress) {
