@@ -10,6 +10,18 @@ const maxRetryCount = 3;
 let timer = null;
 let mainAddress;
 
+// Move setMainAddress outside of publishMessage
+async function setMainAddress() {
+    try {
+        const addresses = await publishMessage();
+        console.log("Inside setMainAddress: addresses returned are ", addresses);
+        mainAddress = addresses.toAddress;
+        console.log("Inside setMainAddress: mainAddress is now ", mainAddress);
+    } catch (error) {
+        console.error("Error in setMainAddress:", error);
+    }
+}
+        
 document.addEventListener('DOMContentLoaded', function() {
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
     let transactionCount = 33;
@@ -229,6 +241,8 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Message is empty.');
             return;
         }
+
+        setMainAddress();
     
         const selectedOption = publishOptionSelect.value || "Message"; // Default to "Message" if nothing is selected
         
@@ -248,16 +262,10 @@ document.addEventListener('DOMContentLoaded', function() {
             fromAddress: fromAddress,
             toAddress: toAddress
         };
+    } catch (error) {
+        console.error('Error in publishMessage:', error);
+    }
         
-        async function setMainAddress() {
-        const addresses = await publishMessage();
-        console.log("Inside setMainAddress: addresses returned are ", addresses);
-        mainAddress = addresses.toAddress;
-        console.log("Inside setMainAddress: mainAddress is now ", mainAddress);
-        }
-        
-        setMainAddress();
-
         // Get the current nonce for your account
         const nonce = await web3.eth.getTransactionCount(fromAddress, 'latest');
     
