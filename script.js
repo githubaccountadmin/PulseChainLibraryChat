@@ -214,6 +214,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add a boolean flag to prevent multiple executions
     let isPublishing = false;
     
+    console.log("publishMessage() has been called!");
     async function publishMessage() {
         console.log('Returned from publishMessage:', returnedValue);
         if (!isConnected) {
