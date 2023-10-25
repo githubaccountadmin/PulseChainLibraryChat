@@ -87,6 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function startUserNameFetchTimer(walletAddress, mainAddress) {
         // If a timer already exists, clear it
+        console.log("About to check timer, which is:", timer);
         if (timer !== null) {
             clearInterval(timer);
         }
