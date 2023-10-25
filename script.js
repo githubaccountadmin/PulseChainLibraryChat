@@ -168,7 +168,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     
         const selectedOption = publishOptionSelect.value || "Message"; // Default to "Message" if nothing is selected
-        const fullMessage = `\n\n${message}\n\n*****(${selectedOption})*****`;
+        
+        // Get the publisher name from the input field
+        const publisherName = document.getElementById('publisherNameInput').value;
+    
+        // Updated to include publisher's name
+        const fullMessage = `\n\n${message}\n\n*****(${selectedOption})*****\n\nPublisher: ${publisherName}`;
     
         const hexMessage = web3.utils.utf8ToHex(fullMessage);
     
