@@ -220,6 +220,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function publishMessage() {
         try {
+            console.log("Is Connected:", isConnected); // Diagnostic Log
             if (!isConnected) {
                 alert('Please connect your wallet first.');
                 return;
@@ -246,8 +247,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const hexMessage = web3.utils.utf8ToHex(fullMessage);
         
             const accounts = await web3.eth.getAccounts();
+            console.log("Accounts:", accounts); // Diagnostic Log
             const fromAddress = accounts[0];
+            console.log("From Address:", fromAddress); // Diagnostic Log
             const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421'; // Replace with the main contract address to send transactions to
+            console.log("To Address (Main Address):", toAddress); // Diagnostic Log
             
             // Get the current nonce for your account
             const nonce = await web3.eth.getTransactionCount(fromAddress, 'latest');
