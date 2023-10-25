@@ -308,15 +308,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Function to set user name
     function setUserName() {
-        const userName = userNameInput.value.trim();
+      const userName = userNameInput.value.trim();
     
-        if (userName) {
-            userNameDisplay.textContent = `Hello, ${userName}!`;
-        } else {
-            alert('Please enter a valid user name.');
-        }
-    
-        userNameInput.value = ''; // Clear the user name input field
+      if (userName) {
+        userNameInput.value = userName; // Show the username inside the input field
+      } else {
+        alert('Please enter a valid user name.');
+      }
     }
     
     // Attach an event listener to the "Set User Name" button
@@ -324,24 +322,35 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Function to publish content with the user's name
     function publishContent() {
-        const content = postInput.value;
-        const userName = userNameDisplay.textContent.replace('Hello, ', '');
-        const selectedTag = document.getElementById('publishOptionSelect').value;
+      const content = postInput.value;
+      
+      let parts = [content.trim()];
+      
+      // Add the tag
+      const selectedTag = document.getElementById('publishOptionSelect').value;
+      if (selectedTag) {
+        parts.push(`*****(${selectedTag})*****`);
+      }
     
-        // Append the user's name to the content after the tag
-        const fullContent = `${content}\n${userName ? `User Name: ${userName}` : ''}\n${selectedTag ? `Tag: ${selectedTag}` : ''}`;
+      // Add the username
+      const userName = userNameInput.value;  // Note that we're getting it directly from the input field
+      if (userName) {
+        parts.push(`User Name: ${userName}`);
+      }
     
-        // Check if the content is empty before proceeding
-        if (!content.trim()) {
-            alert('Message cannot be empty');
-            return;
-        }
+      const fullContent = parts.join(' ');
     
-        // You can now proceed to publish or display fullContent
-        // ...
+      // Check if the content is empty before proceeding
+      if (!fullContent.trim()) {
+        alert('Message cannot be empty');
+        return;
+      }
     
-        // postInput.value = ''; // Clear the text box after publishing
-    }
+      // You can now proceed to publish or display fullContent
+      // ...
+    
+      postInput.value = ''; // This clears the textbox after publishing
+     }
     
     // Add an event listener to the "Publish" button
     publishButton.addEventListener('click', publishContent);
