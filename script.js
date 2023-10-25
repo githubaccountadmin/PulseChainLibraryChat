@@ -8,7 +8,7 @@ const apiEndpoints = [
 const maxRetryCount = 3;
 let timer = null;
 let mainAddress;
-let isConnected = false;
+let isConnected = true;
 
 // Move setMainAddress outside of publishMessage
 async function setMainAddress() {
