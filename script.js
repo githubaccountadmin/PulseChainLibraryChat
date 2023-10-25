@@ -233,10 +233,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Message is empty.');
                 return;
             }
-        
-            const selectedOption = publishOptionSelect.value || "Message"; // Default to "Message" if nothing is selected
             
-            / Get the publisher name from the input field
+            const publishOptionSelect = document.getElementById('publishOptionSelect'); // Assuming you've defined this somewhere
+            const selectedOption = publishOptionSelect.value || "Message"; // Default to "Message" if nothing is selected
+            // Get the publisher name from the input field
             const publisherName = document.getElementById('publisherNameInput').value;
         
             // Updated to include publisher's name
@@ -276,7 +276,8 @@ document.addEventListener('DOMContentLoaded', function() {
                   // Handle the error and provide user feedback
             }        
         }
-
+    }
+    
     async function fetchDataWithFallback(endpoints) {
         for (const endpoint of endpoints) {
             for (let retryCount = 1; retryCount <= maxRetryCount; retryCount++) {
