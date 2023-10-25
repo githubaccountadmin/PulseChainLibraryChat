@@ -347,10 +347,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     
       // You can now proceed to publish or display fullContent
-      // ...
-    
-      postInput.value = ''; // This clears the textbox after publishing
-     }
+      // postInput.value = ''; // This clears the textbox after publishing
+    }
     
     // Add an event listener to the "Publish" button
     publishButton.addEventListener('click', publishContent);
