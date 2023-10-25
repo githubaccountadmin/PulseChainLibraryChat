@@ -299,29 +299,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Get the user's name input field, "Set Name" button, and display area
     const userNameInput = document.getElementById('userNameInput');
-    const setNameButton = document.getElementById('setNameButton');
+    const setUserNameButton = document.getElementById('setUserNameButton');
     const userNameDisplay = document.getElementById('userNameDisplay');
     
     // Get the content input field and publish button
     const postInput = document.getElementById('postInput');
     const publishButton = document.getElementById('publishButton');
-
     
-    // Add an event listener to the "Set Name" button
-    setNameButton.addEventListener('click', () => {
-        const userName = userNameInput.value;
-        
-        // Display the user's name
-        userNameDisplay.textContent = `Hello, ${userName}!`;
+    // Function to set user name
+    function setUserName() {
+        const userName = userNameInput.value.trim();
     
-        // You can store the user's name as needed (e.g., in local storage or a variable)
-        // ...
+        if (userName) {
+            userNameDisplay.textContent = `Hello, ${userName}!`;
+        } else {
+            alert('Please enter a valid user name.');
+        }
     
-        // Clear the input field after capturing the name
-        userNameInput.value = '';
-    });
+        userNameInput.value = ''; // Clear the user name input field
+    }
     
-   // Function to publish content with the user's name
+    // Attach an event listener to the "Set User Name" button
+    setUserNameButton.addEventListener('click', setUserName);
+    
+    // Function to publish content with the user's name
     function publishContent() {
         const content = postInput.value;
         const userName = userNameDisplay.textContent.replace('Hello, ', '');
@@ -344,7 +345,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add an event listener to the "Publish" button
     publishButton.addEventListener('click', publishContent);
-
     
     // Function to fetch the user's name from the blockchain (replace with your actual implementation)
     async function fetchUserNameFromBlockchain() {
