@@ -462,15 +462,26 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function fetchUserNameFromBlockchain(walletAddress, mainAddress) {
         console.log("Starting fetchUserNameFromBlockchain..."); // Log the start of the function
+        console.log("Wallet Address: ", walletAddress);  // Debugging line for walletAddress
+        console.log("Main Address: ", mainAddress);  // Debugging line for mainAddress
+    
         const apiUrl = `https://scan.pulsechain.com/api?module=account&action=txlist&address=${walletAddress}&sort=desc`;
-      
+    
         try {
             console.log(`Fetching data from ${apiUrl}`); // Log the API URL being fetched
             
             // Here we'll use fetch() directly to get the data
             const response = await fetch(apiUrl);
+            
+            // Debugging line for complete HTTP response
+            console.log("Complete HTTP response: ", response);  
+    
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const jsonData = await response.json();
+            
+            // Debugging line for complete JSON response
+            console.log("Complete JSON response: ", jsonData);  
+    
             const transactions = jsonData.result;  // Assuming 'result' contains the list of transactions
             
             console.log("Fetched data: ", transactions);  // Log fetched data
@@ -498,7 +509,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) {
             console.log(`Failed to fetch data from ${apiUrl}: ${error}`);
         }
-    
+        
         // If no publisher name is found, display the wallet address
         document.getElementById('publisherNameInput').value = walletAddress;
     }
