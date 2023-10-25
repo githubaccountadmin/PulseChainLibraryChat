@@ -297,30 +297,31 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Get the user's name input field, "Set Name" button, and display area
-    const userNameInput = document.getElementById('userNameInput');
-    const setUserNameButton = document.getElementById('setUserNameButton');
-    const userNameDisplay = document.getElementById('userNameDisplay');
+    // Get the publisher's name input field, "Set Publisher" button, and display area
+    const publisherNameInput = document.getElementById('publisherNameInput');
+    const setPublisherNameButton = document.getElementById('setPublisherNameButton');
+    const publisherNameDisplay = document.getElementById('publisherNameDisplay');
     
     // Get the content input field and publish button
     const postInput = document.getElementById('postInput');
     const publishButton = document.getElementById('publishButton');
     
-    // Function to set user name
+    // Function to set publisher name
     function setPublisherName() {
       const publisherName = publisherNameInput.value.trim();
     
       if (publisherName) {
-        publisherNameInput.value = publisherName; // Show the publisher name inside the input field
+        publisherNameDisplay.innerHTML = `Hello, ${publisherName}`; // Show the publisher name below the input field
+        publisherNameInput.value = ''; // Clear the name box
       } else {
         alert('Please enter a valid publisher name.');
       }
     }
     
-    // Attach an event listener to the "Set User Name" button
-    setUserNameButton.addEventListener('click', setUserName);
+    // Attach an event listener to the "Set Publisher Name" button
+    setPublisherNameButton.addEventListener('click', setPublisherName);
     
-    // Function to publish content with the user's name
+    // Function to publish content with the publisher's name
     function publishContent() {
       console.log("Publish button clicked"); // Debugging log
       
