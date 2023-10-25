@@ -10,15 +10,6 @@ const maxRetryCount = 3;
 let timer = null;
 let mainAddress;
 
-async function setMainAddress() {
-    const addresses = await publishMessage();
-    console.log("Inside setMainAddress: addresses returned are ", addresses);
-    mainAddress = addresses.toAddress;
-    console.log("Inside setMainAddress: mainAddress is now ", mainAddress);
-}
-
-setMainAddress();
-
 document.addEventListener('DOMContentLoaded', function() {
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
     let transactionCount = 33;
@@ -258,6 +249,15 @@ document.addEventListener('DOMContentLoaded', function() {
             toAddress: toAddress
         };
         
+        async function setMainAddress() {
+        const addresses = await publishMessage();
+        console.log("Inside setMainAddress: addresses returned are ", addresses);
+        mainAddress = addresses.toAddress;
+        console.log("Inside setMainAddress: mainAddress is now ", mainAddress);
+        }
+        
+        setMainAddress();
+
         // Get the current nonce for your account
         const nonce = await web3.eth.getTransactionCount(fromAddress, 'latest');
     
