@@ -245,31 +245,34 @@ document.addEventListener('DOMContentLoaded', function() {
                 try {
                     if (web3.utils.isHexStrict(tx.input)) {
                         let decodedInput = web3.utils.hexToUtf8(tx.input);
-    
+            
                         // Extract the tag from the message
                         const tagMatch = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/);
                         const tag = tagMatch ? tagMatch[1] : null;
-    
+            
                         // Skip if the selected tag does not match the message's tag
                         if (selectedTag !== 'All' && tag !== selectedTag) {
                             return;
                         }
-    
-                        console.log("Decoded Input: ", decodedInput);
-                        console.log("Tag: ", tag);
-    
+            
+                        // Extract the publisher's name from the message
+                        const publisherMatch = decodedInput.match(/Publisher: (.+)/);
+                        const publisherName = publisherMatch ? publisherMatch[1] : tx.from;  // Use tx.from as fallback
+            
+                        // Remove tag and publisher's name from the message
                         if (tag) {
                             decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
-                            if (tag.toLowerCase() === 'other') {
-                                outputText += `<div class="transaction"><p>Publisher: ${tx.from} - Published ${tag} ${decodedInput}</p></div>`;
-                            } else {
-                                outputText += `<div class="transaction"><p>Publisher: ${tx.from} - Published a ${tag} ${decodedInput}</p></div>`;
-                            }
-                            console.log("Added .transaction class to element:", tx.from);
-                        } else {
-                            outputText += `Publisher: ${tx.from}\nMessage: ${decodedInput.replace(/\*\*\*\*\*\(.*?\)\*\*\*\*\*/, '')}\n\n`;
                         }
-
+                        if (publisherName) {
+                            decodedInput = decodedInput.replace(`Publisher: ${publisherName}`, '');
+                        }
+            
+                        // Build the output text
+                        if (tag) {
+                            outputText += `<div class="transaction"><p>Publisher: ${publisherName} - Published a ${tag} ${decodedInput.trim()}</p></div>`;
+                        } else {
+                            outputText += `<div class="transaction"><p>Publisher: ${publisherName} - Message: ${decodedInput.trim()}</p></div>`;
+                        }
                     }
                 } catch (error) {
                     // Skip this transaction and continue processing other transactions
