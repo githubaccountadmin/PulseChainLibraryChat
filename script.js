@@ -220,62 +220,62 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function publishMessage() {
         try {
-          if (!isConnected) {
-            alert('Please connect your wallet first.');
-            return;
-          }
-    
-          const contentInput = document.getElementById('postInput');
-          const message = contentInput.value;
-    
-          // Check if message is empty
-          if (!message.trim()) {
-            console.error('Message is empty.');
-            return;
-          }
-    
-          const selectedOption = publishOptionSelect.value || "Message"; // Default to "Message" if nothing is selected
+            if (!isConnected) {
+                alert('Please connect your wallet first.');
+                return;
+            }
         
-          / Get the publisher name from the input field
-          const publisherName = document.getElementById('publisherNameInput').value;
-    
-          // Updated to include publisher's name
-          const fullMessage = `\n\n${message}\n\n*****(${selectedOption})*****\n\nPublisher: ${publisherName}`;
-    
-          const hexMessage = web3.utils.utf8ToHex(fullMessage);
-    
-          const accounts = await web3.eth.getAccounts();
-          const fromAddress = accounts[0];
-          const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421'; // Replace with the main contract address to send transactions to
+            const contentInput = document.getElementById('postInput');
+            const message = contentInput.value;
         
-          // Get the current nonce for your account
-          const nonce = await web3.eth.getTransactionCount(fromAddress, 'latest');
-    
-          const tx = {
-            from: fromAddress,
-            to: toAddress,
-            value: web3.utils.toWei('0', 'ether'),
-            data: hexMessage,
-            gas: 30000000, // Set the gas limit appropriately
-            nonce: nonce, // Include the nonce in the transaction
-          };
-    
-          try {
-            // Send the transaction
-            const receipt = await web3.eth.sendTransaction(tx);
-            console.log('Transaction receipt:', receipt);
-            // Provide user feedback for a successful transaction
-    
-            contentInput.value = ''; // Clear the text area
-          return {
-            fromAddress: fromAddress,
-            toAddress: toAddress
-          };
-        } catch (error) {
-          console.error('Error sending transaction:', error);
-          // Handle the error and provide user feedback
+            // Check if message is empty
+            if (!message.trim()) {
+                console.error('Message is empty.');
+                return;
+            }
+        
+            const selectedOption = publishOptionSelect.value || "Message"; // Default to "Message" if nothing is selected
+            
+            / Get the publisher name from the input field
+            const publisherName = document.getElementById('publisherNameInput').value;
+        
+            // Updated to include publisher's name
+            const fullMessage = `\n\n${message}\n\n*****(${selectedOption})*****\n\nPublisher: ${publisherName}`;
+        
+            const hexMessage = web3.utils.utf8ToHex(fullMessage);
+        
+            const accounts = await web3.eth.getAccounts();
+            const fromAddress = accounts[0];
+            const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421'; // Replace with the main contract address to send transactions to
+            
+            // Get the current nonce for your account
+            const nonce = await web3.eth.getTransactionCount(fromAddress, 'latest');
+        
+            const tx = {
+                from: fromAddress,
+                to: toAddress,
+                value: web3.utils.toWei('0', 'ether'),
+                data: hexMessage,
+                gas: 30000000, // Set the gas limit appropriately
+                nonce: nonce, // Include the nonce in the transaction
+            };
+        
+            try {
+                // Send the transaction
+                const receipt = await web3.eth.sendTransaction(tx);
+                console.log('Transaction receipt:', receipt);
+                // Provide user feedback for a successful transaction
+        
+                contentInput.value = ''; // Clear the text area
+                return {
+                    fromAddress: fromAddress,
+                    toAddress: toAddress
+                };
+            } catch (error) {
+                  console.error('Error sending transaction:', error);
+                  // Handle the error and provide user feedback
+            }        
         }
-    }
 
     async function fetchDataWithFallback(endpoints) {
         for (const endpoint of endpoints) {
