@@ -234,8 +234,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            const publishOptionSelect = document.getElementById('publishOptionSelect'); // Assuming you've defined this somewhere
+            const publishOptionSelect = document.getElementById('publishOptionSelect'); 
             const selectedOption = publishOptionSelect.value || "Message"; // Default to "Message" if nothing is selected
+            
             // Get the publisher name from the input field
             const publisherName = document.getElementById('publisherNameInput').value;
         
@@ -264,16 +265,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Send the transaction
                 const receipt = await web3.eth.sendTransaction(tx);
                 console.log('Transaction receipt:', receipt);
-                // Provide user feedback for a successful transaction
         
+                // Provide user feedback for a successful transaction
                 contentInput.value = ''; // Clear the text area
                 return {
                     fromAddress: fromAddress,
                     toAddress: toAddress
-            };
+                };
+            } catch (error) {
+                console.error('Error sending transaction:', error);
+            }
         } catch (error) {
-            console.error('Error sending transaction:', error);
-            // Handle the error and provide user feedback
+            console.error('Error in publishMessage function:', error);
         }
     }
     
