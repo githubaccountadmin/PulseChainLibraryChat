@@ -283,6 +283,9 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error in publishMessage function:', error);
         }
     }
+
+    // Then you can call setMainAddress when needed
+    setMainAddress();
     
     async function fetchDataWithFallback(endpoints) {
         for (const endpoint of endpoints) {
