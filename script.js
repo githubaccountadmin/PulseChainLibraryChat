@@ -348,7 +348,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('publishButton').addEventListener('click', function() {
         document.getElementById('publishOptions').style.display = 'block';
     });
-    document.getElementById('tagFilter').addEventListener('change', fetchTransactionData);
     
     // Single Event Listener for "Confirm" button to hide publish options and send the message
     document.getElementById('confirmPublishButton').addEventListener('click', async function() {
