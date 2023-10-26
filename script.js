@@ -281,6 +281,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
         } catch (error) {
             console.error("Error details:", error.name, error.message);
+            console.log(document.getElementById('transactionDataWindow'));
             const window = document.getElementById('transactionDataWindow');
             window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
         }
