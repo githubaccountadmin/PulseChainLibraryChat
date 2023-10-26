@@ -231,8 +231,8 @@ document.addEventListener('DOMContentLoaded', function() {
         throw new Error('All API endpoints have failed. Please reload the page to try again.');
     }
 
-    async function fetchTransactionData() {
-        console.log('Fetching more data...');
+    async function fetchTransactionData(clearExisting = false) {
+    console.log('Fetching more data...');
         try {
             // Get the selected tag from the dropdown
             const selectedTag = document.getElementById('tagFilter').value;
@@ -261,6 +261,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const sliceEnd = lastIndexProcessed + 13;
     
             if (window.innerHTML === 'Fetching data...') {
+                window.innerHTML = '';
+            }
+            
+            if (clearExisting) {
                 window.innerHTML = '';
             }
             
@@ -337,11 +341,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('tagFilter').addEventListener('change', function() {
         // Reset lastIndexProcessed
         lastIndexProcessed = 0;
-        // Clear the transaction data window
-        const window = document.getElementById('transactionDataWindow');
-        window.innerHTML = '';
-        // Fetch data again with the new filter
-        fetchTransactionData();
+        // Fetch data again with the new filter and clear existing data
+        fetchTransactionData(true);
     });
     
     document.getElementById('connectButton').addEventListener('click', connectWallet);
