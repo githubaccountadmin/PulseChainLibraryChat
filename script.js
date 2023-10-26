@@ -12,7 +12,7 @@ let isConnected = true;
 let apiCalls = 0;
 const maxApiCalls = 2;
 const timeWindow = 60000; // 60 seconds in milliseconds
-    
+const delayBetweenCalls = 10000; // 10 seconds in milliseconds    
 setInterval(() => {
     apiCalls = 0;
 }, timeWindow);
@@ -24,6 +24,7 @@ async function fetchSomething() {
     } else {
         console.log("Max API call limit reached for this minute.");
     }
+    await new Promise(resolve => setTimeout(resolve, delayBetweenCalls));
 }
 
 // Web3 Initialization moved to global scope
