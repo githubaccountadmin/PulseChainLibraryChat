@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function fetchTransactionData() {
-        console.log('Fetching more data...');  // Add this line
+        console.log('Inside fetchTransactionData');  // Add this line
         try {
             // Get the selected tag from the dropdown
             const selectedTag = document.getElementById('tagFilter').value;
