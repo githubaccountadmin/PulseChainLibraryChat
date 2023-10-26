@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let transactionCount = 33;
     let isConnected = false;
     let globalHexMessage = '';
+    let isFirstLoad = true; // Add this line at the top of your script
     
     document.getElementById('transactionCountInput').value = transactionCount;
 
@@ -232,10 +233,15 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("Transaction Count: ", transactionCount);
     
             const window = document.getElementById('transactionDataWindow');
-            window.innerHTML = 'Fetching data...';
+        
+            if (isFirstLoad) {
+                window.innerHTML = 'Fetching data...';
+                isFirstLoad = false; // Set it to false after the first load
+            }
     
             const data = await fetchDataWithFallback(apiEndpoints);
             let outputText = "";
+
             data.result.filter(tx => tx.input !== '0x').slice(0, transactionCount).forEach(tx => {
                 try {
                     if (web3.utils.isHexStrict(tx.input)) {
