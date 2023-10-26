@@ -298,11 +298,12 @@ document.addEventListener('DOMContentLoaded', function() {
         
     // Function to fetch more transaction data when scrolled to the bottom
     document.getElementById('transactionDataWindow').addEventListener('scroll', async function() {
-        console.log('Scroll event fired!');  // Debugging line
-        const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-        console.log("ScrollTop:", scrollTop, "ScrollHeight:", scrollHeight, "ClientHeight:", clientHeight); // Debugging line
+        console.log('Scroll event triggered on transactionDataWindow');
+        const { scrollTop, scrollHeight, clientHeight } = this; // Note the use of 'this' here
+        console.log("ScrollTop:", scrollTop, "ScrollHeight:", scrollHeight, "ClientHeight:", clientHeight);
+        
         if(clientHeight + scrollTop >= scrollHeight - 5) {
-            console.log("Fetching more data..."); // Debugging line
+            console.log("Fetching more data...");
             await fetchTransactionData();
         }
     });
