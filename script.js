@@ -328,7 +328,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Make the DIV element draggable:
-    dragElement(document.getElementById("transaction-container"), document.getElementById("dragHandle"));    
+    dragElement(document.getElementById("transaction-container"), document.getElementById("dragHandle"));
+    
     function dragElement(elmnt, handle) {
         var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
         if (handle) {
