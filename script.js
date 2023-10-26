@@ -227,7 +227,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // const newCount = parseInt(document.getElementById('transactionCountInput').value);
             // if (!isNaN(newCount)) {
             //      transactionCount = newCount;
-            }
+            // }
     
             console.log("Selected Tag: ", selectedTag);
                 
