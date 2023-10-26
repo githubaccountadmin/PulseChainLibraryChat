@@ -31,9 +31,14 @@ async function fetchSomething() {
 const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
 
 async function initialize() {
-  await fetchUserNameFromBlockchain();  // Assuming this returns a Promise
-  await setMainAddress();
-  // Now you can safely proceed to other operations
+    try {
+        const addressData = await publishMessage(); // Assuming this returns a Promise
+        if (addressData) {
+            await setMainAddress(addressData);
+        }
+    } catch (error) {
+        console.error("Error in initialize:", error);
+    }
 }
 
 // Move setMainAddress outside of publishMessage
@@ -115,9 +120,6 @@ async function publishMessage() {
     }
 }
 
-// Then you can call setMainAddress when needed
-setMainAddress();
-    
 document.addEventListener('DOMContentLoaded', function() {
     let transactionCount = 33;
     let globalHexMessage = '';
@@ -599,7 +601,8 @@ document.addEventListener('DOMContentLoaded', function() {
     checkInitialConnection();
     fetchTransactionData();
     setRandomTitle();
-    
+    initialize();
+    setMainAddress();
     setInterval(fetchTransactionData, 120000);
     
 });
