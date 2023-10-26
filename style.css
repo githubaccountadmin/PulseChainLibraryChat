@@ -1,4 +1,4 @@
-/* CSS for Dark Mode */
+/*or Dark Mode */
 
 /* Styling for the entire page in dark mode */
 body.dark-mode {
@@ -30,13 +30,6 @@ button, #connectButton, #publishButton, #docs-button {
 #connectButton {
     position: absolute;
     top: 0;
-    right: 0;
-}
-
-/* New styling for publisher-name-container */
-#publisher-name-container {
-    position: absolute;
-    top: 60px;  /* Height of connectButton + gap */
     right: 0;
 }
 
@@ -201,8 +194,4 @@ button.connected:hover {
     padding: 5px; /* Padding */
     font-size: 16px; /* Font size */
     width: 50px; /* Adjust the width as needed */
-}
-
-.flash {
-  border: 3px solid green; /* You can customize the color as you like */
 }
