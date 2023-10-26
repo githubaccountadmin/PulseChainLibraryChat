@@ -105,11 +105,21 @@ textarea {
     position: relative;
 }
 
+#dragHandle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: move;
+    background-color: grey;
+    text-align: center;
+    width: 50px;
+}
+
 /* Styling for the scrollable transaction data window */
 .scrollable-window {
-    background-color: #000000;
-    color: #00ff00;
     overflow: auto;
+    background-color: #000000;
+    color: #00ff00;    
     padding: 10px;
     margin-top: 20px;
     height: calc(50vh - 170px);
