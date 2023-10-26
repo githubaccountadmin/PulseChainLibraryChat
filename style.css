@@ -126,8 +126,6 @@ textarea {
     width: 1000px; /* same as input-container and input-wrapper */
     white-space: pre-wrap;
     border: 2px solid #00ff00; /* Add a border around each transaction */
-    resize: both; /* Make the div resizable */
-    overflow: hidden; /* Hide overflow */
     position: relative; /* NEW: Relative positioning */
 }
 
