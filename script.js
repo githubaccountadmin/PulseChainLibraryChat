@@ -42,24 +42,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function checkPulseChain(networkId) {
+        console.log("Network ID from Ethereum:", networkId);
+        console.log("PulseChain ID:", pulseChainId);
         try {
             const connectButton = document.getElementById('connectButton');
-            console.log("Updating connect button");  // Debugging log
-
+    
+            // Explicitly convert networkId to a number
+            const networkIdNumber = Number(networkId);
+    
+            // Add hover effect for connectButton
             connectButton.addEventListener('mouseover', function() {
                 if (!isConnected) {
                     this.style.backgroundColor = 'green';
                 }
             });
-
+    
             connectButton.addEventListener('mouseout', function() {
                 if (!isConnected) {
                     this.style.backgroundColor = 'grey';
                 }
             });
-
-            connectButton.innerText = isConnected ? (networkId === pulseChainId ? "Connected" : "Not connected to PulseChain") : "Connect Wallet";
-            connectButton.style.backgroundColor = isConnected ? (networkId === pulseChainId ? "green" : "red") : "grey";
+            
+            console.log("Updating connect button");
+            connectButton.innerText = isConnected ? (networkIdNumber === pulseChainId ? "Connected" : "Not connected to PulseChain") : "Connect Wallet";
+            connectButton.style.backgroundColor = isConnected ? (networkIdNumber === pulseChainId ? "green" : "red") : "grey";
         } catch (error) {
             console.error('Error checking PulseChain network:', error);
         }
