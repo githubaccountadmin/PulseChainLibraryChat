@@ -12,42 +12,40 @@ document.addEventListener('DOMContentLoaded', function() {
     let transactionCount = 13;
     let isConnected = false;
     let globalHexMessage = '';
-    let isFirstLoad = true; // Add this line at the top of your script
-    
-    // document.getElementById('transactionCountInput').value = transactionCount;
+    let isFirstLoad = true;
+    const pulseChainId = 369;  // PulseChain network ID - Moved outside of the function
+
+    console.log("Initial PulseChain ID:", pulseChainId);  // Debugging log
 
     async function checkInitialConnection() {
         try {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             isConnected = accounts.length > 0;
             const networkId = isConnected ? await window.ethereum.request({ method: 'net_version' }) : null;
+            console.log("Network ID from Ethereum:", networkId);  // Debugging log
             checkPulseChain(networkId);
         } catch (error) {
             console.error('Error checking initial connection:', error);
-            // Handle the error and provide user feedback
         }
     }
-    
+
     async function connectWallet() {
         try {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             isConnected = true;
             const networkId = await window.ethereum.request({ method: 'net_version' });
+            console.log("Network ID from Ethereum:", networkId);  // Debugging log
             checkPulseChain(networkId);
         } catch (error) {
             console.error('Error connecting wallet:', error);
-            // Handle the error and provide user feedback
         }
     }
 
     function checkPulseChain(networkId) {
-        console.log("Network ID from Ethereum:", networkId);
-        console.log("PulseChain ID:", pulseChainId);
         try {
             const connectButton = document.getElementById('connectButton');
-            const pulseChainId = 369;  // PulseChain network ID
+            console.log("Updating connect button");  // Debugging log
 
-            // Add hover effect for connectButton
             connectButton.addEventListener('mouseover', function() {
                 if (!isConnected) {
                     this.style.backgroundColor = 'green';
@@ -59,13 +57,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     this.style.backgroundColor = 'grey';
                 }
             });
-            
-            console.log("Updating connect button");
+
             connectButton.innerText = isConnected ? (networkId === pulseChainId ? "Connected" : "Not connected to PulseChain") : "Connect Wallet";
             connectButton.style.backgroundColor = isConnected ? (networkId === pulseChainId ? "green" : "red") : "grey";
         } catch (error) {
             console.error('Error checking PulseChain network:', error);
-            // Handle the error and provide user feedback
         }
     }
 
