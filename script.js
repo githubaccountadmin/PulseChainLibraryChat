@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421'; // Replace with your contract address
     
         // Get the current nonce for your account
-        const nonce = await web3.eth.getTransactionCount(fromAddress, 'latest');
+        // const nonce = await web3.eth.getTransactionCount(fromAddress, 'latest');
     
         const tx = {
             from: fromAddress,
