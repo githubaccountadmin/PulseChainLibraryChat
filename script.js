@@ -375,6 +375,28 @@ document.addEventListener('DOMContentLoaded', function() {
             document.onmousemove = null;
         }
     }
+    
+    // Make the DIV element resizable:
+    var resizer = document.createElement('div');
+    resizer.className = 'resizer';
+    document.getElementById("transaction-container").appendChild(resizer);
+    
+    resizer.addEventListener('mousedown', initResize, false);
+    
+    function initResize(e) {
+        window.addEventListener('mousemove', resize, false);
+        window.addEventListener('mouseup', stopResize, false);
+    }
+    
+    function resize(e) {
+        document.getElementById("transaction-container").style.width = (e.clientX - document.getElementById("transaction-container").offsetLeft) + 'px';
+        document.getElementById("transaction-container").style.height = (e.clientY - document.getElementById("transaction-container").offsetTop) + 'px';
+    }
+    
+    function stopResize(e) {
+        window.removeEventListener('mousemove', resize, false);
+        window.removeEventListener('mouseup', stopResize, false);
+    }
         
     // Function to fetch more transaction data when scrolled to the bottom
     document.getElementById('transactionDataWindow').addEventListener('scroll', async function() {
