@@ -18,7 +18,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function checkInitialConnection() {
         try {
-            const accounts = await web3.eth.getAccounts();
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            // const accounts = await web3.eth.getAccounts();
             isConnected = accounts.length > 0;
             const networkId = isConnected ? await web3.eth.net.getId() : null;
             checkPulseChain(networkId);
