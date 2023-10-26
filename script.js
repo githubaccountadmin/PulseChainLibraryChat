@@ -19,21 +19,20 @@ document.addEventListener('DOMContentLoaded', function() {
     async function checkInitialConnection() {
         try {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            // const accounts = await web3.eth.getAccounts();
             isConnected = accounts.length > 0;
-            const networkId = isConnected ? await web3.eth.net.getId() : null;
+            const networkId = isConnected ? await window.ethereum.request({ method: 'net_version' }) : null;
             checkPulseChain(networkId);
         } catch (error) {
             console.error('Error checking initial connection:', error);
             // Handle the error and provide user feedback
         }
     }
-
+    
     async function connectWallet() {
         try {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             isConnected = true;
-            const networkId = await web3.eth.net.getId();
+            const networkId = await window.ethereum.request({ method: 'net_version' });
             checkPulseChain(networkId);
         } catch (error) {
             console.error('Error connecting wallet:', error);
