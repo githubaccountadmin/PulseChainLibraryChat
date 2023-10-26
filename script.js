@@ -224,14 +224,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const selectedTag = document.getElementById('tagFilter').value;
     
             // Update this line to get the count from the input box
-            const newCount = parseInt(document.getElementById('transactionCountInput').value);
-            if (!isNaN(newCount)) {
-                transactionCount = newCount;
+            // const newCount = parseInt(document.getElementById('transactionCountInput').value);
+            // if (!isNaN(newCount)) {
+            //      transactionCount = newCount;
             }
     
             console.log("Selected Tag: ", selectedTag);
-            console.log("Transaction Count: ", transactionCount);
-    
+                
             const window = document.getElementById('transactionDataWindow');
         
             if (isFirstLoad) {
@@ -291,16 +290,16 @@ document.addEventListener('DOMContentLoaded', function() {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    function updateTransactionCount() {
-        try {
-            const newCount = parseInt(document.getElementById('transactionCountInput').value);
-            if (!isNaN(newCount)) {
-                transactionCount = newCount;
-            }
-        } catch (error) {
-            console.error('Error updating transaction count:', error);
-            // Handle the error and provide user feedback
-        }
+    // function updateTransactionCount() {
+    //     try {
+    //         const newCount = parseInt(document.getElementById('transactionCountInput').value);
+    //         if (!isNaN(newCount)) {
+    //             transactionCount = newCount;
+    //         }
+    //     } catch (error) {
+    //         console.error('Error updating transaction count:', error);
+    //         // Handle the error and provide user feedback
+    //     }
     }
 
     // Function to fetch more transaction data when scrolled to the bottom
