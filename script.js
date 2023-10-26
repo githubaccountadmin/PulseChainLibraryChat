@@ -6,6 +6,7 @@ const apiEndpoints = [
 ];
 
 const maxRetryCount = 3;
+const pulseChainId = 369;  // PulseChain network ID - Moved outside of the function
 
 document.addEventListener('DOMContentLoaded', function() {
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
@@ -13,8 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let isConnected = false;
     let globalHexMessage = '';
     let isFirstLoad = true;
-    const pulseChainId = 369;  // PulseChain network ID - Moved outside of the function
-
+    
     console.log("Initial PulseChain ID:", pulseChainId);  // Debugging log
 
     async function checkInitialConnection() {
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             isConnected = accounts.length > 0;
             const networkId = isConnected ? await window.ethereum.request({ method: 'net_version' }) : null;
-            console.log("Network ID from Ethereum:", networkId);  // Debugging log
+            console.log("Network ID from Ethereum in checkInitialConnection:", networkId);  // Debugging log
             checkPulseChain(networkId);
         } catch (error) {
             console.error('Error checking initial connection:', error);
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             isConnected = true;
             const networkId = await window.ethereum.request({ method: 'net_version' });
-            console.log("Network ID from Ethereum:", networkId);  // Debugging log
+            console.log("Network ID from Ethereum in connectWallet:", networkId);  // Debugging log
             checkPulseChain(networkId);
         } catch (error) {
             console.error('Error connecting wallet:', error);
