@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
     // Function to fetch more transaction data when scrolled to the bottom
     window.addEventListener('scroll', async function() {
-        console.log('Scroll event fired!');  // Add this line
+        console.log('Scroll event fired!');  // Debugging line
         const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
         console.log("ScrollTop:", scrollTop, "ScrollHeight:", scrollHeight, "ClientHeight:", clientHeight); // Debugging line
         if(clientHeight + scrollTop >= scrollHeight - 5) {
@@ -332,7 +332,6 @@ document.addEventListener('DOMContentLoaded', function() {
     checkInitialConnection();
     fetchTransactionData();
     setRandomTitle();
-    
-    setInterval(fetchTransactionData, 120000);
+    // setInterval(fetchTransactionData, 120000);
     
 });
