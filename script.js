@@ -359,6 +359,11 @@ document.addEventListener('DOMContentLoaded', function() {
             pos2 = pos4 - e.clientY;
             pos3 = e.clientX;
             pos4 = e.clientY;
+            // Debugging logs
+            console.log("Current top:", elmnt.offsetTop);
+            console.log("Current left:", elmnt.offsetLeft);
+            console.log("New top:", elmnt.offsetTop - pos2);
+            console.log("New left:", elmnt.offsetLeft - pos1);
             // set the element's new position:
             elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
             elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
