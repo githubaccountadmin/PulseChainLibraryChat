@@ -334,6 +334,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    document.getElementById('tagFilter').addEventListener('change', function() {
+        // Reset lastIndexProcessed
+        lastIndexProcessed = 0;
+        // Clear the transaction data window
+        const window = document.getElementById('transactionDataWindow');
+        window.innerHTML = '';
+        // Fetch data again with the new filter
+        fetchTransactionData();
+    });
+    
     document.getElementById('connectButton').addEventListener('click', connectWallet);
     document.getElementById('publishButton').addEventListener('click', function() {
         document.getElementById('publishOptions').style.display = 'block';
