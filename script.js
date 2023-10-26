@@ -376,27 +376,38 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Make the DIV element resizable:
-    var resizer = document.createElement('div');
+    // Add this to make the DIV element resizable
+    const resizer = document.createElement('div');
     resizer.className = 'resizer';
-    document.getElementById("transaction-container").appendChild(resizer);
+    const transactionContainer = document.getElementById("transaction-container");
+    transactionContainer.appendChild(resizer);
     
-    resizer.addEventListener('mousedown', initResize, false);
+    let isResizing = false;
     
-    function initResize(e) {
-        window.addEventListener('mousemove', resize, false);
-        window.addEventListener('mouseup', stopResize, false);
-    }
+    resizer.addEventListener('mousedown', (event) => {
+        isResizing = true;
+        let initialWidth = transactionContainer.clientWidth;
+        let initialHeight = transactionContainer.clientHeight;
+        let initialX = event.clientX;
+        let initialY = event.clientY;
     
-    function resize(e) {
-        document.getElementById("transaction-container").style.width = (e.clientX - document.getElementById("transaction-container").offsetLeft) + 'px';
-        document.getElementById("transaction-container").style.height = (e.clientY - document.getElementById("transaction-container").offsetTop) + 'px';
-    }
+        const handleMouseMove = (event) => {
+            const newWidth = initialWidth + (event.clientX - initialX);
+            const newHeight = initialHeight + (event.clientY - initialY);
     
-    function stopResize(e) {
-        window.removeEventListener('mousemove', resize, false);
-        window.removeEventListener('mouseup', stopResize, false);
-    }
+            transactionContainer.style.width = `${newWidth}px`;
+            transactionContainer.style.height = `${newHeight}px`;
+        };
+    
+        const stopResize = () => {
+            isResizing = false;
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseup', stopResize);
+        };
+    
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseup', stopResize);
+    });
         
     // Function to fetch more transaction data when scrolled to the bottom
     document.getElementById('transactionDataWindow').addEventListener('scroll', async function() {
