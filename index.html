@@ -29,14 +29,6 @@
         <span id="loadingIndicator" style="display:none;">Loading...</span>
     </div>
 
-    <!-- Container for publisher's name input -->
-    <div id="publisher-name-container">
-        <!-- Input field for setting and displaying the publisher's name -->
-        <input type="text" id="publisherNameInput" placeholder="Enter Name">
-        <button id="setPublisherNameButton">Set Publisher Name</button>
-        <div id="publisherNameDisplay"></div>
-    </div>
-    
     <!-- Container for posts -->
     <div id="posts-container">
         <!-- Empty h2 tag for the title to be set dynamically -->
@@ -49,7 +41,7 @@
                 <!-- Textarea for entering a new post -->
                 <textarea id="postInput" rows="4" cols="50" aria-label="Write a post"></textarea>
     
-                <!-- Button to append publisher's name show publish options -->
+                <!-- Button to show publish options -->
                 <button id="publishButton">Publish</button>
                 
                 <!-- Dropdown for publish options (hidden by default) -->
@@ -93,6 +85,6 @@
     </div>
 
     <!-- Include the JavaScript code for interactivity -->
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
