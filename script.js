@@ -244,6 +244,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
     
             const data = await fetchDataWithFallback(apiEndpoints);
+            console.log("Fetched Data:", data);
             let outputText = "";
 
             data.result.filter(tx => tx.input !== '0x').slice(0, transactionCount).forEach(tx => {
@@ -282,6 +283,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
     
+            console.log("Output Text:", outputText);
             window.innerHTML = outputText;
     
         } catch (error) {
