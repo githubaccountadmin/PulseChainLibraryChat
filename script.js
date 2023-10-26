@@ -186,7 +186,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
         const hexMessage = web3.utils.utf8ToHex(fullMessage);
     
-        const accounts = await web3.eth.getAccounts();
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const account = accounts[0];
         const fromAddress = accounts[0];
         const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421'; // Replace with your contract address
     
