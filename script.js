@@ -260,6 +260,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const sliceStart = lastIndexProcessed;
             const sliceEnd = lastIndexProcessed + 13;
     
+            if (window.innerHTML === 'Fetching data...') {
+                window.innerHTML = '';
+            }
+            
             filteredData.slice(sliceStart, sliceEnd).forEach(tx => {            
                 try {
                     if (web3.utils.isHexStrict(tx.input)) {
@@ -296,10 +300,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
     
-            if (window.innerHTML === 'Fetching data...') {
-                window.innerHTML = '';
-            }
-
             console.log("Output Text:", outputText);
             window.innerHTML += outputText;  // Append new transactions to the existing ones
                 
