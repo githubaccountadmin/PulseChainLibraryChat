@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
     let totalTransactions = 0; // Add this line at the top of your script to keep track of total transactions
     let transactionCount = 13;
+    let lastIndexProcessed = 0; // Add this line at the top of your script to keep track of the last index processed
     let isConnected = false;
     let globalHexMessage = '';
     let isFirstLoad = true;
@@ -255,7 +256,11 @@ document.addEventListener('DOMContentLoaded', function() {
             
             let outputText = "";
 
-            data.result.filter(tx => tx.input !== '0x').slice(0, transactionCount).forEach(tx => {
+            const filteredData = data.result.filter(tx => tx.input !== '0x');
+            const sliceStart = lastIndexProcessed;
+            const sliceEnd = lastIndexProcessed + 13;
+    
+            filteredData.slice(sliceStart, sliceEnd).forEach(tx => {            
                 try {
                     if (web3.utils.isHexStrict(tx.input)) {
                         let decodedInput = web3.utils.hexToUtf8(tx.input);
@@ -293,11 +298,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
             console.log("Output Text:", outputText);
             window.innerHTML += outputText;  // Append new transactions to the existing ones
-            transactionCount += 13;  // Increment the transaction count for the next fetch
-            
-            if (transactionCount > totalTransactions) {
-            transactionCount = totalTransactions; // Cap transactionCount to totalTransactions
-    
+                
+            lastIndexProcessed = sliceEnd;  // Update the last index processed for the next fetch
+
+            if (lastIndexProcessed >= totalTransactions) {
+                console.log("Reached the end of available transactions.");
+                return; // Exit the function if we've reached the end
+            }            
+              
         } catch (error) {
             console.error("Error details:", error.name, error.message);
             console.log(document.getElementById('transactionDataWindow'));
