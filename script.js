@@ -294,13 +294,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to fetch more transaction data when scrolled to the bottom
     window.addEventListener('scroll', async function() {
         const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-        
+        console.log("ScrollTop:", scrollTop, "ScrollHeight:", scrollHeight, "ClientHeight:", clientHeight); // Debugging line
         if(clientHeight + scrollTop >= scrollHeight - 5) {
-            // Fetch more transactions here
+            console.log("Fetching more data..."); // Debugging line
             await fetchTransactionData();
         }
     });
-
+    
     document.getElementById('connectButton').addEventListener('click', connectWallet);
     document.getElementById('publishButton').addEventListener('click', function() {
         document.getElementById('publishOptions').style.display = 'block';
