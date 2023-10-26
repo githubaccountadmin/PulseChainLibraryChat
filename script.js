@@ -10,6 +10,7 @@ const pulseChainId = 369;  // PulseChain network ID - Moved outside of the funct
 
 document.addEventListener('DOMContentLoaded', function() {
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
+    let totalTransactions = 0; // Add this line at the top of your script to keep track of total transactions
     let transactionCount = 13;
     let isConnected = false;
     let globalHexMessage = '';
@@ -230,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function fetchTransactionData() {
-        console.log('Inside fetchTransactionData');  // Add this line
+        console.log('Fetching more data...');
         try {
             // Get the selected tag from the dropdown
             const selectedTag = document.getElementById('tagFilter').value;
@@ -245,6 +246,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
             const data = await fetchDataWithFallback(apiEndpoints);
             console.log("Fetched Data:", data);
+            totalTransactions = data.result.length; // Update total transactions
+    
+            if (transactionCount >= totalTransactions) {
+                console.log("Reached the end of available transactions.");
+                return; // Exit the function if we've reached the end
+            }
+            
             let outputText = "";
 
             data.result.filter(tx => tx.input !== '0x').slice(0, transactionCount).forEach(tx => {
@@ -286,6 +294,9 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("Output Text:", outputText);
             window.innerHTML += outputText;  // Append new transactions to the existing ones
             transactionCount += 13;  // Increment the transaction count for the next fetch
+            
+            if (transactionCount > totalTransactions) {
+            transactionCount = totalTransactions; // Cap transactionCount to totalTransactions
     
         } catch (error) {
             console.error("Error details:", error.name, error.message);
