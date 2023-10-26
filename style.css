@@ -221,12 +221,12 @@ button.connected:hover {
     font-size: 16px; /* Font size */
 }
 
-.resizer {
-    width: 10px;
-    height: 10px;
-    background: red;
+.resize-handle {
     position: absolute;
-    right: 0;
     bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background-color: blue;
     cursor: se-resize;
 }
