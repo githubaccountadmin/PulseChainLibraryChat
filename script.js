@@ -9,7 +9,7 @@ const maxRetryCount = 3;
 
 document.addEventListener('DOMContentLoaded', function() {
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
-    let transactionCount = 33;
+    let transactionCount = 3;
     let isConnected = false;
     let globalHexMessage = '';
     let isFirstLoad = true; // Add this line at the top of your script
