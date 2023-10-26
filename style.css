@@ -102,7 +102,7 @@ textarea {
 
 /* Add this to your existing CSS */
 #transaction-container {
-    position: absolute;
+    position: relative;
     top: 100px;  /* Adjust these values */
     left: 100px; /* Adjust these values */
 }
