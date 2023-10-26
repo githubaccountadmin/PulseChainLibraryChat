@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let globalHexMessage = '';
     let isFirstLoad = true; // Add this line at the top of your script
     
-    document.getElementById('transactionCountInput').value = transactionCount;
+    // document.getElementById('transactionCountInput').value = transactionCount;
 
     async function checkInitialConnection() {
         try {
@@ -317,7 +317,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('publishButton').addEventListener('click', function() {
         document.getElementById('publishOptions').style.display = 'block';
     });
-    document.getElementById('loadMoreTransactionsButton').addEventListener('click', fetchTransactionData);
     document.getElementById('tagFilter').addEventListener('change', fetchTransactionData);
     
     // Single Event Listener for "Confirm" button to hide publish options and send the message
