@@ -67,7 +67,7 @@ button, #connectButton, #publishButton, #docs-button {
 }
 
 /* Common hover effect for all buttons */
-button:hover, #connectButton:hover, #publishButton:hover, #loadMoreTransactionsButton:hover, #docs-button:hover {
+button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
     background-color: #808080;  /* Gray background */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);  /* Blackish shadow */
 }
@@ -111,8 +111,21 @@ textarea {
     width: 1000px; /* same as input-container and input-wrapper */
     white-space: pre-wrap;
     border: 2px solid #00ff00; /* Add a border around each transaction */
-    resize: both; /* NEW: Make the div resizable */
-    overflow: hidden; /* NEW: Hide overflow */
+    resize: both; /* Make the div resizable */
+    overflow: hidden; /* Hide overflow */
+    position: relative; /* NEW: Relative positioning */
+}
+
+/* NEW: Add a handle for resizing */
+.scrollable-window::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(-45deg, #00ff00 25%, transparent 25%, transparent 50%, #00ff00 50%, #00ff00 75%, transparent 75%, transparent);
+    cursor: nwse-resize;
 }
 
 /* Style the scroll bar (webkit) */
@@ -186,14 +199,4 @@ button.connected:hover {
     border: 2px solid #00ff00; /* Border color */
     padding: 5px; /* Padding */
     font-size: 16px; /* Font size */
-}
-
-/* Styling for the "How many" field */
-#transactionCountInput {
-    background-color: #000000; /* Background color */
-    color: #00ff00; /* Text color */
-    border: 2px solid #00ff00; /* Border color */
-    padding: 5px; /* Padding */
-    font-size: 16px; /* Font size */
-    width: 50px; /* Adjust the width as needed */
 }
