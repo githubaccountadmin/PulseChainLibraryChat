@@ -284,7 +284,8 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     
             console.log("Output Text:", outputText);
-            window.innerHTML = outputText;
+            window.innerHTML += outputText;  // Append new transactions to the existing ones
+            transactionCount += 13;  // Increment the transaction count for the next fetch
     
         } catch (error) {
             console.error("Error details:", error.name, error.message);
