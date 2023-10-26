@@ -100,6 +100,11 @@ textarea {
     height: 100%;
 }
 
+/* Add this to your existing CSS */
+#transaction-container {
+    position: relative;
+}
+
 /* Styling for the scrollable transaction data window */
 .scrollable-window {
     background-color: #000000;
