@@ -219,16 +219,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function fetchTransactionData() {
+        console.log('Fetching more data...');  // Add this line
         try {
             // Get the selected tag from the dropdown
             const selectedTag = document.getElementById('tagFilter').value;
-    
-            // Update this line to get the count from the input box
-            // const newCount = parseInt(document.getElementById('transactionCountInput').value);
-            // if (!isNaN(newCount)) {
-            //      transactionCount = newCount;
-            // }
-    
             console.log("Selected Tag: ", selectedTag);
                 
             const window = document.getElementById('transactionDataWindow');
@@ -293,6 +287,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
     // Function to fetch more transaction data when scrolled to the bottom
     window.addEventListener('scroll', async function() {
+        console.log('Scroll event fired!');  // Add this line
         const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
         console.log("ScrollTop:", scrollTop, "ScrollHeight:", scrollHeight, "ClientHeight:", clientHeight); // Debugging line
         if(clientHeight + scrollTop >= scrollHeight - 5) {
