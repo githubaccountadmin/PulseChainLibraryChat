@@ -9,6 +9,22 @@ const maxRetryCount = 3;
 let timer = null;
 let mainAddress;
 let isConnected = true;
+let apiCalls = 0;
+const maxApiCalls = 2;
+const timeWindow = 60000; // 60 seconds in milliseconds
+    
+setInterval(() => {
+    apiCalls = 0;
+}, timeWindow);
+    
+async function fetchSomething() {
+    if (apiCalls < maxApiCalls) {
+        apiCalls++;
+        // Perform the fetch
+    } else {
+        console.log("Max API call limit reached for this minute.");
+    }
+}
 
 // Web3 Initialization moved to global scope
 const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
@@ -104,23 +120,7 @@ setMainAddress();
 document.addEventListener('DOMContentLoaded', function() {
     let transactionCount = 33;
     let globalHexMessage = '';
-    let apiCalls = 0;
-    const maxApiCalls = 10;
-    const timeWindow = 60000; // 60 seconds in milliseconds
-    
-    setInterval(() => {
-        apiCalls = 0;
-    }, timeWindow);
-    
-    async function fetchSomething() {
-        if (apiCalls < maxApiCalls) {
-            apiCalls++;
-            // Perform the fetch
-        } else {
-            console.log("Max API call limit reached for this minute.");
-        }
-    }
-    
+        
     const savedPublisherName = localStorage.getItem('publisherName');
     if (savedPublisherName) {
         document.getElementById('publisherNameInput').value = savedPublisherName;
