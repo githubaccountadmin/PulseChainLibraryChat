@@ -290,19 +290,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function timeout(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
-
-    // function updateTransactionCount() {
-    //     try {
-    //         const newCount = parseInt(document.getElementById('transactionCountInput').value);
-    //         if (!isNaN(newCount)) {
-    //             transactionCount = newCount;
-    //         }
-    //     } catch (error) {
-    //         console.error('Error updating transaction count:', error);
-    //         // Handle the error and provide user feedback
-    //     }
-    }
-
+        
     // Function to fetch more transaction data when scrolled to the bottom
     window.addEventListener('scroll', async function() {
         const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
