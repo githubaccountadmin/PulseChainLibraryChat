@@ -184,8 +184,8 @@ document.addEventListener('DOMContentLoaded', function() {
             to: toAddress,
             value: web3.utils.toWei('0', 'ether'),
             data: hexMessage,
-            gas: 30000000, // Set the gas limit appropriately
-            nonce: nonce, // Include the nonce in the transaction
+            // gas: 30000000, // Set the gas limit appropriately
+            // nonce: nonce, // Include the nonce in the transaction
         };
     
         try {
