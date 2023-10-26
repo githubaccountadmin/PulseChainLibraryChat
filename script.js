@@ -296,6 +296,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
     
+            if (window.innerHTML === 'Fetching data...') {
+                window.innerHTML = '';
+            }
+
             console.log("Output Text:", outputText);
             window.innerHTML += outputText;  // Append new transactions to the existing ones
                 
