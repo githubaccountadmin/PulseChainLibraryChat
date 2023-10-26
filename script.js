@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
             
+            console.log("Updating connect button");
             connectButton.innerText = isConnected ? (networkId === pulseChainId ? "Connected" : "Not connected to PulseChain") : "Connect Wallet";
             connectButton.style.backgroundColor = isConnected ? (networkId === pulseChainId ? "green" : "red") : "grey";
         } catch (error) {
