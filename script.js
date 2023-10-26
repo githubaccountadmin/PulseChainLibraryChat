@@ -41,6 +41,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function checkPulseChain(networkId) {
+        console.log("Network ID from Ethereum:", networkId);
+        console.log("PulseChain ID:", pulseChainId);
         try {
             const connectButton = document.getElementById('connectButton');
             const pulseChainId = 369;  // PulseChain network ID
