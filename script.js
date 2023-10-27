@@ -364,38 +364,34 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Add this to make the DIV element resizable
-    const resizer = document.createElement('div');
-    resizer.className = 'resizer';
-    const transactionContainer = document.getElementById("transaction-container");
-    transactionContainer.appendChild(resizer);
+    // Function to make the DIV element resizable
+    function makeResizable(elmnt, handle) {
+        let startX, startY, startWidth, startHeight;
+        
+        handle.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            startX = e.clientX;
+            startY = e.clientY;
+            startWidth = parseInt(document.defaultView.getComputedStyle(elmnt).width, 10);
+            startHeight = parseInt(document.defaultView.getComputedStyle(elmnt).height, 10);
+            document.addEventListener('mousemove', doResize);
+            document.addEventListener('mouseup', stopResize);
+        });
     
-    let isResizing = false;
+        function doResize(e) {
+            elmnt.style.width = (startWidth + e.clientX - startX) + 'px';
+            elmnt.style.height = (startHeight + e.clientY - startY) + 'px';
+        }
     
-    resizer.addEventListener('mousedown', (event) => {
-        isResizing = true;
-        let initialWidth = transactionContainer.clientWidth;
-        let initialHeight = transactionContainer.clientHeight;
-        let initialX = event.clientX;
-        let initialY = event.clientY;
+        function stopResize() {
+            document.removeEventListener('mousemove', doResize);
+            document.removeEventListener('mouseup', stopResize);
+        }
+    }
     
-        const handleMouseMove = (event) => {
-            const newWidth = initialWidth + (event.clientX - initialX);
-            const newHeight = initialHeight + (event.clientY - initialY);
-    
-            transactionContainer.style.width = `${newWidth}px`;
-            transactionContainer.style.height = `${newHeight}px`;
-        };
-    
-        const stopResize = () => {
-            isResizing = false;
-            window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('mouseup', stopResize);
-        };
-    
-        window.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('mouseup', stopResize);
-    });
+    // Apply the resizable function to the transactionDataWindow and its handle
+    makeResizable(document.getElementById("transactionDataWindow"), document.getElementById("resizeHandle"));
+
         
     // Function to fetch more transaction data when scrolled to the bottom
     document.getElementById('transactionDataWindow').addEventListener('scroll', async function() {
