@@ -116,7 +116,7 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
 }
 
 #transaction-container {
-    max-height: calc(100vh - 400px);  /* This will keep it within the screen borders */
+    max-height: calc(100vh - 420px);  /* This will keep it within the screen borders */
     overflow-y: auto;  /* Adds scroll if the content exceeds max-height */
 }
 
