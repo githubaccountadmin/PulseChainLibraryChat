@@ -11,6 +11,8 @@ body.dark-mode {
     justify-content: flex-start;
     height: 100vh;
     margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
 /* Common styling for all buttons */
@@ -100,13 +102,15 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
 #flex-container {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 100px);  /* Adjusting for header and other elements */
-}
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;  /* Prevent scrolling on the body */
 
 #posts-container,
 #transaction-container {
     flex: 1;
-    overflow-y: auto;  /* Adds scroll if the content exceeds the height */
+    overflow: hidden;  /* Adds scroll if the content exceeds the height */
     min-height: 0;  /* This is important for flex items that scroll */
 }
 
@@ -119,11 +123,12 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
 .scrollable-window {
     position: relative;
     width: 90%;
-    overflow: auto;
+    overflow-y: auto;
     background-color: #000000;
     color: #00ff00;    
     padding: 10px;
     margin-top: 20px;
+    max-height: 100%;
     height: calc(100vh - 170px);
     white-space: pre-wrap;
     border: 2px solid #00ff00; /* Add a border around each transaction */
