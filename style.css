@@ -54,7 +54,7 @@ button, #connectButton, #publishButton, #docs-button {
     overflow: hidden;  /* hide text that exceeds the maximum width */
     text-overflow: ellipsis;  /* add ellipsis when text is too long */
     white-space: nowrap;  /* keep the text from breaking into multiple lines */
-    font-size: 17px; /* adjust the size as needed */
+    font-size: 18px; /* adjust the size as needed */
     text-align: center; /* Center the text */
 }
 
@@ -230,7 +230,7 @@ button.connected:hover {
 }
 
 .transaction-body {
-    font-size: 13px; /* main body of message */
+    font-size: 14px; /* main body of message */
 }
 
 .transaction-tag {
