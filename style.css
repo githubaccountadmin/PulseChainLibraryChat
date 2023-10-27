@@ -108,16 +108,14 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
     overflow: hidden;  /* Prevent scrolling on the body */
 }
 
-#posts-container,
-#transaction-container {
-    flex: 1;
-    overflow: hidden;  /* Adds scroll if the content exceeds the height */
-    min-height: 200px;  /* This is important for flex items that scroll */
+#posts-container {
+    height: calc(50vh - 225px);  /* Adjust these values */
+    overflow: hidden;
 }
 
 #transaction-container {
-    max-height: calc(100vh - 450px);  /* This will keep it within the screen borders */
-    overflow-y: auto;  /* Adds scroll if the content exceeds max-height */
+    height: calc(50vh - 225px);  /* Adjust these values */
+    overflow: hidden;
 }
 
 /* Styling for the scrollable transaction data window */
