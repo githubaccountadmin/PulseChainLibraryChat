@@ -97,8 +97,18 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
     resize: none;
 }
 
+#flex-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* or whatever height you want */
+}
+
+#posts-container {
+    flex-grow: 2; /* Takes up twice as much space as the other container */
+}
+
 #transaction-container {
-    position: relative;
+    flex-grow: 1; /* Takes up less space */
 }
 
 /* Styling for the scrollable transaction data window */
