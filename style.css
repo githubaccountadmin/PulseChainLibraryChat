@@ -224,5 +224,9 @@ button.connected:hover {
 }
 
 .transaction-body {
-    font-size: 12px; /* or whatever size you prefer */
+    font-size: 11px; /* or whatever size you prefer */
+}
+
+.transaction-tag {
+    font-size: inherit; /* or whatever size you had before */
 }
