@@ -290,7 +290,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             }
                             console.log("Added .transaction class to element:", tx.from);
                         } else {
-                            outputText += `Publisher: ${tx.from}\nMessage: <span class="transaction-body">${decodedInput.replace(/\*\*\*\*\*\(.*?\)\*\*\*\*\*/, '')}</span>\n\n`;
+                            outputText += `<div class="transaction"><p>Publisher: ${tx.from} - <span class="transaction-tag">Message:</span> <span class="transaction-body">${decodedInput.replace(/\*\*\*\*\*\(.*?\)\*\*\*\*\*/, '')}</span></p></div>`;
                         }
                     }
                 } catch (error) {
