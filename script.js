@@ -235,7 +235,6 @@ document.addEventListener('DOMContentLoaded', function() {
     async function fetchTransactionData(clearExisting = false) {
     console.log('Fetching more data...');
         try {
-            // Get the selected tag from the dropdown
             const selectedTag = document.getElementById('tagFilter').value;
             console.log("Selected Tag: ", selectedTag);
                 
@@ -256,7 +255,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             let outputText = "";
-
             const filteredData = data.result.filter(tx => tx.input !== '0x');
             const sliceStart = lastIndexProcessed;
             const sliceEnd = lastIndexProcessed + 13;
@@ -273,12 +271,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 try {
                     if (web3.utils.isHexStrict(tx.input)) {
                         let decodedInput = web3.utils.hexToUtf8(tx.input);
-    
-                        // Extract the tag from the message
                         const tagMatch = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/);
                         const tag = tagMatch ? tagMatch[1] : null;
     
-                        // Skip if the selected tag does not match the message's tag
                         if (selectedTag !== 'All' && tag !== selectedTag) {
                             return;
                         }
@@ -297,7 +292,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         } else {
                             outputText += `Publisher: ${tx.from}\nMessage: ${decodedInput.replace(/\*\*\*\*\*\(.*?\)\*\*\*\*\*/, '')}\n\n`;
                         }
-
                     }
                 } catch (error) {
                     // Skip this transaction and continue processing other transactions
@@ -305,9 +299,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
     
-            console.log("Output Text:", outputText);
             window.innerHTML += outputText;  // Append new transactions to the existing ones
-                
             lastIndexProcessed = sliceEnd;  // Update the last index processed for the next fetch
 
             if (lastIndexProcessed >= totalTransactions) {
@@ -317,7 +309,6 @@ document.addEventListener('DOMContentLoaded', function() {
               
         } catch (error) {
             console.error("Error details:", error.name, error.message);
-            console.log(document.getElementById('transactionDataWindow'));
             const window = document.getElementById('transactionDataWindow');
             window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
         }
@@ -327,10 +318,10 @@ document.addEventListener('DOMContentLoaded', function() {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-   // Function to fetch more transaction data when scrolled to the bottom
+    // Function to fetch more transaction data when scrolled to the bottom
     document.getElementById('transactionDataWindow').addEventListener('scroll', async function() {
         console.log('Scroll event triggered on transactionDataWindow');
-        const { scrollTop, scrollHeight, clientHeight } = this; // Note the use of 'this' here
+        const { scrollTop, scrollHeight, clientHeight } = this;
         console.log("ScrollTop:", scrollTop, "ScrollHeight:", scrollHeight, "ClientHeight:", clientHeight);
         
         if(clientHeight + scrollTop >= scrollHeight - 5) {
@@ -340,9 +331,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     document.getElementById('tagFilter').addEventListener('change', function() {
-        // Reset lastIndexProcessed
         lastIndexProcessed = 0;
-        // Fetch data again with the new filter and clear existing data
         fetchTransactionData(true);
     });
     
@@ -354,22 +343,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Single Event Listener for "Confirm" button to hide publish options and send the message
     document.getElementById('confirmPublishButton').addEventListener('click', async function() {
         console.log("Confirm button clicked. Preparing to publish message...");
-        
         // Disable the confirm button to prevent multiple clicks
         this.disabled = true;
-    
         hidePublishOptions(); // Hide the publish options
-    
         const publishOptionSelect = document.getElementById('publishOptionSelect');
         const selectedOption = publishOptionSelect.value;
     
         if (selectedOption === "") {
-            // If no option is selected, set it to "Message"
             publishOptionSelect.value = "Message";
         }
     
         try {
-            await publishMessage(); // Publish the message
+            await publishMessage();
         } catch (error) {
             console.error('Error publishing message:', error);
         } finally {
