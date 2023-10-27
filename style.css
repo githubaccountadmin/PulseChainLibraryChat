@@ -35,11 +35,11 @@ button, #connectButton, #publishButton, #docs-button {
 }
 
 .fixed-width-title {
-    max-width: 100%;  /* or whatever size fits your layout */
+    max-width: 1000px;  /* or whatever size fits your layout */
     overflow: hidden;  /* hide text that exceeds the maximum width */
     text-overflow: ellipsis;  /* add ellipsis when text is too long */
     white-space: nowrap;  /* keep the text from breaking into multiple lines */
-    font-size: 18px; /* adjust the size as needed */
+    font-size: 15px; /* adjust the size as needed */
     text-align: center; /* Center the text */
 }
 
@@ -82,7 +82,7 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    height: 50%;
+    height: 99%;
     width: 90%; //* same as scrollable-window */
     position: relative;
 }
@@ -109,12 +109,12 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
 }
 
 #posts-container {
-    height: calc(100vh - 225px);  /* Adjust these values */
+    flex: 1;
     overflow: hidden;
 }
 
 #transaction-container {
-    height: calc(100vh - 225px);  /* Adjust these values */
+    flex:1;
     overflow: hidden;
 }
 
@@ -127,8 +127,8 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
     color: #00ff00;    
     padding: 10px;
     margin-top: 20px;
-    max-height: calc(100vh - 300px);
-    height: calc(100vh - 170px);
+    max-height: none;
+    height: 95%;
     white-space: pre-wrap;
     border: 2px solid #00ff00; /* Add a border around each transaction */
     margin: auto;
