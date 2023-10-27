@@ -103,14 +103,14 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
     height: 100vh; /* or whatever height you want */
 }
 
-#posts-container {
-    min-geight: 300px;
-    flex-grow: 1; /* Takes up twice as much space as the other container */
+#posts-container,
+#transaction-container {
+    min-height: 300px;  /* Adjust as needed */
 }
 
 #transaction-container {
-    min-geight: 300px;
-    flex-grow: 1; /* Takes up less space */
+    max-height: calc(100vh - 400px);  /* This will keep it within the screen borders */
+    overflow-y: auto;  /* Adds scroll if the content exceeds max-height */
 }
 
 /* Styling for the scrollable transaction data window */
