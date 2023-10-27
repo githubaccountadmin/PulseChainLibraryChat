@@ -47,7 +47,7 @@ button, #connectButton, #publishButton, #docs-button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 1000px; /* same as scrollable-window */
+    width: 90%; /* same as scrollable-window */
 }
 
 /* Styling for the Publish button */
@@ -90,14 +90,9 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
     padding: 10px;
     margin: 4px 2px;
     border: 2px solid #00ff00;
-    width: calc(100% - 24px); /* Adjusting for padding and border */
-    height: 300px;
-    resize: none;
-}
-
-/* Styling for the textarea */
-textarea {
+    width: calc(90% - 24px); /* Adjusting for padding and border */
     height: 100%;
+    resize: none;
 }
 
 #transaction-container {
@@ -107,7 +102,7 @@ textarea {
 /* Styling for the scrollable transaction data window */
 .scrollable-window {
     position: relative;
-    width: 1000px;
+    width: 90%;
     height: 500px;
     overflow: auto;
     background-color: #000000;
@@ -115,7 +110,6 @@ textarea {
     padding: 10px;
     margin-top: 20px;
     height: calc(50vh - 170px);
-    width: 1000px; /* same as input-container and input-wrapper */
     white-space: pre-wrap;
     border: 2px solid #00ff00; /* Add a border around each transaction */
 }
