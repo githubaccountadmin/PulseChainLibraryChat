@@ -327,73 +327,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    // Make the DIV element draggable:
-    dragElement(document.getElementById("transactionDataWindow"), document.getElementById("dragHandle"));
-    
-    function dragElement(elmnt, handle) {
-        var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-        if (handle) {
-            handle.onmousedown = dragMouseDown;
-        } else {
-            elmnt.onmousedown = dragMouseDown;
-        }
-    
-        function dragMouseDown(e) {
-            e = e || window.event;
-            e.preventDefault();
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-            document.onmouseup = closeDragElement;
-            document.onmousemove = elementDrag;
-        }
-    
-        function elementDrag(e) {
-            e = e || window.event;
-            e.preventDefault();
-            pos1 = pos3 - e.clientX;
-            pos2 = pos4 - e.clientY;
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-        }
-    
-        function closeDragElement() {
-            document.onmouseup = null;
-            document.onmousemove = null;
-        }
-    }
-    
-    // Function to make the DIV element resizable
-    function makeResizable(elmnt, handle) {
-        let startX, startY, startWidth, startHeight;
-        
-        handle.addEventListener('mousedown', (e) => {
-            e.preventDefault();
-            startX = e.clientX;
-            startY = e.clientY;
-            startWidth = parseInt(document.defaultView.getComputedStyle(elmnt).width, 10);
-            startHeight = parseInt(document.defaultView.getComputedStyle(elmnt).height, 10);
-            document.addEventListener('mousemove', doResize);
-            document.addEventListener('mouseup', stopResize);
-        });
-    
-        function doResize(e) {
-            elmnt.style.width = (startWidth + e.clientX - startX) + 'px';
-            elmnt.style.height = (startHeight + e.clientY - startY) + 'px';
-        }
-    
-        function stopResize() {
-            document.removeEventListener('mousemove', doResize);
-            document.removeEventListener('mouseup', stopResize);
-        }
-    }
-    
-    // Apply the resizable function to the transactionDataWindow and its handle
-    makeResizable(document.getElementById("transactionDataWindow"), document.getElementById("resizeHandle"));
-
-        
-    // Function to fetch more transaction data when scrolled to the bottom
+   // Function to fetch more transaction data when scrolled to the bottom
     document.getElementById('transactionDataWindow').addEventListener('scroll', async function() {
         console.log('Scroll event triggered on transactionDataWindow');
         const { scrollTop, scrollHeight, clientHeight } = this; // Note the use of 'this' here
