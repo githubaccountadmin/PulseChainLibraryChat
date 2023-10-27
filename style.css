@@ -134,6 +134,12 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
     overflow: hidden;
 }
 
+/* Style for the new filter container */
+#filter-container {
+    width: 90%;
+    margin: auto;
+}
+
 /* Styling for the scrollable transaction data window */
 .scrollable-window {
     position: relative;
