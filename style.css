@@ -222,3 +222,7 @@ button.connected:hover {
     padding: 5px; /* Padding */
     font-size: 16px; /* Font size */
 }
+
+.transaction-body {
+    font-size: 12px; /* or whatever size you prefer */
+}
