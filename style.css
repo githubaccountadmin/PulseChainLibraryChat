@@ -52,6 +52,7 @@ button, #connectButton, #publishButton, #docs-button {
 
 /* Styling for the Publish button */
 #publishButton {
+    margin: 10px auto; /* Center the button */
     margin-top: 10px; /* Some space between the text area and button */
     z-index: 1;
     width: 150px;
@@ -104,7 +105,7 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
 .scrollable-window {
     position: relative;
     width: 90%;
-    height: 500px;
+    height: 800px;
     overflow: auto;
     background-color: #000000;
     color: #00ff00;    
