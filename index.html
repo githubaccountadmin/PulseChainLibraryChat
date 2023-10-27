@@ -29,54 +29,57 @@
         <span id="loadingIndicator" style="display:none;">Loading...</span>
     </div>
 
-    <!-- Container for posts -->
-    <div id="posts-container">
-        <!-- Empty h2 tag for the title to be set dynamically -->
-        <h2 id="dynamicTitle" class="fixed-width-title"></h2>
-        
-        <!-- New Wrapper for input and publish button -->
-        <div class="input-wrapper">
-            <!-- Container for entering a new post -->
+    <!-- New flex container -->
+    <div id="flex-container">
+        <!-- Container for posts -->
+        <div id="posts-container">
+            <!-- Empty h2 tag for the title to be set dynamically -->
+            <h2 id="dynamicTitle" class="fixed-width-title"></h2>
+            
+            <!-- New Wrapper for input and publish button -->
             <div class="input-wrapper">
-                <!-- Textarea for entering a new post -->
-                <textarea id="postInput" rows="4" cols="50" aria-label="Write a post"></textarea>
-    
-                <!-- Button to show publish options -->
-                <button id="publishButton">Publish</button>
-                
-                <!-- Dropdown for publish options (hidden by default) -->
-                <div id="publishOptions" style="display:none;">
-                    <select id="publishOptionSelect">
-                        <option value="Message">Message</option>
-                        <option value="Story">Story</option>
-                        <option value="Book">Book</option>
-                        <option value="Document">Document</option>
-                        <option value="Other">Other</option>
-                    </select>
-                    <button id="confirmPublishButton">Confirm</button>
+                <!-- Container for entering a new post -->
+                <div class="input-wrapper">
+                    <!-- Textarea for entering a new post -->
+                    <textarea id="postInput" rows="4" cols="50" aria-label="Write a post"></textarea>
+        
+                    <!-- Button to show publish options -->
+                    <button id="publishButton">Publish</button>
+                    
+                    <!-- Dropdown for publish options (hidden by default) -->
+                    <div id="publishOptions" style="display:none;">
+                        <select id="publishOptionSelect">
+                            <option value="Message">Message</option>
+                            <option value="Story">Story</option>
+                            <option value="Book">Book</option>
+                            <option value="Document">Document</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <button id="confirmPublishButton">Confirm</button>
+                    </div>
                 </div>
             </div>
+            <!-- List of posts -->
+            <ul id="postList" aria-label="List of posts"></ul>
         </div>
-        <!-- List of posts -->
-        <ul id="postList" aria-label="List of posts"></ul>
-    </div>
 
-    <!-- Container for displaying transaction data -->
-    <div id="transaction-container">
-        <!-- Filter by Tag Dropdown -->
-        <label for="tagFilter">Filter by Tag:</label>
-        <select id="tagFilter">
-          <option value="All">All</option>
-          <option value="Message">Message</option>
-          <option value="Story">Story</option>
-          <option value="Book">Book</option>
-          <option value="Document">Document</option>
-          <option value="Other">Other</option>
-        </select>
-        
-        <!-- Container for transaction data -->
-        <div id="transactionDataWindow" class="scrollable-window">
-            <!-- Your data will be populated here by JavaScript -->
+        <!-- Container for displaying transaction data -->
+        <div id="transaction-container">
+            <!-- Filter by Tag Dropdown -->
+            <label for="tagFilter">Filter by Tag:</label>
+            <select id="tagFilter">
+              <option value="All">All</option>
+              <option value="Message">Message</option>
+              <option value="Story">Story</option>
+              <option value="Book">Book</option>
+              <option value="Document">Document</option>
+              <option value="Other">Other</option>
+            </select>
+            
+            <!-- Container for transaction data -->
+            <div id="transactionDataWindow" class="scrollable-window">
+                <!-- Your data will be populated here by JavaScript -->
+            </div>
         </div>
     </div>
 
