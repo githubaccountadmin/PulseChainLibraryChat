@@ -230,7 +230,7 @@ button.connected:hover {
 }
 
 .transaction-body {
-    font-size: 11px; /* or whatever size you prefer */
+    font-size: 12px; /* main body of message */
 }
 
 .transaction-tag {
