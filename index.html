@@ -67,16 +67,18 @@
 
         <!-- Container for displaying transaction data -->
         <div id="transaction-container">
-            <!-- Filter by Tag Dropdown -->
-            <label for="tagFilter">Filter by Tag:</label>
-            <select id="tagFilter">
-              <option value="All">All</option>
-              <option value="Message">Message</option>
-              <option value="Story">Story</option>
-              <option value="Book">Book</option>
-              <option value="Document">Document</option>
-              <option value="Other">Other</option>
-            </select>
+            <!-- New div for filter -->
+            <div id="filter-container">
+                <label for="tagFilter">Filter by Tag:</label>
+                <select id="tagFilter">
+                  <option value="All">All</option>
+                  <option value="Message">Message</option>
+                  <option value="Story">Story</option>
+                  <option value="Book">Book</option>
+                  <option value="Document">Document</option>
+                  <option value="Other">Other</option>
+                </select>
+            </div>
             
             <!-- Container for transaction data -->
             <div id="transactionDataWindow" class="scrollable-window">
