@@ -100,12 +100,14 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
 #flex-container {
     display: flex;
     flex-direction: column;
-    height: 100vh; /* or whatever height you want */
+    height: calc(100vh - 100px);  /* Adjusting for header and other elements */
 }
 
 #posts-container,
 #transaction-container {
-    min-height: 300px;  /* Adjust as needed */
+    flex: 1;
+    overflow-y: auto;  /* Adds scroll if the content exceeds the height */
+    min-height: 0;  /* This is important for flex items that scroll */
 }
 
 #transaction-container {
