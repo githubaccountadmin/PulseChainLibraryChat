@@ -35,7 +35,7 @@ button, #connectButton, #publishButton, #docs-button {
 }
 
 .fixed-width-title {
-    max-width: 1000px;  /* or whatever size fits your layout */
+    max-width: 100%;  /* or whatever size fits your layout */
     overflow: hidden;  /* hide text that exceeds the maximum width */
     text-overflow: ellipsis;  /* add ellipsis when text is too long */
     white-space: nowrap;  /* keep the text from breaking into multiple lines */
@@ -109,12 +109,12 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
 }
 
 #posts-container {
-    height: calc(50vh - 225px);  /* Adjust these values */
+    height: calc(100vh - 225px);  /* Adjust these values */
     overflow: hidden;
 }
 
 #transaction-container {
-    height: calc(50vh - 500px);  /* Adjust these values */
+    height: calc(100vh - 500px);  /* Adjust these values */
     overflow: hidden;
 }
 
