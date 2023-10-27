@@ -15,9 +15,11 @@ body.dark-mode {
     overflow: hidden;
 }
 
-/* Center the main title */
-h1 {
-    text-align: center;
+/* Center the title using flexbox */
+#title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Common styling for all buttons */
@@ -134,7 +136,7 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
     padding: 10px;
     margin-top: 20px;
     max-height: none;
-    height: 90%;
+    height: 85%;
     white-space: pre-wrap;
     border: 2px solid #00ff00; /* Add a border around each transaction */
     margin: auto;
