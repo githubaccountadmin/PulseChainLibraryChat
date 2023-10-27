@@ -104,10 +104,12 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
 }
 
 #posts-container {
+    min-geight: 300px;
     flex-grow: 1; /* Takes up twice as much space as the other container */
 }
 
 #transaction-container {
+    min-geight: 300px;
     flex-grow: 1; /* Takes up less space */
 }
 
