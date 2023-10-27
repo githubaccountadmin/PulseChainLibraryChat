@@ -1,5 +1,3 @@
-/*or Dark Mode */
-
 /* Styling for the entire page in dark mode */
 body.dark-mode {
     background-color: #000000;
@@ -24,6 +22,12 @@ body.dark-mode {
 
 h2#dynamicTitle {
   text-align: center;
+}
+
+#dynamicTitleWrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 /* Common styling for all buttons */
