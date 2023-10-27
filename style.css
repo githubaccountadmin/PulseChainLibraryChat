@@ -114,7 +114,7 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
 }
 
 #transaction-container {
-    height: calc(50vh - 225px);  /* Adjust these values */
+    height: calc(50vh - 500px);  /* Adjust these values */
     overflow: hidden;
 }
 
