@@ -47,12 +47,14 @@ button, #connectButton, #publishButton, #docs-button {
     flex-direction: column;
     align-items: stretch;
     width: 90%; /* same as scrollable-window */
+    margin: auto;
 }
 
 /* Styling for the Publish button */
 #publishButton {
     margin-top: 10px; /* Some space between the text area and button */
     z-index: 1;
+    width: 150px;
 }
 
 /* Styling for the Docs button */
@@ -111,6 +113,7 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
     height: calc(50vh - 170px);
     white-space: pre-wrap;
     border: 2px solid #00ff00; /* Add a border around each transaction */
+    margin: auto;
 }
 
 /* Style the scroll bar (webkit) */
