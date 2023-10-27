@@ -15,6 +15,11 @@ body.dark-mode {
     overflow: hidden;
 }
 
+/* Center the main title */
+h1 {
+    text-align: center;
+}
+
 /* Common styling for all buttons */
 button, #connectButton, #publishButton, #docs-button {
     background-color: #00ff00;
