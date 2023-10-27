@@ -104,15 +104,11 @@ textarea {
     position: relative;
 }
 
-#transactionDataWindow {
+/* Styling for the scrollable transaction data window */
+.scrollable-window {
     position: relative;
     width: 1000px;
     height: 500px;
-    overflow: auto;
-}
-
-/* Styling for the scrollable transaction data window */
-.scrollable-window {
     overflow: auto;
     background-color: #000000;
     color: #00ff00;    
