@@ -48,7 +48,7 @@ button, #connectButton, #publishButton, #docs-button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 80%;
+    height: 90%;
     width: 90%; /* same as scrollable-window */
     margin: auto;
 }
