@@ -401,3 +401,4 @@ document.addEventListener('DOMContentLoaded', function() {
     fetchTransactionData();
     setRandomTitle();
     // setInterval(fetchTransactionData, 120000);
+});
