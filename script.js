@@ -181,11 +181,16 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
     
-        const selectedOption = publishOptionSelect.value || "Message"; // Default to "Message" if nothing is selected
+        let selectedOption = publishOptionSelect.value || "Message"; // Default to "Message" if nothing is selected
+
+        // If the selected option is "Custom", replace it with the user's custom tag
+        if (selectedOption === "Custom") {
+            selectedOption = document.getElementById('customTagInput').value;
+        }
+    
         const fullMessage = `\n\n${message}\n\n*****(${selectedOption})*****`;
     
         const hexMessage = web3.utils.utf8ToHex(fullMessage);
-    
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         const account = accounts[0];
         const fromAddress = accounts[0];
