@@ -335,8 +335,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const selectedTag = document.getElementById('tagFilter').value;
         
-        // Keep fetching until a matching tag is found or we reach the end
-        while (window.innerHTML.indexOf(selectedTag) === -1 && lastIndexProcessed < totalTransactions) {
+        // Keep fetching until a matching tag is found, the window is filled, or we reach the end
+        while ((window.scrollHeight <= window.clientHeight || window.innerHTML.indexOf(selectedTag) === -1) && lastIndexProcessed < totalTransactions) {
             await fetchTransactionData();
         }
     });
