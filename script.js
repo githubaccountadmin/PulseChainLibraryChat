@@ -407,6 +407,29 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    let searchTimer;  // Declare a variable to hold the timer
+
+    document.getElementById('customFilterInput').addEventListener('input', function() {
+        clearTimeout(searchTimer);  // Clear the existing timer
+    
+        // Start a new timer
+        searchTimer = setTimeout(async function() {
+            // Your search logic here
+            lastIndexProcessed = 0; // Reset the last index
+            const window = document.getElementById('transactionDataWindow');
+            window.innerHTML = ''; // Clear the window
+    
+            let selectedTag = document.getElementById('customFilterInput').value;  // Get the custom tag
+    
+            await fetchTransactionData(true);  // Fetch new data with clearExisting set to true
+    
+            // Keep fetching until a matching tag is found, the window is filled, or we reach the end
+            while ((window.scrollHeight <= window.clientHeight || window.innerHTML.indexOf(selectedTag) === -1) && lastIndexProcessed < totalTransactions) {
+                await fetchTransactionData();
+            }
+        }, 3000);  // 3-second delay
+    });
+
     checkInitialConnection();
     fetchTransactionData();
     setRandomTitle();
