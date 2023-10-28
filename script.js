@@ -321,26 +321,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to fetch more transaction data when scrolled to the bottom
     document.getElementById('transactionDataWindow').addEventListener('scroll', async function() {
         const { scrollTop, scrollHeight, clientHeight } = this;
-        const selectedTag = document.getElementById('tagFilter').value;
         
         if(clientHeight + scrollTop >= scrollHeight - 5) {
             await fetchTransactionData();
-            
-            // Check if the newly fetched data contains the selected tag
-            while (this.innerHTML.indexOf(selectedTag) === -1 && lastIndexProcessed < totalTransactions) {
-                await fetchTransactionData();
-            }
         }
     });
     
     // Updated event listener for tagFilter
     document.getElementById('tagFilter').addEventListener('change', async function() {
         lastIndexProcessed = 0; // Reset the last index
-        await fetchTransactionData(true); // Clear existing and fetch new data
-        
         const window = document.getElementById('transactionDataWindow');
+        window.innerHTML = ''; // Clear the window
+        await fetchTransactionData(); // Fetch new data
+        
         const selectedTag = document.getElementById('tagFilter').value;
         
+        // Keep fetching until a matching tag is found or we reach the end
         while (window.innerHTML.indexOf(selectedTag) === -1 && lastIndexProcessed < totalTransactions) {
             await fetchTransactionData();
         }
