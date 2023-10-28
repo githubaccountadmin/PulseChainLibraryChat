@@ -371,25 +371,24 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('publishOptions').style.display = 'block';
     });
     
-    // Single Event Listener for "Confirm" button to hide publish options and send the message
     document.getElementById('confirmPublishButton').addEventListener('click', async function() {
         console.log("Confirm button clicked. Preparing to publish message...");
         // Disable the confirm button to prevent multiple clicks
         this.disabled = true;
         hidePublishOptions(); // Hide the publish options
-        let selectedOption = document.getElementById('publishOptionSelect').value;
+        const publishOptionSelect = document.getElementById('publishOptionSelect');
+        let selectedOption = publishOptionSelect.value;
     
-        // If the selected option is "Custom", use the value from the custom input field
         if (selectedOption === "Custom") {
             selectedOption = document.getElementById('customTagInput').value;
         }
     
         if (selectedOption === "") {
-            selectedOption = "Message";
+            publishOptionSelect.value = "Message";
         }
     
         try {
-            await publishMessage(selectedOption);
+            await publishMessage();
         } catch (error) {
             console.error('Error publishing message:', error);
         } finally {
@@ -397,7 +396,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.disabled = false;
         }
     });
-    
+
     checkInitialConnection();
     fetchTransactionData();
     setRandomTitle();
