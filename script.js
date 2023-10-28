@@ -320,13 +320,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to fetch more transaction data when scrolled to the bottom
     document.getElementById('transactionDataWindow').addEventListener('scroll', async function() {
-        console.log('Scroll event triggered on transactionDataWindow');
         const { scrollTop, scrollHeight, clientHeight } = this;
-        console.log("ScrollTop:", scrollTop, "ScrollHeight:", scrollHeight, "ClientHeight:", clientHeight);
+        const selectedTag = document.getElementById('tagFilter').value;
         
         if(clientHeight + scrollTop >= scrollHeight - 5) {
-            console.log("Fetching more data...");
             await fetchTransactionData();
+            
+            // Check if the newly fetched data contains the selected tag
+            while (this.innerHTML.indexOf(selectedTag) === -1 && lastIndexProcessed < totalTransactions) {
+                await fetchTransactionData();
+            }
         }
     });
     
