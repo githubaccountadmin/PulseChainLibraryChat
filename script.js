@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', function() {
     async function fetchTransactionData(clearExisting = false) {
         console.log("fetchTransactionData called");  // Add this line
         try {
-            const selectedTag = document.getElementById('tagFilter').value;
+            let selectedTag = document.getElementById('tagFilter').value;
             console.log("Selected Tag from Dropdown: ", selectedTag);  // Debugging line
 
             // If the selected tag is "Custom", use the value from the custom input field
