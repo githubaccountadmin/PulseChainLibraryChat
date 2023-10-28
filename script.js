@@ -333,7 +333,12 @@ document.addEventListener('DOMContentLoaded', function() {
         window.innerHTML = ''; // Clear the window
         await fetchTransactionData(true); // Fetch new data with clearExisting set to true
         
-        const selectedTag = document.getElementById('tagFilter').value;
+        let selectedTag = this.value;
+        
+        // If the selected tag is "Custom", use the value from the custom input field
+        if (selectedTag === "Custom") {
+            selectedTag = document.getElementById('customFilterInput').value;
+        }
         
         // Keep fetching until a matching tag is found, the window is filled, or we reach the end
         while ((window.scrollHeight <= window.clientHeight || window.innerHTML.indexOf(selectedTag) === -1) && lastIndexProcessed < totalTransactions) {
@@ -352,15 +357,19 @@ document.addEventListener('DOMContentLoaded', function() {
         // Disable the confirm button to prevent multiple clicks
         this.disabled = true;
         hidePublishOptions(); // Hide the publish options
-        const publishOptionSelect = document.getElementById('publishOptionSelect');
-        const selectedOption = publishOptionSelect.value;
+        let selectedOption = document.getElementById('publishOptionSelect').value;
+    
+        // If the selected option is "Custom", use the value from the custom input field
+        if (selectedOption === "Custom") {
+            selectedOption = document.getElementById('customTagInput').value;
+        }
     
         if (selectedOption === "") {
-            publishOptionSelect.value = "Message";
+            selectedOption = "Message";
         }
     
         try {
-            await publishMessage();
+            await publishMessage(selectedOption);
         } catch (error) {
             console.error('Error publishing message:', error);
         } finally {
@@ -373,5 +382,3 @@ document.addEventListener('DOMContentLoaded', function() {
     fetchTransactionData();
     setRandomTitle();
     // setInterval(fetchTransactionData, 120000);
-    
-});
