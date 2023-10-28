@@ -410,6 +410,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let searchTimer;  // Declare a variable to hold the timer
 
     document.getElementById('customFilterInput').addEventListener('input', function() {
+        console.log("Input event triggered");  // Add this line
         clearTimeout(searchTimer);  // Clear the existing timer
     
         // Start a new timer
