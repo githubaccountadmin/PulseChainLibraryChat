@@ -188,6 +188,11 @@ document.addEventListener('DOMContentLoaded', function() {
             selectedOption = document.getElementById('customTagInput').value;
         }
     
+        // Check if the custom tag is empty and default to "Message" if it is
+        if (selectedOption.trim() === "") {
+            selectedOption = "Message";
+        }
+    
         const fullMessage = `\n\n${message}\n\n*****(${selectedOption})*****`;
     
         const hexMessage = web3.utils.utf8ToHex(fullMessage);
