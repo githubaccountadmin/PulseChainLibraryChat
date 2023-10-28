@@ -247,6 +247,11 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const selectedTag = document.getElementById('tagFilter').value;
             console.log("Selected Tag: ", selectedTag);
+
+            // If the selected tag is "Custom", use the value from the custom input field
+            if (selectedTag === "Custom") {
+                selectedTag = document.getElementById('customFilterInput').value;
+            }
                 
             const window = document.getElementById('transactionDataWindow');
         
