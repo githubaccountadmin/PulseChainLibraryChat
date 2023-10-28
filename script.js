@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let outputText = "";
             const filteredData = data.result.filter(tx => tx.input !== '0x');
             const sliceStart = lastIndexProcessed;
-            const sliceEnd = lastIndexProcessed + 13;
+            const sliceEnd = clearExisting ? lastIndexProcessed + 50 : lastIndexProcessed + 13; // Fetch more data if it's a new tag
     
             if (window.innerHTML === 'Fetching data...') {
                 window.innerHTML = '';
@@ -327,12 +327,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Updated event listener for tagFilter
     document.getElementById('tagFilter').addEventListener('change', async function() {
         lastIndexProcessed = 0; // Reset the last index
         const window = document.getElementById('transactionDataWindow');
         window.innerHTML = ''; // Clear the window
-        await fetchTransactionData(); // Fetch new data
+        await fetchTransactionData(true); // Fetch new data with clearExisting set to true
         
         const selectedTag = document.getElementById('tagFilter').value;
         
