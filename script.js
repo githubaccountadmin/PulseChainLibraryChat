@@ -331,9 +331,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Updated event listener for tagFilter
-    document.getElementById('tagFilter').addEventListener('change', function() {
+    document.getElementById('tagFilter').addEventListener('change', async function() {
         lastIndexProcessed = 0; // Reset the last index
-        fetchTransactionData(true); // Clear existing and fetch new data
+        await fetchTransactionData(true); // Clear existing and fetch new data
+        
+        const window = document.getElementById('transactionDataWindow');
+        const selectedTag = document.getElementById('tagFilter').value;
+        
+        while (window.innerHTML.indexOf(selectedTag) === -1 && lastIndexProcessed < totalTransactions) {
+            await fetchTransactionData();
+        }
     });
     
     document.getElementById('connectButton').addEventListener('click', connectWallet);
