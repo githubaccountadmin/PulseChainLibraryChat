@@ -318,6 +318,16 @@ document.addEventListener('DOMContentLoaded', function() {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
+    // Function to toggle the visibility of the custom tag input box based on the selected option
+    function toggleCustomTagInput(selectElement, inputElementId) {
+        const inputElement = document.getElementById(inputElementId);
+        if (selectElement.value === "Custom") {
+            inputElement.style.display = "inline";
+        } else {
+            inputElement.style.display = "none";
+        }
+    }
+
     // Function to fetch more transaction data when scrolled to the bottom
     document.getElementById('transactionDataWindow').addEventListener('scroll', async function() {
         const { scrollTop, scrollHeight, clientHeight } = this;
@@ -344,6 +354,16 @@ document.addEventListener('DOMContentLoaded', function() {
         while ((window.scrollHeight <= window.clientHeight || window.innerHTML.indexOf(selectedTag) === -1) && lastIndexProcessed < totalTransactions) {
             await fetchTransactionData();
         }
+    });
+
+    // Add event listener to toggle custom tag input for publish options
+    document.getElementById('publishOptionSelect').addEventListener('change', function() {
+        toggleCustomTagInput(this, 'customTagInput');
+    });
+    
+    // Add event listener to toggle custom tag input for filter
+    document.getElementById('tagFilter').addEventListener('change', function() {
+        toggleCustomTagInput(this, 'customFilterInput');
     });
     
     document.getElementById('connectButton').addEventListener('click', connectWallet);
