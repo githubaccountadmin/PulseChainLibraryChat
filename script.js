@@ -246,11 +246,12 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("fetchTransactionData called");  // Add this line
         try {
             const selectedTag = document.getElementById('tagFilter').value;
-            console.log("Selected Tag: ", selectedTag);
+            console.log("Selected Tag from Dropdown: ", selectedTag);  // Debugging line
 
             // If the selected tag is "Custom", use the value from the custom input field
             if (selectedTag === "Custom") {
                 selectedTag = document.getElementById('customFilterInput').value;
+                console.log("Selected Tag from Custom Input: ", selectedTag);  // Debugging line
             }
                 
             const window = document.getElementById('transactionDataWindow');
@@ -415,7 +416,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let searchTimer;  // Declare a variable to hold the timer
 
     document.getElementById('customFilterInput').addEventListener('input', function() {
-        console.log("Input event triggered");  // Add this line
+        console.log("Custom input changed: ", this.value);  // Debugging line
         clearTimeout(searchTimer);  // Clear the existing timer
     
         // Start a new timer
