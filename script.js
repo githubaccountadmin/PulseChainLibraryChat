@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function fetchTransactionData(clearExisting = false) {
-    console.log('Fetching more data...');
+        console.log("fetchTransactionData called");  // Add this line
         try {
             const selectedTag = document.getElementById('tagFilter').value;
             console.log("Selected Tag: ", selectedTag);
@@ -415,6 +415,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
         // Start a new timer
         searchTimer = setTimeout(async function() {
+            console.log("Timer completed, starting search");  // Add this line
             // Your search logic here
             lastIndexProcessed = 0; // Reset the last index
             const window = document.getElementById('transactionDataWindow');
