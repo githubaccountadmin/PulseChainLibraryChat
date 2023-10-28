@@ -330,9 +330,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // Updated event listener for tagFilter
     document.getElementById('tagFilter').addEventListener('change', function() {
-        lastIndexProcessed = 0;
-        fetchTransactionData(true);
+        lastIndexProcessed = 0; // Reset the last index
+        fetchTransactionData(true); // Clear existing and fetch new data
     });
     
     document.getElementById('connectButton').addEventListener('click', connectWallet);
