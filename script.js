@@ -322,17 +322,18 @@ document.addEventListener('DOMContentLoaded', function() {
                         console.log("Decoded Input: ", decodedInput);
                         console.log("Tags: ", tags);
             
-                        if (selectedTags.includes("All") || tags.some(tag => selectedTags.includes(tag)) || selectedTags.length === 0) {
-                            tags.forEach(tag => {
-                                decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
-                            });
+                        // Remove the tags from the decoded input
+                        tags.forEach(tag => {
+                            decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
+                        });
             
+                        if (selectedTags.includes("All") || tags.some(tag => selectedTags.includes(tag)) || selectedTags.length === 0) {
                             const tagString = tags.map(tag => `'${tag}'`).join(', ');
             
                             if (tags.length > 0) {
-                                outputText += `<div class="transaction"><p>Publisher: ${tx.from} - Published a ${tagString} <span class="transaction-body">${decodedInput}</span></p></div>`;
+                                outputText += `<div class="transaction"><p>Publisher: ${tx.from} - Published a ${tagString} <span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
                             } else {
-                                outputText += `<div class="transaction"><p>Publisher: ${tx.from} - <span class="transaction-tag">Message:</span> <span class="transaction-body">${decodedInput.replace(/\*\*\*\*\*\(.*?\)\*\*\*\*\*/, '')}</span></p></div>`;
+                                outputText += `<div class="transaction"><p>Publisher: ${tx.from} - <span class="transaction-tag">Message:</span> <span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
                             }
                         }
                     }
