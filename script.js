@@ -194,14 +194,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     
         // Handle multiple tags separated by commas
-        if (selectedOption.includes(',')) {
-            const tags = selectedOption.split(',').map(tag => tag.trim());
-            tags.forEach(async (tag) => {
-                const fullMessage = `\n\n${message}\n\n*****(${tag})*****`;
-                await sendMessage(fullMessage);
-            });
-        } else {
-            const fullMessage = `\n\n${message}\n\n*****(${selectedOption})*****`;
+        const tags = selectedOption.split(',').map(tag => tag.trim());
+        for (const tag of tags) {
+            const fullMessage = `\n\n${message}\n\n*****(${tag})*****`;
             await sendMessage(fullMessage);
         }
     
@@ -250,7 +245,7 @@ document.addEventListener('DOMContentLoaded', function() {
     async function fetchTransactionData(clearExisting = false) {
         console.log("fetchTransactionData called");  // Add this line
         try {
-            let selectedTag = document.getElementById('tagFilter').value;
+            let selectedTags = document.getElementById('tagFilter').value.split(',').map(tag => tag.trim()); // Split by comma and trim
             console.log("Selected Tag from Dropdown: ", selectedTag);  // Debugging line
 
             // If the selected tag is "Custom", use the value from the custom input field
@@ -295,7 +290,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         const tagMatch = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/);
                         const tag = tagMatch ? tagMatch[1] : null;
     
-                        if (selectedTag !== 'All' && tag !== selectedTag) {
+                        if (selectedTags !== ['All'] && !selectedTags.includes(tag)) {
                             return;
                         }
     
