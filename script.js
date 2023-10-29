@@ -252,6 +252,12 @@ document.addEventListener('DOMContentLoaded', function() {
             let selectedTags = document.getElementById('tagFilter').value.split(',').map(tag => tag.trim()); // Split by comma and trim
             console.log("Selected Tags from Dropdown: ", selectedTags);  // Debugging line
 
+            // New code to handle the default case
+            if (selectedTags.length === 0 || selectedTags.includes("All")) {
+                selectedTags = ["All"];
+                console.log("Defaulting to All Tags");  // Debugging line
+            }
+            
             // If the selected tag is "Custom", use the value from the custom input field
             if (selectedTags.includes("Custom")) {
                 selectedTags = [document.getElementById('customFilterInput').value];
