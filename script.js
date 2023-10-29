@@ -279,7 +279,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // If the selected tag is "Custom", use the value from the custom input field
             if (selectedTags.includes("Custom")) {
-                selectedTags = [document.getElementById('customFilterInput').value];
+                selectedTags = document.getElementById('customFilterInput').value.split(',').map(tag => tag.trim());
                 console.log("Selected Tags from Custom Input: ", selectedTags);  // Debugging line
             }
                 
@@ -334,7 +334,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         console.log("Selected Tags: ", selectedTags);
                         console.log("Transaction Tags: ", tags);
                         const hasAnyMatchingTags = selectedTags.some(selTag => tags.includes(selTag));
-                        console.log("Has All Matching Tags: ", hasAllMatchingTags);  // Debugging line
+                        console.log("Has Any Matching Tags: ", hasAnyMatchingTags);  // Debugging line
             
                         if (selectedTags.includes("All") || hasAnyMatchingTags || selectedTags.length === 0) {
                             const tagString = tags.join(', ');
