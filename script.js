@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let encodedTags = tags.map(tag => `*****(${tag})*****`).join(' ');
     
         // Add the encoded tags to the message
-        const fullMessage = `${encodedTags} ${message}`;
+        const fullMessage = `${message} ${encodedTags}`;
     
         try {
             await sendMessage(fullMessage);
