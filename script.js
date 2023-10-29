@@ -442,32 +442,32 @@ document.addEventListener('DOMContentLoaded', function() {
             let found = false;
             let iterationCount = 0;  // Add this line to count iterations
             const maxIterations = 10;  // Maximum number of iterations
-    
+            
             while ((window.scrollHeight <= window.clientHeight || !found) && lastIndexProcessed < totalTransactions) {
                 if (iterationCount >= maxIterations) {  // Check if maximum iterations reached
                     console.log("Maximum iterations reached. Breaking loop.");
                     break;
                 }
-    
+            
                 let previousLastIndex = lastIndexProcessed;  // Store the previous last index
-    
+            
                 for (const tag of selectedTags) {
                     if (window.innerHTML.indexOf(tag) !== -1) {
                         found = true;
                         break;
                     }
                 }
-    
+            
                 if (!found) {
                     await fetchTransactionData();
                 }
-    
+            
                 // Check if new data was fetched
                 if (previousLastIndex === lastIndexProcessed) {
                     console.log("No new data fetched. Breaking loop.");
                     break;
                 }
-    
+            
                 iterationCount++;  // Increment the iteration count
             }
         }, 3000);  // 3-second delay
