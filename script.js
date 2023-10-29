@@ -169,49 +169,61 @@ document.addEventListener('DOMContentLoaded', function() {
     let isPublishing = false;
     
     async function publishMessage() {
-        if (!isConnected) {
-            alert('Please connect your wallet before publishing a message.');
-            try {
-                await connectWallet();
-            } catch (error) {
-                console.error('Error publishing message:', error);
-                return;
-            }
-        }
+      // Check if already publishing
+      if (isPublishing) {
+        console.log('Already publishing, please wait...');
+        return;
+      }
     
-        const contentInput = document.getElementById('postInput');
-        const message = contentInput.value;
-        const publishOptionSelect = document.getElementById('publishOptionSelect');
+      // Set the flag to true
+      isPublishing = true;
     
-        if (!message.trim()) {
-            console.error('Message is empty.');
-            return;
-        }
-    
-        let selectedOption = publishOptionSelect.value || "Message";
-    
-        if (selectedOption === "Custom") {
-            selectedOption = document.getElementById('customTagInput').value;
-        }
-    
-        if (selectedOption.trim() === "") {
-            selectedOption = "Message";
-        }
-    
-        // Handle multiple tags
-        const tags = selectedOption.split(',').map(tag => tag.trim());
-        let encodedTags = tags.map(tag => `*****(${tag})*****`).join(' ');
-    
-        // Add the encoded tags to the message
-        const fullMessage = `${message} ${encodedTags}`;
-    
+      if (!isConnected) {
+        alert('Please connect your wallet before publishing a message.');
         try {
-            await sendMessage(fullMessage);
+          await connectWallet();
         } catch (error) {
-            console.error('Error sending message:', error);
+          console.error('Error publishing message:', error);
+          isPublishing = false; // Reset the flag
+          return;
         }
+      }
     
-        contentInput.value = '';
+      const contentInput = document.getElementById('postInput');
+      const message = contentInput.value;
+      const publishOptionSelect = document.getElementById('publishOptionSelect');
+    
+      if (!message.trim()) {
+        console.error('Message is empty.');
+        isPublishing = false; // Reset the flag
+        return;
+      }
+    
+      let selectedOption = publishOptionSelect.value || "Message";
+    
+      if (selectedOption === "Custom") {
+        selectedOption = document.getElementById('customTagInput').value;
+      }
+    
+      if (selectedOption.trim() === "") {
+        selectedOption = "Message";
+      }
+    
+      // Handle multiple tags
+      const tags = selectedOption.split(',').map(tag => tag.trim());
+      let encodedTags = tags.map(tag => `*****(${tag})*****`).join(' ');
+    
+      // Add the encoded tags to the message
+      const fullMessage = `${message} ${encodedTags}`;
+    
+      try {
+        await sendMessage(fullMessage);
+      } catch (error) {
+        console.error('Error sending message:', error);
+      }
+    
+      contentInput.value = '';
+      isPublishing = false; // Reset the flag
     }
     
     async function sendMessage(fullMessage) {
