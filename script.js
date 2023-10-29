@@ -1,4 +1,3 @@
-// Define constants for API endpoints
 const apiEndpoints = [
     'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x490eE229913202fEFbf52925bF5100CA87fb4421&sort=desc',
     'https://scan.9mm.pro/api?module=account&action=txlist&address=0x490eE229913202fEFbf52925bF5100CA87fb4421&sort=desc',    
@@ -6,13 +5,13 @@ const apiEndpoints = [
 ];
 
 const maxRetryCount = 3;
-const pulseChainId = 369;  // PulseChain network ID - Moved outside of the function
+const pulseChainId = 369;
 
 document.addEventListener('DOMContentLoaded', function() {
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
-    let totalTransactions = 0; // Add this line at the top of your script to keep track of total transactions
+    let totalTransactions = 0;
     let transactionCount = 13;
-    let lastIndexProcessed = 0; // Add this line at the top of your script to keep track of the last index processed
+    let lastIndexProcessed = 0;
     let isConnected = false;
     let globalHexMessage = '';
     let isFirstLoad = true;
@@ -43,10 +42,8 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const connectButton = document.getElementById('connectButton');
     
-            // Explicitly convert networkId to a number
             const networkIdNumber = Number(networkId);
                 
-            // Add hover effect for connectButton
             connectButton.addEventListener('mouseover', function() {
                 if (!isConnected) {
                     this.style.backgroundColor = 'green';
@@ -70,7 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function setRandomTitle() {
         try {
             const titles = [
-                // Array of random titles
                 "The Great Library of PulseChain: Home of the Immutable Publishing House",
                 "The Great Library & Publishing House of PulseChain: Your Words, Our Blocks",
                 "PulseChain's Magna Bibliotheca: A Great Library and Publishing House",
@@ -88,16 +84,13 @@ document.addEventListener('DOMContentLoaded', function() {
             titleElement.innerText = titles[randomIndex];
         } catch (error) {
             console.error('Error setting random title:', error);
-            // Handle the error and provide user feedback
         }
     }
     
-    // Function to show publish options (the dropdown)
     document.getElementById('publishButton').addEventListener('click', function() {
         document.getElementById('publishOptions').style.display = 'block';
     });
     
-    // Function to hide publish options (the dropdown)
     function hidePublishOptions() {
         document.getElementById('publishOptions').style.display = 'none';
     }
@@ -109,37 +102,30 @@ document.addEventListener('DOMContentLoaded', function() {
       return web3.utils.utf8ToHex(fullMessage);
     }
     
-    // Updated handlePublishOption function
     function handlePublishOption(option) {
-      const contentInput = document.getElementById('postInput').value; // Directly get the value
+      const contentInput = document.getElementById('postInput').value;
       
-      // If no option or empty string, default to "Message"
       if (!option || option.trim() === '') {
         option = "Message";
-        publishOptionSelect.value = "Message"; // Update the dropdown to "Message"
+        publishOptionSelect.value = "Message";
       }
       
-      // If the option is "Custom", get the value from the custom input field
       if (option === "Custom") {
         option = document.getElementById('customTagInput').value;
       }
       
-      // Use the new constructAndEncodeMessage function to handle message construction and encoding
       globalHexMessage = constructAndEncodeMessage(contentInput, option);
     }
     
     const publishOptionSelect = document.getElementById('publishOptionSelect');
     
-   // Add this event listener to handle the initial click on the dropdown
     publishOptionSelect.addEventListener('click', function() {
         if (this.value === "") {
             handlePublishOption("Message");
-            // Update globalHexMessage directly here
             globalHexMessage = web3.utils.utf8ToHex("*****(Message)*****");
         }
     });
     
-    // Event listener for changes in the dropdown menu
     publishOptionSelect.addEventListener('change', function() {
         try {
             handlePublishOption(publishOptionSelect.value);
@@ -148,16 +134,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Add a boolean flag to prevent multiple executions
     let isPublishing = false;
     
     async function publishMessage(selectedTags) {
-      // Check if already publishing
       if (isPublishing) {
         return;
       }
     
-      // Set the flag to true
       isPublishing = true;
     
       if (!isConnected) {
@@ -166,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
           await connectWallet();
         } catch (error) {
           console.error('Error publishing message:', error);
-          isPublishing = false; // Reset the flag
+          isPublishing = false;
           return;
         }
       }
@@ -191,11 +174,9 @@ document.addEventListener('DOMContentLoaded', function() {
         selectedOption = "Message";
       }
     
-      // Handle multiple tags
       const tags = selectedOption.split(',').map(tag => tag.trim());
       let encodedTags = tags.map(tag => `*****(${tag})*****`).join(' ');
     
-      // Add the encoded tags to the message
       const fullMessage = `${message} ${encodedTags}`;
     
       try {
@@ -205,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     
       contentInput.value = '';
-      isPublishing = false; // Reset the flag
+      isPublishing = false;
     }
     
     async function sendMessage(fullMessage) {
@@ -213,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         const account = accounts[0];
         const fromAddress = accounts[0];
-        const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421'; // Replace with your contract address
+        const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421';
     
         const tx = {
             from: fromAddress,
@@ -226,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const receipt = await web3.eth.sendTransaction(tx);
         } catch (error) {
             console.error('Error sending transaction:', error);
-            throw error; // Added this line to propagate the error
+            throw error;
         }
     }
     
@@ -247,14 +228,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function fetchTransactionData(clearExisting = false) {
         try {
-            let selectedTags = document.getElementById('tagFilter').value.split(',').map(tag => tag.trim()); // Split by comma and trim
-                
-            // New code to handle the default case
+            let selectedTags = document.getElementById('tagFilter').value.split(',').map(tag => tag.trim());
+            
             if (selectedTags.length === 0 || selectedTags.includes("All")) {
                 selectedTags = ["All"];
             }
             
-            // If the selected tag is "Custom", use the value from the custom input field
             if (selectedTags.includes("Custom")) {
                 selectedTags = document.getElementById('customFilterInput').value.split(',').map(tag => tag.trim());
             }
@@ -263,20 +242,20 @@ document.addEventListener('DOMContentLoaded', function() {
         
             if (isFirstLoad) {
                 window.innerHTML = 'Fetching data...';
-                isFirstLoad = false; // Set it to false after the first load
+                isFirstLoad = false;
             }
     
             const data = await fetchDataWithFallback(apiEndpoints);
-            totalTransactions = data.result.length; // Update total transactions
+            totalTransactions = data.result.length;
     
             if (transactionCount >= totalTransactions) {
-                return; // Exit the function if we've reached the end
+                return;
             }
             
             let outputText = "";
             const filteredData = data.result.filter(tx => tx.input !== '0x');
             const sliceStart = lastIndexProcessed;
-            const sliceEnd = clearExisting ? lastIndexProcessed + 50 : lastIndexProcessed + 13; // Fetch more data if it's a new tag
+            const sliceEnd = clearExisting ? lastIndexProcessed + 50 : lastIndexProcessed + 13;
     
             if (window.innerHTML === 'Fetching data...') {
                 window.innerHTML = '';
@@ -293,12 +272,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
                         const tags = tagMatches ? tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')) : [];
                         
-                        // Remove the tags from the decoded input
                         tags.forEach(tag => {
                             decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
                         });
             
-                        // Check if all of the selectedTags are present in the tags of the transaction
                         const hasAllMatchingTags = selectedTags.every(selTag => tags.includes(selTag));
             
                         if (selectedTags.includes("All") || hasAllMatchingTags || selectedTags.length === 0) {
@@ -311,16 +288,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     }
                 } catch (error) {
-                    // Skip this transaction and continue processing other transactions
                     console.error('Error processing transaction:', error);
                 }
             });
 
-            window.innerHTML += outputText;  // Append new transactions to the existing ones
-            lastIndexProcessed = sliceEnd;  // Update the last index processed for the next fetch
+            window.innerHTML += outputText;s
+            lastIndexProcessed = sliceEnd;
 
             if (lastIndexProcessed >= totalTransactions) {
-                return; // Exit the function if we've reached the end
+                return;
             }            
               
         } catch (error) {
@@ -334,7 +310,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    // Function to toggle the visibility of the custom tag input box based on the selected option
     function toggleCustomTagInput(selectElement, inputElementId) {
         const inputElement = document.getElementById(inputElementId);
         if (selectElement.value === "Custom") {
@@ -344,7 +319,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Function to fetch more transaction data when scrolled to the bottom
     document.getElementById('transactionDataWindow').addEventListener('scroll', async function() {
         const { scrollTop, scrollHeight, clientHeight } = this;
         
@@ -354,30 +328,26 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     document.getElementById('tagFilter').addEventListener('change', async function() {
-        lastIndexProcessed = 0; // Reset the last index
+        lastIndexProcessed = 0;
         const window = document.getElementById('transactionDataWindow');
-        window.innerHTML = ''; // Clear the window
-        await fetchTransactionData(true); // Fetch new data with clearExisting set to true
+        window.innerHTML = '';
+        await fetchTransactionData(true);
         
         let selectedTags = this.value;
         
-        // If the selected tag is "Custom", use the value from the custom input field
         if (selectedTags === "Custom") {
             selectedTags = document.getElementById('customFilterInput').value;
         }
         
-        // Keep fetching until a matching tag is found, the window is filled, or we reach the end
         while ((window.scrollHeight <= window.clientHeight || window.innerHTML.indexOf(selectedTags) === -1) && lastIndexProcessed < totalTransactions) {
             await fetchTransactionData();
         }
     });
 
-    // Add event listener to toggle custom tag input for publish options
     document.getElementById('publishOptionSelect').addEventListener('change', function() {
         toggleCustomTagInput(this, 'customTagInput');
     });
     
-    // Add event listener to toggle custom tag input for filter
     document.getElementById('tagFilter').addEventListener('change', function() {
         toggleCustomTagInput(this, 'customFilterInput');
     });
@@ -388,10 +358,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     document.getElementById('confirmPublishButton').addEventListener('click', async function() {
-        console.log("Confirm button clicked. Preparing to publish message...");
-        // Disable the confirm button to prevent multiple clicks
         this.disabled = true;
-        hidePublishOptions(); // Hide the publish options
+        hidePublishOptions();
         const publishOptionSelect = document.getElementById('publishOptionSelect');
         let selectedOption = publishOptionSelect.value;
         let selectedTags = document.getElementById('tagFilter').value.split(',').map(tag => tag.trim());
@@ -408,7 +376,6 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) {
             console.error('Error publishing message:', error);
         } finally {
-            // Re-enable the confirm button after the message is sent
             this.disabled = false;
         }
     });
@@ -434,7 +401,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
             while ((window.scrollHeight <= window.clientHeight) && lastIndexProcessed < totalTransactions) {
                 if (iterationCount >= maxIterations) {  // Check if maximum iterations reached
-                    console.log("Maximum iterations reached. Breaking loop.");
                     break;
                 }
     
@@ -444,7 +410,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
                 // Check if new data was fetched
                 if (previousLastIndex === lastIndexProcessed) {
-                    console.log("No new data fetched. Breaking loop.");
                     break;
                 }
     
