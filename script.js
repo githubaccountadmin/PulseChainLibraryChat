@@ -250,12 +250,12 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("fetchTransactionData called");  // Add this line
         try {
             let selectedTags = document.getElementById('tagFilter').value.split(',').map(tag => tag.trim()); // Split by comma and trim
-            console.log("Selected Tag from Dropdown: ", selectedTag);  // Debugging line
+            console.log("Selected Tag from Dropdown: ", selectedTags);  // Debugging line
 
             // If the selected tag is "Custom", use the value from the custom input field
-            if (selectedTag === "Custom") {
-                selectedTag = document.getElementById('customFilterInput').value;
-                console.log("Selected Tag from Custom Input: ", selectedTag);  // Debugging line
+            if (selectedTags === "Custom") {
+                selectedTags = document.getElementById('customFilterInput').value;
+                console.log("Selected Tag from Custom Input: ", selectedTags);  // Debugging line
             }
                 
             const window = document.getElementById('transactionDataWindow');
@@ -363,15 +363,15 @@ document.addEventListener('DOMContentLoaded', function() {
         window.innerHTML = ''; // Clear the window
         await fetchTransactionData(true); // Fetch new data with clearExisting set to true
         
-        let selectedTag = this.value;
+        let selectedTags = this.value;
         
         // If the selected tag is "Custom", use the value from the custom input field
-        if (selectedTag === "Custom") {
-            selectedTag = document.getElementById('customFilterInput').value;
+        if (selectedTags === "Custom") {
+            selectedTags = document.getElementById('customFilterInput').value;
         }
         
         // Keep fetching until a matching tag is found, the window is filled, or we reach the end
-        while ((window.scrollHeight <= window.clientHeight || window.innerHTML.indexOf(selectedTag) === -1) && lastIndexProcessed < totalTransactions) {
+        while ((window.scrollHeight <= window.clientHeight || window.innerHTML.indexOf(selectedTags) === -1) && lastIndexProcessed < totalTransactions) {
             await fetchTransactionData();
         }
     });
