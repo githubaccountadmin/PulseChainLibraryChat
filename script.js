@@ -329,8 +329,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         });
             
                         // Check if all of the selectedTags are present in the tags of the transaction
+                        console.log("Selected Tags: ", selectedTags);
+                        console.log("Transaction Tags: ", tags);
                         const hasAllMatchingTags = selectedTags.every(selTag => tags.includes(selTag));
-
                         console.log("Has All Matching Tags: ", hasAllMatchingTags);  // Debugging line
             
                         if (selectedTags.includes("All") || hasAllMatchingTags || selectedTags.length === 0) {
