@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add a boolean flag to prevent multiple executions
     let isPublishing = false;
     
-    async function publishMessage() {
+    async function publishMessage(selectedTags) {
       // Check if already publishing
       if (isPublishing) {
         console.log('Already publishing, please wait...');
@@ -430,7 +430,7 @@ document.addEventListener('DOMContentLoaded', function() {
         hidePublishOptions(); // Hide the publish options
         const publishOptionSelect = document.getElementById('publishOptionSelect');
         let selectedOption = publishOptionSelect.value;
-    
+        let selectedTags = document.getElementById('tagFilter').value.split(',').map(tag => tag.trim());
         if (selectedTags.includes("Custom")) {
             selectedTags = document.getElementById('customFilterInput').value.split(',').map(tag => tag.trim());
         }
@@ -440,7 +440,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     
         try {
-            await publishMessage();
+            await publishMessage(selectedTags);
         } catch (error) {
             console.error('Error publishing message:', error);
         } finally {
