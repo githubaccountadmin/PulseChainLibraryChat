@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     
         let selectedOption = publishOptionSelect.value || "Message"; // Default to "Message" if nothing is selected
-
+    
         // If the selected option is "Custom", replace it with the user's custom tag
         if (selectedOption === "Custom") {
             selectedOption = document.getElementById('customTagInput').value;
@@ -193,39 +193,44 @@ document.addEventListener('DOMContentLoaded', function() {
             selectedOption = "Message";
         }
     
-        const fullMessage = `\n\n${message}\n\n*****(${selectedOption})*****`;
+        // Handle multiple tags separated by commas
+        if (selectedOption.includes(',')) {
+            const tags = selectedOption.split(',').map(tag => tag.trim());
+            tags.forEach(async (tag) => {
+                const fullMessage = `\n\n${message}\n\n*****(${tag})*****`;
+                await sendMessage(fullMessage);
+            });
+        } else {
+            const fullMessage = `\n\n${message}\n\n*****(${selectedOption})*****`;
+            await sendMessage(fullMessage);
+        }
     
+        contentInput.value = ''; // Clear the text area
+    }
+    
+    async function sendMessage(fullMessage) {
         const hexMessage = web3.utils.utf8ToHex(fullMessage);
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         const account = accounts[0];
         const fromAddress = accounts[0];
         const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421'; // Replace with your contract address
     
-        // Get the current nonce for your account
-        // const nonce = await web3.eth.getTransactionCount(fromAddress, 'latest');
-    
         const tx = {
             from: fromAddress,
             to: toAddress,
             value: web3.utils.toWei('0', 'ether'),
             data: hexMessage,
-            // gas: 30000000, // Set the gas limit appropriately
-            // nonce: nonce, // Include the nonce in the transaction
         };
     
         try {
             // Send the transaction
             const receipt = await web3.eth.sendTransaction(tx);
             console.log('Transaction receipt:', receipt);
-            // Provide user feedback for a successful transaction
-    
-            contentInput.value = ''; // Clear the text area
         } catch (error) {
             console.error('Error sending transaction:', error);
-            // Handle the error and provide user feedback
         }
     }
-
+    
     async function fetchDataWithFallback(endpoints) {
         for (const endpoint of endpoints) {
             for (let retryCount = 1; retryCount <= maxRetryCount; retryCount++) {
@@ -426,16 +431,26 @@ document.addEventListener('DOMContentLoaded', function() {
             lastIndexProcessed = 0; // Reset the last index
             const window = document.getElementById('transactionDataWindow');
             window.innerHTML = ''; // Clear the window
-    
-            let selectedTag = document.getElementById('customFilterInput').value;  // Get the custom tag
-    
+        
+            let selectedTags = document.getElementById('customFilterInput').value.split(',').map(tag => tag.trim());
+        
             await fetchTransactionData(true);  // Fetch new data with clearExisting set to true
-    
+        
             // Keep fetching until a matching tag is found, the window is filled, or we reach the end
-            while ((window.scrollHeight <= window.clientHeight || window.innerHTML.indexOf(selectedTag) === -1) && lastIndexProcessed < totalTransactions) {
-                await fetchTransactionData();
+            let found = false;
+            while ((window.scrollHeight <= window.clientHeight || !found) && lastIndexProcessed < totalTransactions) {
+                for (const tag of selectedTags) {
+                    if (window.innerHTML.indexOf(tag) !== -1) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    await fetchTransactionData();
+                }
             }
         }, 3000);  // 3-second delay
+
     });
 
     checkInitialConnection();
