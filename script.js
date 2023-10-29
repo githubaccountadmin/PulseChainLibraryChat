@@ -453,47 +453,34 @@ document.addEventListener('DOMContentLoaded', function() {
         // Start a new timer
         searchTimer = setTimeout(async function() {
             console.log("Timer completed, starting search");  // Add this line
-            // Your search logic here
             lastIndexProcessed = 0; // Reset the last index
             const window = document.getElementById('transactionDataWindow');
             window.innerHTML = ''; // Clear the window
-        
+    
             let selectedTags = document.getElementById('customFilterInput').value.split(',').map(tag => tag.trim());
-        
+    
             await fetchTransactionData(true);  // Fetch new data with clearExisting set to true
-        
+    
             // Keep fetching until a matching tag is found, the window is filled, or we reach the end
-            let found = false;
             let iterationCount = 0;  // Add this line to count iterations
             const maxIterations = 10;  // Maximum number of iterations
-            
-            while ((window.scrollHeight <= window.clientHeight || !found) && lastIndexProcessed < totalTransactions) {
+    
+            while ((window.scrollHeight <= window.clientHeight) && lastIndexProcessed < totalTransactions) {
                 if (iterationCount >= maxIterations) {  // Check if maximum iterations reached
                     console.log("Maximum iterations reached. Breaking loop.");
                     break;
                 }
-
-                for (const tag of selectedTags) {
-                    if (tags.includes(tag)) {
-                        found = true;
-                        break;
-                    }
-                }
-            
+    
                 let previousLastIndex = lastIndexProcessed;  // Store the previous last index
-            
-                found = selectedTags.every(tag => window.innerHTML.indexOf(tag) !== -1);
-            
-                if (!found) {
-                    await fetchTransactionData();
-                }
-            
+    
+                await fetchTransactionData();
+    
                 // Check if new data was fetched
                 if (previousLastIndex === lastIndexProcessed) {
                     console.log("No new data fetched. Breaking loop.");
                     break;
                 }
-            
+    
                 iterationCount++;  // Increment the iteration count
             }
         }, 3000);  // 3-second delay
