@@ -114,24 +114,32 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('publishOptions').style.display = 'none';
     }
     
-    // Update handlePublishOption function to call hidePublishOptions() after publishing
+    function constructAndEncodeMessage(message, selectedOption) {
+      const tags = selectedOption.split(',').map(tag => tag.trim());
+      const encodedTags = tags.map(tag => `*****(${tag})*****`).join(' ');
+      const fullMessage = `${message} ${encodedTags}`;
+      return web3.utils.utf8ToHex(fullMessage);
+    }
+    
+    // Updated handlePublishOption function
     function handlePublishOption(option) {
-        console.log("handlePublishOption called with option: ", option);
-        const contentInput = document.getElementById('postInput');
-    
-        // Trim leading and trailing white spaces and check if the resulting string is empty
-        if (!option || option.trim() === '') {
-            // If no option is selected, default to "Message"
-            option = "Message";
-            publishOptionSelect.value = "Message"; // Set the select element to "Message"
-        }
-    
-        const message = `*****(${option})***** ${contentInput.value}`;
-        console.log("About to update globalHexMessage: ", globalHexMessage);
-        globalHexMessage = web3.utils.utf8ToHex(message);
-        console.log("Updated globalHexMessage: ", globalHexMessage);
-        // ...
-        console.log("At the end of handlePublishOption, globalHexMessage is: ", globalHexMessage);
+      console.log("handlePublishOption called with option:", option);
+      const contentInput = document.getElementById('postInput').value; // Directly get the value
+      
+      // If no option or empty string, default to "Message"
+      if (!option || option.trim() === '') {
+        option = "Message";
+        publishOptionSelect.value = "Message"; // Update the dropdown to "Message"
+      }
+      
+      // If the option is "Custom", get the value from the custom input field
+      if (option === "Custom") {
+        option = document.getElementById('customTagInput').value;
+      }
+      
+      // Use the new constructAndEncodeMessage function to handle message construction and encoding
+      globalHexMessage = constructAndEncodeMessage(contentInput, option);
+      console.log("Updated globalHexMessage:", globalHexMessage);
     }
     
     const publishOptionSelect = document.getElementById('publishOptionSelect');
