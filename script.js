@@ -472,6 +472,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log("Maximum iterations reached. Breaking loop.");
                     break;
                 }
+
+                for (const tag of selectedTags) {
+                    if (tags.includes(tag)) {
+                        found = true;
+                        break;
+                    }
+                }
             
                 let previousLastIndex = lastIndexProcessed;  // Store the previous last index
             
