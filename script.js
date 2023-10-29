@@ -318,10 +318,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         let decodedInput = web3.utils.hexToUtf8(tx.input);
                         const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
                         const tags = tagMatches ? tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')) : [];
-
+                        console.log("Tags extracted from transaction: ", tags);
                         console.log("Processing transaction with tags: ", tags);  // New Debugging line
                         console.log("Transaction Tags: ", tags);  // Debugging line
                         console.log("Selected Tags: ", selectedTags);  // Debugging line
+                        console.log("Selected Tags from Custom Input: ", selectedTags);
+                        console.log("Actual value of selectedTags: ", JSON.stringify(selectedTags));
             
                         // Remove the tags from the decoded input
                         tags.forEach(tag => {
