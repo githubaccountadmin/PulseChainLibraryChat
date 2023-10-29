@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         console.log("Decoded Input: ", decodedInput);
                         console.log("Tag: ", tag);
-                        if (selectedTags.includes("All") || selectedTags.includes(tag)) {
+                        if (selectedTags.includes("All") || selectedTags.includes(tag) || selectedTags.length === 0) {
                             if (tag) {
                                 decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
                                 if (tag.toLowerCase() === 'other') {
