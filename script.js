@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
-            window.innerHTML += outputText;s
+            window.innerHTML += outputText;
             lastIndexProcessed = sliceEnd;
 
             if (lastIndexProcessed >= totalTransactions) {
