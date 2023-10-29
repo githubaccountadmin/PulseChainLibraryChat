@@ -434,7 +434,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
         if (selectedTags.includes("Custom")) {
             selectedTags = document.getElementById('customFilterInput').value.split(',').map(tag => tag.trim());
-            console.log("Selected Tags from Custom Input: ", selectedTags);  // Debugging line
         }
     
         if (selectedOption === "") {
