@@ -247,11 +247,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function fetchTransactionData(clearExisting = false) {
-        console.log("fetchTransactionData called");  // Add this line
+        console.log("fetchTransactionData called");  // Debugging line
         try {
             let selectedTags = document.getElementById('tagFilter').value.split(',').map(tag => tag.trim()); // Split by comma and trim
             console.log("Selected Tags from Dropdown: ", selectedTags);  // Debugging line
-
+    
             // New code to handle the default case
             if (selectedTags.length === 0 || selectedTags.includes("All")) {
                 selectedTags = ["All"];
@@ -299,25 +299,22 @@ document.addEventListener('DOMContentLoaded', function() {
                         let decodedInput = web3.utils.hexToUtf8(tx.input);
                         const tagMatch = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/);
                         const tag = tagMatch ? tagMatch[1] : null;
-    
-                        if (selectedTags !== ['All'] && !selectedTags.includes(tag)) {
-                            return;
-                        }
-    
+                        
                         console.log("Decoded Input: ", decodedInput);
                         console.log("Tag: ", tag);
-    
-                        if (tag) {
-                            decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
-                            if (tag.toLowerCase() === 'other') {
-                                outputText += `<div class="transaction"><p>Publisher: ${tx.from} - Published ${tag} <span class="transaction-body">${decodedInput}</span></p></div>`;
+                        if (selectedTags.includes("All") || selectedTags.includes(tag)) {
+                            if (tag) {
+                                decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
+                                if (tag.toLowerCase() === 'other') {
+                                    outputText += `<div class="transaction"><p>Publisher: ${tx.from} - Published ${tag} <span class="transaction-body">${decodedInput}</span></p></div>`;
+                                } else {
+                                    outputText += `<div class="transaction"><p>Publisher: ${tx.from} - Published a ${tag} <span class="transaction-body">${decodedInput}</span></p></div>`;
+                                }
+                                console.log("Added .transaction class to element:", tx.from);
                             } else {
-                                outputText += `<div class="transaction"><p>Publisher: ${tx.from} - Published a ${tag} <span class="transaction-body">${decodedInput}</span></p></div>`;
+                                outputText += `<div class="transaction"><p>Publisher: ${tx.from} - <span class="transaction-tag">Message:</span> <span class="transaction-body">${decodedInput.replace(/\*\*\*\*\*\(.*?\)\*\*\*\*\*/, '')}</span></p></div>`;
                             }
-                            console.log("Added .transaction class to element:", tx.from);
-                        } else {
-                            outputText += `<div class="transaction"><p>Publisher: ${tx.from} - <span class="transaction-tag">Message:</span> <span class="transaction-body">${decodedInput.replace(/\*\*\*\*\*\(.*?\)\*\*\*\*\*/, '')}</span></p></div>`;
-                        }
+                         }   
                     }
                 } catch (error) {
                     // Skip this transaction and continue processing other transactions
