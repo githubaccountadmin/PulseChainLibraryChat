@@ -174,8 +174,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
         const contentInput = document.getElementById('postInput');
         const message = contentInput.value;
+        const publishOptionSelect = document.getElementById('publishOptionSelect'); // Added this line
     
-        // Check if message is empty
         if (!message.trim()) {
             console.error('Message is empty.');
             return;
@@ -197,10 +197,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const tags = selectedOption.split(',').map(tag => tag.trim());
         for (const tag of tags) {
             const fullMessage = `\n\n${message}\n\n*****(${tag})*****`;
-            await sendMessage(fullMessage);
+            try {
+                await sendMessage(fullMessage);
+            } catch (error) {
+                console.error(`Error sending message with tag ${tag}:`, error);
+            }
         }
     
-        contentInput.value = ''; // Clear the text area
+        contentInput.value = '';
     }
     
     async function sendMessage(fullMessage) {
@@ -218,11 +222,11 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     
         try {
-            // Send the transaction
             const receipt = await web3.eth.sendTransaction(tx);
             console.log('Transaction receipt:', receipt);
         } catch (error) {
             console.error('Error sending transaction:', error);
+            throw error; // Added this line to propagate the error
         }
     }
     
