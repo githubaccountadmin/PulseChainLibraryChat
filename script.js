@@ -328,10 +328,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         });
             
                         if (selectedTags.includes("All") || tags.some(tag => selectedTags.includes(tag)) || selectedTags.length === 0) {
-                            const tagString = tags.map(tag => `'${tag}'`).join(', ');
+                            const tagString = tags.join(', ');
             
                             if (tags.length > 0) {
-                                outputText += `<div class="transaction"><p>Publisher: ${tx.from} - Published a ${tagString} <span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
+                                outputText += `<div class="transaction"><p>Publisher: ${tx.from} - Published a ${tagString}<br><span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
                             } else {
                                 outputText += `<div class="transaction"><p>Publisher: ${tx.from} - <span class="transaction-tag">Message:</span> <span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
                             }
