@@ -16,8 +16,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let isConnected = false;
     let globalHexMessage = '';
     let isFirstLoad = true;
-    
-    console.log("Initial PulseChain ID:", pulseChainId);  // Debugging log
 
     async function checkInitialConnection() {
         try {
