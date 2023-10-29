@@ -316,24 +316,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 try {
                     if (web3.utils.isHexStrict(tx.input)) {
                         let decodedInput = web3.utils.hexToUtf8(tx.input);
-                        const tagMatch = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/);
-                        const tag = tagMatch ? tagMatch[1] : null;
-                        
+                        const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
+                        let tags = tagMatches ? tagMatches.map(tag => tag.match(/\((.*?)\)/)[1]) : [];
+            
                         console.log("Decoded Input: ", decodedInput);
-                        console.log("Tag: ", tag);
-                        if (selectedTags.includes("All") || selectedTags.includes(tag) || selectedTags.length === 0) {
-                            if (tag) {
+                        console.log("Tags: ", tags);
+            
+                        if (selectedTags.includes("All") || tags.some(tag => selectedTags.includes(tag)) || selectedTags.length === 0) {
+                            tags.forEach(tag => {
                                 decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
-                                if (tag.toLowerCase() === 'other') {
-                                    outputText += `<div class="transaction"><p>Publisher: ${tx.from} - Published ${tag} <span class="transaction-body">${decodedInput}</span></p></div>`;
-                                } else {
-                                    outputText += `<div class="transaction"><p>Publisher: ${tx.from} - Published a ${tag} <span class="transaction-body">${decodedInput}</span></p></div>`;
-                                }
-                                console.log("Added .transaction class to element:", tx.from);
+                            });
+            
+                            const tagString = tags.map(tag => `'${tag}'`).join(', ');
+            
+                            if (tags.length > 0) {
+                                outputText += `<div class="transaction"><p>Publisher: ${tx.from} - Published a ${tagString} <span class="transaction-body">${decodedInput}</span></p></div>`;
                             } else {
                                 outputText += `<div class="transaction"><p>Publisher: ${tx.from} - <span class="transaction-tag">Message:</span> <span class="transaction-body">${decodedInput.replace(/\*\*\*\*\*\(.*?\)\*\*\*\*\*/, '')}</span></p></div>`;
                             }
-                         }   
+                        }
                     }
                 } catch (error) {
                     // Skip this transaction and continue processing other transactions
