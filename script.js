@@ -327,10 +327,10 @@ document.addEventListener('DOMContentLoaded', function() {
                             decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
                         });
             
-                        // Check if all of the selectedTags match the tags in the transaction
-                        const hasAllMatchingTags = selectedTags.every(selTag => tags.includes(selTag));
+                        // Check if at least all of the selectedTags match the tags in the transaction
+                        const hasSomeMatchingTags = selectedTags.every(selTag => tags.includes(selTag));
             
-                        if (selectedTags.includes("All") || hasAllMatchingTags || selectedTags.length === 0) {
+                        if (selectedTags.includes("All") || hasSomeMatchingTags || selectedTags.length === 0) {
                             const tagString = tags.join(', ');
             
                             if (tags.length > 0) {
