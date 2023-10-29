@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             isConnected = accounts.length > 0;
             const networkId = isConnected ? await window.ethereum.request({ method: 'net_version' }) : null;
-            console.log("Network ID from Ethereum in checkInitialConnection:", networkId);  // Debugging log
             checkPulseChain(networkId);
         } catch (error) {
             console.error('Error checking initial connection:', error);
@@ -36,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             isConnected = true;
             const networkId = await window.ethereum.request({ method: 'net_version' });
-            console.log("Network ID from Ethereum in connectWallet:", networkId);  // Debugging log
             checkPulseChain(networkId);
         } catch (error) {
             console.error('Error connecting wallet:', error);
@@ -44,17 +42,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function checkPulseChain(networkId) {
-        console.log("Network ID from Ethereum:", networkId);
-        console.log("PulseChain ID:", pulseChainId);
-        console.log("Is connected:", isConnected);
-        
         try {
             const connectButton = document.getElementById('connectButton');
     
             // Explicitly convert networkId to a number
             const networkIdNumber = Number(networkId);
-            console.log("Converted Network ID:", networkIdNumber);
-    
+                
             // Add hover effect for connectButton
             connectButton.addEventListener('mouseover', function() {
                 if (!isConnected) {
@@ -68,12 +61,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
             
-            console.log("Updating connect button");
             connectButton.innerText = isConnected ? (networkIdNumber === pulseChainId ? "Connected" : "Not connected to PulseChain") : "Connect Wallet";
             connectButton.style.backgroundColor = isConnected ? (networkIdNumber === pulseChainId ? "green" : "red") : "grey";
-            console.log("Button text:", connectButton.innerText);
-            console.log("Button color:", connectButton.style.backgroundColor);
-            
+                        
         } catch (error) {
             console.error('Error checking PulseChain network:', error);
         }
@@ -123,7 +113,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Updated handlePublishOption function
     function handlePublishOption(option) {
-      console.log("handlePublishOption called with option:", option);
       const contentInput = document.getElementById('postInput').value; // Directly get the value
       
       // If no option or empty string, default to "Message"
@@ -139,7 +128,6 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Use the new constructAndEncodeMessage function to handle message construction and encoding
       globalHexMessage = constructAndEncodeMessage(contentInput, option);
-      console.log("Updated globalHexMessage:", globalHexMessage);
     }
     
     const publishOptionSelect = document.getElementById('publishOptionSelect');
@@ -147,17 +135,14 @@ document.addEventListener('DOMContentLoaded', function() {
    // Add this event listener to handle the initial click on the dropdown
     publishOptionSelect.addEventListener('click', function() {
         if (this.value === "") {
-            console.log("No option selected. Defaulting to 'Message'...");
             handlePublishOption("Message");
             // Update globalHexMessage directly here
             globalHexMessage = web3.utils.utf8ToHex("*****(Message)*****");
-            console.log("Updated globalHexMessage: ", globalHexMessage);
         }
     });
     
     // Event listener for changes in the dropdown menu
     publishOptionSelect.addEventListener('change', function() {
-        console.log("A publish-option was selected! Invoking handlePublishOption...");
         try {
             handlePublishOption(publishOptionSelect.value);
         } catch (error) {
@@ -171,7 +156,6 @@ document.addEventListener('DOMContentLoaded', function() {
     async function publishMessage(selectedTags) {
       // Check if already publishing
       if (isPublishing) {
-        console.log('Already publishing, please wait...');
         return;
       }
     
@@ -242,7 +226,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
         try {
             const receipt = await web3.eth.sendTransaction(tx);
-            console.log('Transaction receipt:', receipt);
         } catch (error) {
             console.error('Error sending transaction:', error);
             throw error; // Added this line to propagate the error
@@ -258,7 +241,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         return await response.json();
                     }
                 } catch (error) {
-                    console.log(`Fetching data from ${endpoint} failed (Retry ${retryCount}). Trying again...`);
                 }
             }
         }
@@ -266,21 +248,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function fetchTransactionData(clearExisting = false) {
-        console.log("fetchTransactionData called");  // Debugging line
         try {
             let selectedTags = document.getElementById('tagFilter').value.split(',').map(tag => tag.trim()); // Split by comma and trim
-            console.log("Selected Tags from Dropdown: ", selectedTags);  // Debugging line
-    
+                
             // New code to handle the default case
             if (selectedTags.length === 0 || selectedTags.includes("All")) {
                 selectedTags = ["All"];
-                console.log("Defaulting to All Tags");  // Debugging line
             }
             
             // If the selected tag is "Custom", use the value from the custom input field
             if (selectedTags.includes("Custom")) {
                 selectedTags = document.getElementById('customFilterInput').value.split(',').map(tag => tag.trim());
-                console.log("Selected Tags from Custom Input: ", selectedTags);  // Debugging line
             }
                 
             const window = document.getElementById('transactionDataWindow');
@@ -291,11 +269,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
     
             const data = await fetchDataWithFallback(apiEndpoints);
-            console.log("Fetched Data:", data);
             totalTransactions = data.result.length; // Update total transactions
     
             if (transactionCount >= totalTransactions) {
-                console.log("Reached the end of available transactions.");
                 return; // Exit the function if we've reached the end
             }
             
@@ -318,23 +294,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         let decodedInput = web3.utils.hexToUtf8(tx.input);
                         const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
                         const tags = tagMatches ? tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')) : [];
-                        console.log("Tags extracted from transaction: ", tags);
-                        console.log("Processing transaction with tags: ", tags);  // New Debugging line
-                        console.log("Transaction Tags: ", tags);  // Debugging line
-                        console.log("Selected Tags: ", selectedTags);  // Debugging line
-                        console.log("Selected Tags from Custom Input: ", selectedTags);
-                        console.log("Actual value of selectedTags: ", JSON.stringify(selectedTags));
-            
+                        
                         // Remove the tags from the decoded input
                         tags.forEach(tag => {
                             decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
                         });
             
                         // Check if all of the selectedTags are present in the tags of the transaction
-                        console.log("Selected Tags: ", selectedTags);
-                        console.log("Transaction Tags: ", tags);
                         const hasAllMatchingTags = selectedTags.every(selTag => tags.includes(selTag));
-                        console.log("Has All Matching Tags: ", hasAllMatchingTags);  // Debugging line
             
                         if (selectedTags.includes("All") || hasAllMatchingTags || selectedTags.length === 0) {
                             const tagString = tags.join(', ');
@@ -355,7 +322,6 @@ document.addEventListener('DOMContentLoaded', function() {
             lastIndexProcessed = sliceEnd;  // Update the last index processed for the next fetch
 
             if (lastIndexProcessed >= totalTransactions) {
-                console.log("Reached the end of available transactions.");
                 return; // Exit the function if we've reached the end
             }            
               
@@ -452,12 +418,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let searchTimer;  // Declare a variable to hold the timer
 
     document.getElementById('customFilterInput').addEventListener('input', function() {
-        console.log("Custom input changed: ", this.value);  // Debugging line
         clearTimeout(searchTimer);  // Clear the existing timer
     
         // Start a new timer
         searchTimer = setTimeout(async function() {
-            console.log("Timer completed, starting search");  // Add this line
             lastIndexProcessed = 0; // Reset the last index
             const window = document.getElementById('transactionDataWindow');
             window.innerHTML = ''; // Clear the window
