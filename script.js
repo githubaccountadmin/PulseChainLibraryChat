@@ -318,6 +318,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         let decodedInput = web3.utils.hexToUtf8(tx.input);
                         const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
                         const tags = tagMatches ? tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')) : [];
+
+                        console.log("Transaction Tags: ", tags);  // Debugging line
+                        console.log("Selected Tags: ", selectedTags);  // Debugging line
             
                         // Remove the tags from the decoded input
                         tags.forEach(tag => {
@@ -326,6 +329,8 @@ document.addEventListener('DOMContentLoaded', function() {
             
                         // Check if all of the selectedTags are present in the tags of the transaction
                         const hasAllMatchingTags = selectedTags.every(selTag => tags.includes(selTag));
+
+                        console.log("Has All Matching Tags: ", hasAllMatchingTags);  // Debugging line
             
                         if (selectedTags.includes("All") || hasAllMatchingTags || selectedTags.length === 0) {
                             const tagString = tags.join(', ');
