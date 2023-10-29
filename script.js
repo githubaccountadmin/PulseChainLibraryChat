@@ -475,12 +475,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
                 let previousLastIndex = lastIndexProcessed;  // Store the previous last index
             
-                for (const tag of selectedTags) {
-                    if (window.innerHTML.indexOf(tag) !== -1) {
-                        found = true;
-                        break;
-                    }
-                }
+                found = selectedTags.every(tag => window.innerHTML.indexOf(tag) !== -1);
             
                 if (!found) {
                     await fetchTransactionData();
