@@ -430,8 +430,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const publishOptionSelect = document.getElementById('publishOptionSelect');
         let selectedOption = publishOptionSelect.value;
     
-        if (selectedOption === "Custom") {
-            selectedOption = document.getElementById('customTagInput').value;
+        if (selectedTags.includes("Custom")) {
+            selectedTags = document.getElementById('customFilterInput').value.split(',').map(tag => tag.trim());
+            console.log("Selected Tags from Custom Input: ", selectedTags);  // Debugging line
         }
     
         if (selectedOption === "") {
