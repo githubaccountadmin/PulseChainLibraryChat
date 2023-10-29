@@ -319,6 +319,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
                         const tags = tagMatches ? tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')) : [];
 
+                        console.log("Processing transaction with tags: ", tags);  // New Debugging line
                         console.log("Transaction Tags: ", tags);  // Debugging line
                         console.log("Selected Tags: ", selectedTags);  // Debugging line
             
