@@ -318,19 +318,16 @@ document.addEventListener('DOMContentLoaded', function() {
                         let decodedInput = web3.utils.hexToUtf8(tx.input);
                         const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
                         const tags = tagMatches ? tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')) : [];
-                        
-                        console.log("Decoded Input: ", decodedInput);
-                        console.log("Tags: ", tags);
             
                         // Remove the tags from the decoded input
                         tags.forEach(tag => {
                             decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
                         });
             
-                        // Check if at least all of the selectedTags match the tags in the transaction
-                        const hasSomeMatchingTags = selectedTags.every(selTag => tags.includes(selTag));
+                        // Check if all of the selectedTags are present in the tags of the transaction
+                        const hasAllMatchingTags = selectedTags.every(selTag => tags.includes(selTag));
             
-                        if (selectedTags.includes("All") || tags.some(tag => selectedTags.includes(tag)) || selectedTags.length === 0) {
+                        if (selectedTags.includes("All") || hasAllMatchingTags || selectedTags.length === 0) {
                             const tagString = tags.join(', ');
             
                             if (tags.length > 0) {
@@ -345,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error('Error processing transaction:', error);
                 }
             });
-    
+
             window.innerHTML += outputText;  // Append new transactions to the existing ones
             lastIndexProcessed = sliceEnd;  // Update the last index processed for the next fetch
 
