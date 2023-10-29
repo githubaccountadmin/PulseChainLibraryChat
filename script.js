@@ -327,11 +327,14 @@ document.addEventListener('DOMContentLoaded', function() {
                             decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
                         });
             
-                        if (selectedTags.includes("All") || tags.some(tag => selectedTags.includes(tag)) || selectedTags.length === 0) {
+                        // Check if all of the selectedTags match the tags in the transaction
+                        const hasAllMatchingTags = selectedTags.every(selTag => tags.includes(selTag));
+            
+                        if (selectedTags.includes("All") || hasAllMatchingTags || selectedTags.length === 0) {
                             const tagString = tags.join(', ');
             
                             if (tags.length > 0) {
-                                outputText += `<div class="transaction"><p>Publisher: ${tx.from} - Published a ${tagString}<br><br>>br><span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
+                                outputText += `<div class="transaction"><p>Publisher: ${tx.from} - Published a ${tagString}<br><br><br><span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
                             } else {
                                 outputText += `<div class="transaction"><p>Publisher: ${tx.from} - <span class="transaction-tag">Message:</span> <span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
                             }
