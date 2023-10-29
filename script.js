@@ -162,46 +162,45 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function publishMessage() {
         if (!isConnected) {
-            alert('Please connect your wallet before publishing a message.'); // Show a warning message
+            alert('Please connect your wallet before publishing a message.');
             try {
-                await connectWallet(); // Ensure the wallet is connected
+                await connectWallet();
             } catch (error) {
                 console.error('Error publishing message:', error);
-                // Handle the error and provide user feedback
                 return;
             }
         }
     
         const contentInput = document.getElementById('postInput');
         const message = contentInput.value;
-        const publishOptionSelect = document.getElementById('publishOptionSelect'); // Added this line
+        const publishOptionSelect = document.getElementById('publishOptionSelect');
     
         if (!message.trim()) {
             console.error('Message is empty.');
             return;
         }
     
-        let selectedOption = publishOptionSelect.value || "Message"; // Default to "Message" if nothing is selected
+        let selectedOption = publishOptionSelect.value || "Message";
     
-        // If the selected option is "Custom", replace it with the user's custom tag
         if (selectedOption === "Custom") {
             selectedOption = document.getElementById('customTagInput').value;
         }
     
-        // Check if the custom tag is empty and default to "Message" if it is
         if (selectedOption.trim() === "") {
             selectedOption = "Message";
         }
     
-        // Handle multiple tags separated by commas
+        // Handle multiple tags
         const tags = selectedOption.split(',').map(tag => tag.trim());
-        for (const tag of tags) {
-            const fullMessage = `\n\n${message}\n\n*****(${tag})*****`;
-            try {
-                await sendMessage(fullMessage);
-            } catch (error) {
-                console.error(`Error sending message with tag ${tag}:`, error);
-            }
+        let encodedTags = tags.map(tag => `*****(${tag})*****`).join(' ');
+    
+        // Add the encoded tags to the message
+        const fullMessage = `${encodedTags} ${message}`;
+    
+        try {
+            await sendMessage(fullMessage);
+        } catch (error) {
+            console.error('Error sending message:', error);
         }
     
         contentInput.value = '';
