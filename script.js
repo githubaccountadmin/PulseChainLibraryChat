@@ -250,12 +250,12 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("fetchTransactionData called");  // Add this line
         try {
             let selectedTags = document.getElementById('tagFilter').value.split(',').map(tag => tag.trim()); // Split by comma and trim
-            console.log("Selected Tag from Dropdown: ", selectedTags);  // Debugging line
+            console.log("Selected Tags from Dropdown: ", selectedTags);  // Debugging line
 
             // If the selected tag is "Custom", use the value from the custom input field
-            if (selectedTags === "Custom") {
-                selectedTags = document.getElementById('customFilterInput').value;
-                console.log("Selected Tag from Custom Input: ", selectedTags);  // Debugging line
+            if (selectedTags.includes("Custom")) {
+                selectedTags = [document.getElementById('customFilterInput').value];
+                console.log("Selected Tags from Custom Input: ", selectedTags);  // Debugging line
             }
                 
             const window = document.getElementById('transactionDataWindow');
