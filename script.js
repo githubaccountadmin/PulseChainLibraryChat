@@ -333,12 +333,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Check if all of the selectedTags are present in the tags of the transaction
                         console.log("Selected Tags: ", selectedTags);
                         console.log("Transaction Tags: ", tags);
-                        const hasAnyMatchingTags = selectedTags.some(selTag => tags.includes(selTag));
-                        console.log("Has Any Matching Tags: ", hasAnyMatchingTags);  // Debugging line
+                        const hasAllMatchingTags = selectedTags.every(selTag => tags.includes(selTag));
+                        console.log("Has All Matching Tags: ", hasAllMatchingTags);  // Debugging line
             
-                        if (selectedTags.includes("All") || hasAnyMatchingTags || selectedTags.length === 0) {
+                        if (selectedTags.includes("All") || hasAllMatchingTags || selectedTags.length === 0) {
                             const tagString = tags.join(', ');
-            
                             if (tags.length > 0) {
                                 outputText += `<div class="transaction"><p>Publisher: ${tx.from} - Published a ${tagString}<br><br><br><span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
                             } else {
