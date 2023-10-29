@@ -317,8 +317,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (web3.utils.isHexStrict(tx.input)) {
                         let decodedInput = web3.utils.hexToUtf8(tx.input);
                         const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
-                        let tags = tagMatches ? tagMatches.map(tag => tag.match(/\((.*?)\)/)[1]) : [];
-            
+                        const tags = tagMatches ? tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')) : [];
+                        
                         console.log("Decoded Input: ", decodedInput);
                         console.log("Tags: ", tags);
             
@@ -330,7 +330,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Check if at least all of the selectedTags match the tags in the transaction
                         const hasSomeMatchingTags = selectedTags.every(selTag => tags.includes(selTag));
             
-                        if (selectedTags.includes("All") || hasSomeMatchingTags || selectedTags.length === 0) {
+                        if (selectedTags.includes("All") || tags.some(tag => selectedTags.includes(tag)) || selectedTags.length === 0) {
                             const tagString = tags.join(', ');
             
                             if (tags.length > 0) {
