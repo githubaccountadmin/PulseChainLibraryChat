@@ -280,10 +280,17 @@ document.addEventListener('DOMContentLoaded', function() {
             
                         if (selectedTags.includes("All") || hasAllMatchingTags || selectedTags.length === 0) {
                             const tagString = tags.join(', ');
+            
+                            // Convert the Unix timestamp to a JavaScript Date object
+                            const txTime = new Date(tx.timeStamp * 1000);
+            
+                            // Format the Date object to a human-readable string
+                            const formattedTime = txTime.toLocaleString();
+            
                             if (tags.length > 0) {
-                                outputText += `<div class="transaction"><p>Publisher: ${tx.from} - Published a ${tagString}<br><br><br><span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
+                                outputText += `<div class="transaction"><p>Publisher: ${tx.from} - Published a ${tagString} at ${formattedTime}<br><br><br><span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
                             } else {
-                                outputText += `<div class="transaction"><p>Publisher: ${tx.from} - <span class="transaction-tag">Message:</span> <span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
+                                outputText += `<div class="transaction"><p>Publisher: ${tx.from} - <span class="transaction-tag">Message:</span> <span class="transaction-body">${decodedInput.trim()}</span> at ${formattedTime}</p></div>`;
                             }
                         }
                     }
