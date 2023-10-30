@@ -1,9 +1,3 @@
-const apiEndpoints = [
-    'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x490eE229913202fEFbf52925bF5100CA87fb4421&sort=desc',
-    'https://scan.9mm.pro/api?module=account&action=txlist&address=0x490eE229913202fEFbf52925bF5100CA87fb4421&sort=desc',    
-   
-];
-
 const maxRetryCount = 3;
 const pulseChainId = 369;
 
@@ -219,23 +213,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    async function fetchDataWithFallback(endpoints) {
-        for (const endpoint of endpoints) {
-            for (let retryCount = 1; retryCount <= maxRetryCount; retryCount++) {
-                try {
-                    const response = await fetch(endpoint);
-                    if (response.status === 200) {
-                        return await response.json();
-                    }
-                } catch (error) {
-                }
-            }
-        }
-        throw new Error('All API endpoints have failed. Please reload the page to try again.');
-    }
-
     async function fetchTransactionData(clearExisting = false) {
         try {
+            const endpoint = 'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x490eE229913202fEFbf52925bF5100CA87fb4421&sort=desc';
+            const response = await fetch(endpoint);
+            
+            if (response.status !== 200) {
+                throw new Error(`Failed to fetch data. Status code: ${response.status}`);
+            }
+            
             let selectedTags = document.getElementById('tagFilter').value.split(',').map(tag => tag.trim());
             
             if (selectedTags.length === 0 || selectedTags.includes("All")) {
@@ -253,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 isFirstLoad = false;
             }
     
-            const data = await fetchDataWithFallback(apiEndpoints);
+            const data = await response.json();
             totalTransactions = data.result.length;
     
             if (transactionCount >= totalTransactions) {
