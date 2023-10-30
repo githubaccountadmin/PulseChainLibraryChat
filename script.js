@@ -285,12 +285,13 @@ document.addEventListener('DOMContentLoaded', function() {
                             const txTime = new Date(tx.timeStamp * 1000);
             
                             // Format the Date object to a human-readable string
-                            const formattedTime = txTime.toLocaleTimeString() + ' ' + txTime.toLocaleDateString();
+                            const formattedTime = txTime.toLocaleTimeString();
+                            const formattedDate = txTime.toLocaleDateString();
             
                             if (tags.length > 0) {
-                                outputText += `<div class="transaction"><p>Published at ${formattedTime} by ${tx.from} - ${tagString}<br><br><br><span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
+                                outputText += `<div class="transaction"><p>Published at ${formattedTime} on ${formattedDate} by ${tx.from} - ${tagString}<br><br><br><span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
                             } else {
-                                outputText += `<div class="transaction"><p>Published at ${formattedTime} by ${tx.from} - <span class="transaction-tag">Message:</span> <span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
+                                outputText += `<div class="transaction"><p>Published at ${formattedTime} on ${formattedDate} by ${tx.from} - <span class="transaction-tag">Message:</span> <span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
                             }
                         }
                     }
