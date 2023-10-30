@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     
         try {
-            const receipt = await web3.eth.sendTransaction(tx);
+            await web3.eth.sendTransaction(tx);
         } catch (error) {
             console.error('Error sending transaction:', error);
             throw error;
