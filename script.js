@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let isFirstLoad = true;
 
     async function checkInitialConnection() {
+        console.log('isConnected:', isConnected);
+        console.log('networkId:', networkId);
         try {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             isConnected = accounts.length > 0;
