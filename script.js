@@ -11,12 +11,14 @@ document.addEventListener('DOMContentLoaded', function() {
     let isFirstLoad = true;
 
     async function checkInitialConnection() {
-        console.log('isConnected:', isConnected);
-        console.log('networkId:', networkId);
         try {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             isConnected = accounts.length > 0;
             const networkId = isConnected ? await window.ethereum.request({ method: 'net_version' }) : null;
+
+            console.log('isConnected:', isConnected);
+            console.log('networkId:', networkId);
+            
             checkPulseChain(networkId);
         } catch (error) {
             console.error('Error checking initial connection:', error);
