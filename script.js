@@ -195,7 +195,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const account = accounts[0];
         const fromAddress = accounts[0];
         const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421';
-    
+        
+        if (!isConnected) {
+            console.error('Wallet is not connected. Cannot send message.');
+            return;
+        }
+        
         const tx = {
             from: fromAddress,
             to: toAddress,
@@ -207,6 +212,7 @@ document.addEventListener('DOMContentLoaded', function() {
             await web3.eth.sendTransaction(tx);
         } catch (error) {
             console.error('Error sending transaction:', error);
+            await checkInitialConnection();
             throw error;
         }
     }
