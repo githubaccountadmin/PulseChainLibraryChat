@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             const tagString = tags.join(', ');
             
                             // Convert the Unix timestamp to a JavaScript Date object
-                            const txTime = new Date(tx.timestamp * 1000);
+                            const txTime = new Date(tx.timestamp);
             
                             // Format the Date object to a human-readable string
                             const formattedTime = txTime.toLocaleTimeString();
