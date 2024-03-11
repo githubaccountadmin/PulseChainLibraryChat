@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         const account = accounts[0];
         const fromAddress = accounts[0];
-        const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421';
+        const toAddress = '0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB';
         
         if (!isConnected) {
             console.error('Wallet is not connected. Cannot send message.');
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function fetchTransactionData(clearExisting = false) {
         try {
-            const endpoint = 'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x490eE229913202fEFbf52925bF5100CA87fb4421&sort=desc';
+            const endpoint = 'https://api.scan.pulsechain.com/api/v2/addresses/0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB/transactions?filter=to';
             const response = await fetch(endpoint);
             
             if (response.status !== 200) {
