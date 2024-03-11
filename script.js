@@ -277,8 +277,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         try {
                             decodedInput = web3.utils.hexToUtf8(tx.raw_input);
                         } catch (utfError) {
-                            console.error('Error decoding UTF-8:', utfError);
-                            // Handle the error gracefully or skip this transaction
+                            if (utfError.message !== 'Invalid UTF-8 detected') {
+                                console.error('Error decoding UTF-8:', utfError);
+                            }
+                            // Skip this transaction and continue processing
                             return;
                         }
                         const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
