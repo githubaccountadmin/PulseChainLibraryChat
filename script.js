@@ -242,6 +242,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
     
             const data = await response.json();
+            console.log("API Response:", data); // Add this line
 
             if (!data || !Array.isArray(data.result)) {
                 throw new Error('Invalid data format or missing result array.');
