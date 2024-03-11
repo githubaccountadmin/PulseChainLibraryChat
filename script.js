@@ -215,18 +215,21 @@ document.addEventListener('DOMContentLoaded', function() {
             throw error;
         }
     }
+
+    async function fetchTransactions(address) {
+        try {
+            const transactions = await web3.eth.getTransactionsByAddress(address);
+            return transactions;
+        } catch (error) {
+            console.error('Error fetching transactions:', error);
+            throw error;
+        }
+    }
     
     async function fetchTransactionData(clearExisting = false) {
         try {
-            const contractAddress = '0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB'; // Updated contract address
-            const contract = new web3.eth.Contract([], contractAddress);
-            const options = {
-                fromBlock: 'latest', // Fetch transactions from the latest block
-                toBlock: 'latest', // Fetch transactions to the latest block
-                address: contractAddress, // Contract address
-            };
-            
-            const events = await contract.getPastEvents('allEvents', options);
+            const address = '0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB'; // Updated address
+            const transactions = await fetchTransactions(address);
     
             let selectedTags = document.getElementById('tagFilter').value.split(',').map(tag => tag.trim());
             
@@ -245,14 +248,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 isFirstLoad = false;
             }
     
-            totalTransactions = events.length;
+            totalTransactions = transactions.length;
     
             if (transactionCount >= totalTransactions) {
                 return;
             }
             
             let outputText = "";
-            const filteredEvents = events.filter(tx => tx.input !== '0x');
+            const filteredTransactions = transactions.filter(tx => tx.input !== '0x');
             const sliceStart = lastIndexProcessed;
             const sliceEnd = clearExisting ? lastIndexProcessed + 50 : lastIndexProcessed + 13;
     
@@ -264,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.innerHTML = '';
             }
             
-            filteredEvents.slice(sliceStart, sliceEnd).forEach(tx => {            
+            filteredTransactions.slice(sliceStart, sliceEnd).forEach(tx => {            
                 try {
                     if (web3.utils.isHexStrict(tx.input)) {
                         let decodedInput = web3.utils.hexToUtf8(tx.input);
