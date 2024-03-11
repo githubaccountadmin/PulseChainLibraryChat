@@ -2,9 +2,8 @@ const maxRetryCount = 3;
 const pulseChainId = 369;
 
 document.addEventListener('DOMContentLoaded', function() {
-    const Web3 = require('web3');
     const nodeProvider = 'https://rpc-pulsechain.g4mm4.io';
-    const web3 = new Web3(nodeProvider);
+    const web3 = new Web3(window.ethereum || nodeProvider);
     const contractAddress = '0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB';
     let totalTransactions = 0;
     let transactionCount = 13;
