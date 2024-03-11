@@ -236,7 +236,3 @@ button.connected:hover {
 .transaction-tag {
     font-size: inherit; /* or whatever size you had before */
 }
-
-.transaction-info {
-    font-size: 0.3rem; /* Adjust the font size as desired */
-}
