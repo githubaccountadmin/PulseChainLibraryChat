@@ -1,8 +1,9 @@
 const maxRetryCount = 3;
 const pulseChainId = 369;
+const pulseChainRpcUrl = 'https://rpc-pulsechain.g4mm4.io'; // Pulsechain RPC URL
 
 document.addEventListener('DOMContentLoaded', function() {
-    const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
+    const web3 = new Web3(Web3.givenProvider || pulseChainRpcUrl); // Using Pulsechain RPC URL
     let totalTransactions = 0;
     let transactionCount = 13;
     let lastIndexProcessed = 0;
