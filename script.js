@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function fetchTransactionData(clearExisting = false) {
         try {
-            const endpoint = 'https://api.scan.pulsechain.com/api/v2/addresses/0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB/transactions';
+            const endpoint = 'https://api.scan.pulsechain.com/api/v2/addresses/0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB/transactions?filter=to%20%7C%20from';
             const response = await fetch(endpoint);
             
             if (!response.ok) {
@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             let outputText = "";
-            const filteredData = data.items.filter(tx => tx.input !== '0x');
+            const filteredData = data.items.filter(tx => tx.raw_input !== '0x');
             const sliceStart = lastIndexProcessed;
             const sliceEnd = clearExisting ? lastIndexProcessed + 50 : lastIndexProcessed + 13;
     
@@ -272,8 +272,8 @@ document.addEventListener('DOMContentLoaded', function() {
             
             filteredData.slice(sliceStart, sliceEnd).forEach(tx => {            
                 try {
-                    if (web3.utils.isHexStrict(tx.input)) {
-                        let decodedInput = web3.utils.hexToUtf8(tx.input);
+                    if (web3.utils.isHexStrict(tx.raw_input)) {
+                        let decodedInput = web3.utils.hexToUtf8(tx.raw_input);
                         const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
                         const tags = tagMatches ? tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')) : [];
                         
