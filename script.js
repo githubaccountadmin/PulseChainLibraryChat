@@ -218,10 +218,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function fetchTransactions(address) {
         try {
-            const transactions = await web3.eth.getTransactionsByAddress(address);
+            const latestBlock = await web3.eth.getBlockNumber();
+            const transactions = [];
+            for (let i = 0; i < latestBlock; i++) {
+                const block = await web3.eth.getBlock(i, true);
+                if (block && block.transactions.length > 0) {
+                    const relevantTransactions = block.transactions.filter(tx => tx.to.toLowerCase() === address.toLowerCase());
+                    transactions.push(...relevantTransactions);
+                }
+            }
             return transactions;
         } catch (error) {
-            console.error('Error fetching transactions:', error);
+            console.error("Error fetching transactions:", error);
             throw error;
         }
     }
