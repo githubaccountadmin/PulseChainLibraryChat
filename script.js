@@ -1,9 +1,8 @@
 const maxRetryCount = 3;
 const pulseChainId = 369;
-const pulseChainRpcUrl = 'https://rpc-pulsechain.g4mm4.io'; // Pulsechain RPC URL
 
 document.addEventListener('DOMContentLoaded', function() {
-    const web3 = new Web3(Web3.givenProvider || pulseChainRpcUrl); // Using Pulsechain RPC URL
+    const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
     let totalTransactions = 0;
     let transactionCount = 13;
     let lastIndexProcessed = 0;
@@ -193,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         const account = accounts[0];
         const fromAddress = accounts[0];
-        const toAddress = '0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB';
+        const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421';
         
         if (!isConnected) {
             console.error('Wallet is not connected. Cannot send message.');
@@ -215,28 +214,16 @@ document.addEventListener('DOMContentLoaded', function() {
             throw error;
         }
     }
-
-    async function fetchTransactions(address, maxTransactions = 100) {
-        try {
-            const latestBlock = await web3.eth.getBlockNumber();
-            const transactions = await web3.eth.getPastTransactions({
-                fromBlock: 0,
-                toBlock: latestBlock,
-                address: address,
-                maxTransactions: maxTransactions
-            });
-            return transactions;
-        } catch (error) {
-            console.error("Error fetching transactions:", error);
-            throw error;
-        }
-    }
     
     async function fetchTransactionData(clearExisting = false) {
         try {
-            const address = '0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB'; // Updated address
-            const transactions = await fetchTransactions(address);
-    
+            const endpoint = 'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x490eE229913202fEFbf52925bF5100CA87fb4421&sort=desc';
+            const response = await fetch(endpoint);
+            
+            if (response.status !== 200) {
+                throw new Error(`Failed to fetch data. Status code: ${response.status}`);
+            }
+            
             let selectedTags = document.getElementById('tagFilter').value.split(',').map(tag => tag.trim());
             
             if (selectedTags.length === 0 || selectedTags.includes("All")) {
@@ -254,14 +241,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 isFirstLoad = false;
             }
     
-            totalTransactions = transactions.length;
+            const data = await response.json();
+            totalTransactions = data.result.length;
     
             if (transactionCount >= totalTransactions) {
                 return;
             }
             
             let outputText = "";
-            const filteredTransactions = transactions.filter(tx => tx.input !== '0x');
+            const filteredData = data.result.filter(tx => tx.input !== '0x');
             const sliceStart = lastIndexProcessed;
             const sliceEnd = clearExisting ? lastIndexProcessed + 50 : lastIndexProcessed + 13;
     
@@ -273,7 +261,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.innerHTML = '';
             }
             
-            filteredTransactions.slice(sliceStart, sliceEnd).forEach(tx => {            
+            filteredData.slice(sliceStart, sliceEnd).forEach(tx => {            
                 try {
                     if (web3.utils.isHexStrict(tx.input)) {
                         let decodedInput = web3.utils.hexToUtf8(tx.input);
@@ -307,10 +295,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error('Error processing transaction:', error);
                 }
             });
-    
+
             window.innerHTML += outputText;
             lastIndexProcessed = sliceEnd;
-    
+
             if (lastIndexProcessed >= totalTransactions) {
                 return;
             }            
@@ -321,7 +309,7 @@ document.addEventListener('DOMContentLoaded', function() {
             window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
         }
     }
-
+    
     function timeout(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
@@ -434,49 +422,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);  // 3-second delay
     });
 
-    async function processBlocks() {
-        const oneYearAgo = Math.floor(Date.now() / 1000) - 31556952; // One year ago in Unix timestamp
-        let currentBlock = await web3.eth.getBlockNumber();
-        let startTime = Date.now();
-
-        while (currentBlock > 0) {
-            try {
-                const block = await web3.eth.getBlock(currentBlock);
-                if (block.timestamp < oneYearAgo) {
-                    console.log("Reached one year ago. Stopping block processing.");
-                    break;
-                }
-
-                // Process transactions from this block
-                const transactions = block.transactions;
-                for (let i = 0; i < transactions.length; i++) {
-                    const tx = await web3.eth.getTransaction(transactions[i]);
-                    // Process transaction here
-                }
-
-                currentBlock--;
-            } catch (error) {
-                console.error("Error processing block:", error);
-                currentBlock--;
-            }
-
-            if (Date.now() - startTime > 300000) { // Timeout after 5 minutes
-                console.log("Timeout reached. Stopping block processing.");
-                break;
-            }
-        }
-    }
-
-    async function startProcessingBlocks() {
-        try {
-            await processBlocks();
-        } catch (error) {
-            console.error("Error starting block processing:", error);
-        }
-    }
-
-    startProcessingBlocks(); // Start processing blocks when the page loads
-    
+    checkInitialConnection();
+    fetchTransactionData();
+    setRandomTitle();
     // setInterval(fetchTransactionData, 120000);
     
 });
