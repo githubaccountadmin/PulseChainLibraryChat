@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function fetchTransactions(address) {
         try {
-            const transactions = await web3.eth.getTransactionsByAddress(address);
+            const transactions = await web3.eth.getTransaction(address);
             return transactions;
         } catch (error) {
             console.error('Error fetching transactions:', error);
