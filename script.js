@@ -285,18 +285,18 @@ document.addEventListener('DOMContentLoaded', function() {
             
                         if (selectedTags.includes("All") || hasAllMatchingTags || selectedTags.length === 0) {
                             const tagString = tags.join(', ');
-            
-                            // Convert the Unix timestamp to a JavaScript Date object
+                        
+                            // Convert the ISO 8601 timestamp to a JavaScript Date object
                             const txTime = new Date(tx.timestamp);
-            
+                            
                             // Format the Date object to a human-readable string
-                            const formattedTime = txTime.toLocaleTimeString();
-                            const formattedDate = txTime.toLocaleDateString();
-            
+                            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'UTC' };
+                            const formattedTime = new Intl.DateTimeFormat('en-US', options).format(txTime);
+                        
                             if (tags.length > 0) {
-                                outputText += `<div class="transaction"><p>Published at ${formattedTime} on ${formattedDate} by ${tx.from.hash} - ${tagString}<br><br><br><span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
+                                outputText += `<div class="transaction"><p>Published at ${formattedTime} by ${tx.from.hash} - ${tagString}<br><br><br><span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
                             } else {
-                                outputText += `<div class="transaction"><p>Published at ${formattedTime} on ${formattedDate} by ${tx.from.hash} - <span class="transaction-tag">Message:</span> <span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
+                                outputText += `<div class="transaction"><p>Published at ${formattedTime} by ${tx.from.hash} - <span class="transaction-tag">Message:</span> <span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
                             }
                         }
                     }
