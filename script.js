@@ -218,8 +218,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function fetchTransactionData(clearExisting = false) {
         try {
-            const endpoint = 'https://scan.mypinata.cloud/ipfs/bafybeidn64pd2u525lmoipjl4nh3ooa2imd7huionjsdepdsphl5slfowy/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc';
-            const response = await fetch(endpoint);
+            const contractAddress = '0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB'; // Updated contract address
+            const contract = new web3.eth.Contract([], contractAddress);
+            const options = {
+                fromBlock: 'latest', // Fetch transactions from the latest block
+                toBlock: 'latest', // Fetch transactions to the latest block
+                address: contractAddress, // Contract address
+            };
             
             if (response.status !== 200) {
                 throw new Error(`Failed to fetch data. Status code: ${response.status}`);
