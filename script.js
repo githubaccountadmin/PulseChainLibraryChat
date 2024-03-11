@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             let outputText = "";
-            const filteredData = data.result.filter(tx => tx.input !== '0x');
+            const filteredData = data.items.filter(tx => tx.input !== '0x');
             const sliceStart = lastIndexProcessed;
             const sliceEnd = clearExisting ? lastIndexProcessed + 50 : lastIndexProcessed + 13;
     
