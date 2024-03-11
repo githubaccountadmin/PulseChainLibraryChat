@@ -321,7 +321,7 @@ document.addEventListener('DOMContentLoaded', function() {
             window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
         }
     }
-    
+
     function timeout(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
@@ -434,9 +434,49 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);  // 3-second delay
     });
 
-    // checkInitialConnection();
-    setRandomTitle();
-    fetchTransactionData(); // Add the initial call to fetchTransactionData()
+    async function processBlocks() {
+        const oneYearAgo = Math.floor(Date.now() / 1000) - 31556952; // One year ago in Unix timestamp
+        let currentBlock = await web3.eth.getBlockNumber();
+        let startTime = Date.now();
+
+        while (currentBlock > 0) {
+            try {
+                const block = await web3.eth.getBlock(currentBlock);
+                if (block.timestamp < oneYearAgo) {
+                    console.log("Reached one year ago. Stopping block processing.");
+                    break;
+                }
+
+                // Process transactions from this block
+                const transactions = block.transactions;
+                for (let i = 0; i < transactions.length; i++) {
+                    const tx = await web3.eth.getTransaction(transactions[i]);
+                    // Process transaction here
+                }
+
+                currentBlock--;
+            } catch (error) {
+                console.error("Error processing block:", error);
+                currentBlock--;
+            }
+
+            if (Date.now() - startTime > 300000) { // Timeout after 5 minutes
+                console.log("Timeout reached. Stopping block processing.");
+                break;
+            }
+        }
+    }
+
+    async function startProcessingBlocks() {
+        try {
+            await processBlocks();
+        } catch (error) {
+            console.error("Error starting block processing:", error);
+        }
+    }
+
+    startProcessingBlocks(); // Start processing blocks when the page loads
+    
     // setInterval(fetchTransactionData, 120000);
     
 });
