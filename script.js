@@ -247,11 +247,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
             console.log("API Response:", data); // Add this line
 
-            if (!data || !Array.isArray(data.result)) {
+            if (!data || !Array.isArray(data.items)) {
                 throw new Error('Invalid data format or missing result array.');
             }
             
-            totalTransactions = data.result.length;
+            totalTransactions = data.items.length;
     
             if (transactionCount >= totalTransactions) {
                 return;
