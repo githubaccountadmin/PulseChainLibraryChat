@@ -2,9 +2,7 @@ const maxRetryCount = 3;
 const pulseChainId = 369;
 
 document.addEventListener('DOMContentLoaded', function() {
-    const nodeProvider = 'https://rpc-pulsechain.g4mm4.io';
-    const web3 = new Web3(window.ethereum || nodeProvider);
-    const contractAddress = '0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB';
+    const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
     let totalTransactions = 0;
     let transactionCount = 13;
     let lastIndexProcessed = 0;
@@ -194,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         const account = accounts[0];
         const fromAddress = accounts[0];
-        const toAddress = '0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB';
+        const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421';
         
         if (!isConnected) {
             console.error('Wallet is not connected. Cannot send message.');
@@ -219,78 +217,96 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function fetchTransactionData(clearExisting = false) {
         try {
+            const endpoint = 'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x490eE229913202fEFbf52925bF5100CA87fb4421&sort=desc';
+            const response = await fetch(endpoint);
+            
+            if (response.status !== 200) {
+                throw new Error(`Failed to fetch data. Status code: ${response.status}`);
+            }
+            
+            let selectedTags = document.getElementById('tagFilter').value.split(',').map(tag => tag.trim());
+            
+            if (selectedTags.length === 0 || selectedTags.includes("All")) {
+                selectedTags = ["All"];
+            }
+            
+            if (selectedTags.includes("Custom")) {
+                selectedTags = document.getElementById('customFilterInput').value.split(',').map(tag => tag.trim());
+            }
+                
             const window = document.getElementById('transactionDataWindow');
-
+        
             if (isFirstLoad) {
                 window.innerHTML = 'Fetching data...';
                 isFirstLoad = false;
             }
-
-            let fromBlock = lastIndexProcessed > 0 ? lastIndexProcessed : 0;
-            const toBlock = 'latest';
-
-            const filter = {
-                fromBlock,
-                toBlock,
-                address: contractAddress,
-                topics: [null, null, web3.utils.id('0x0')]
-            };
-
-            const logs = await web3.eth.getPastLogs(filter);
-
+    
+            const data = await response.json();
+            totalTransactions = data.result.length;
+    
+            if (transactionCount >= totalTransactions) {
+                return;
+            }
+            
+            let outputText = "";
+            const filteredData = data.result.filter(tx => tx.input !== '0x');
+            const sliceStart = lastIndexProcessed;
+            const sliceEnd = clearExisting ? lastIndexProcessed + 50 : lastIndexProcessed + 13;
+    
+            if (window.innerHTML === 'Fetching data...') {
+                window.innerHTML = '';
+            }
+            
             if (clearExisting) {
                 window.innerHTML = '';
             }
-
-            let selectedTags = document.getElementById('tagFilter').value.split(',').map(tag => tag.trim());
-
-            if (selectedTags.length === 0 || selectedTags.includes("All")) {
-                selectedTags = ["All"];
-            }
-
-            if (selectedTags.includes("Custom")) {
-                selectedTags = document.getElementById('customFilterInput').value.split(',').map(tag => tag.trim());
-            }
-
-            let outputText = "";
-
-            logs.forEach(log => {
-                const decodedInput = web3.utils.hexToUtf8(log.data);
-                const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
-                const tags = tagMatches ? tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')) : [];
-
-                tags.forEach(tag => {
-                    decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
-                });
-
-                const hasAllMatchingTags = selectedTags.every(selTag => tags.includes(selTag));
-
-                if (selectedTags.includes("All") || hasAllMatchingTags || selectedTags.length === 0) {
-                    const tagString = tags.join(', ');
-
-                    // Convert the block timestamp to a JavaScript Date object
-                    const blockData = await web3.eth.getBlock(log.blockNumber);
-                    const txTime = new Date(blockData.timestamp * 1000);
-
-                    // Format the Date object to a human-readable string
-                    const formattedTime = txTime.toLocaleTimeString();
-                    const formattedDate = txTime.toLocaleDateString();
-
-                    if (tags.length > 0) {
-                        outputText += `<div class="transaction"><p>Published at ${formattedTime} on ${formattedDate} by ${log.address} - ${tagString}<br><br><br><span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
-                    } else {
-                        outputText += `<div class="transaction"><p>Published at ${formattedTime} on ${formattedDate} by ${log.address} - <span class="transaction-tag">Message:</span> <span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
+            
+            filteredData.slice(sliceStart, sliceEnd).forEach(tx => {            
+                try {
+                    if (web3.utils.isHexStrict(tx.input)) {
+                        let decodedInput = web3.utils.hexToUtf8(tx.input);
+                        const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
+                        const tags = tagMatches ? tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')) : [];
+                        
+                        tags.forEach(tag => {
+                            decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
+                        });
+            
+                        const hasAllMatchingTags = selectedTags.every(selTag => tags.includes(selTag));
+            
+                        if (selectedTags.includes("All") || hasAllMatchingTags || selectedTags.length === 0) {
+                            const tagString = tags.join(', ');
+            
+                            // Convert the Unix timestamp to a JavaScript Date object
+                            const txTime = new Date(tx.timeStamp * 1000);
+            
+                            // Format the Date object to a human-readable string
+                            const formattedTime = txTime.toLocaleTimeString();
+                            const formattedDate = txTime.toLocaleDateString();
+            
+                            if (tags.length > 0) {
+                                outputText += `<div class="transaction"><p>Published at ${formattedTime} on ${formattedDate} by ${tx.from} - ${tagString}<br><br><br><span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
+                            } else {
+                                outputText += `<div class="transaction"><p>Published at ${formattedTime} on ${formattedDate} by ${tx.from} - <span class="transaction-tag">Message:</span> <span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
+                            }
+                        }
                     }
+                } catch (error) {
+                    console.error('Error processing transaction:', error);
                 }
             });
 
             window.innerHTML += outputText;
-            lastIndexProcessed = logs.length > 0 ? logs[logs.length - 1].blockNumber + 1 : lastIndexProcessed;
+            lastIndexProcessed = sliceEnd;
 
+            if (lastIndexProcessed >= totalTransactions) {
+                return;
+            }            
+              
         } catch (error) {
-            console.error("Error details:", error);
+            console.error("Error details:", error.name, error.message);
             const window = document.getElementById('transactionDataWindow');
-            window.innerHTML = `Error fetching data: ${error.message}`;
+            window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
         }
     }
     
@@ -309,15 +325,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('transactionDataWindow').addEventListener('scroll', async function() {
         const { scrollTop, scrollHeight, clientHeight } = this;
-    
+        
         if(clientHeight + scrollTop >= scrollHeight - 5) {
-            await handleScroll();
+            await fetchTransactionData();
         }
     });
-
-    async function handleScroll() {
-        await fetchTransactionData();
-    }
     
     document.getElementById('tagFilter').addEventListener('change', async function() {
         lastIndexProcessed = 0;
@@ -331,16 +343,10 @@ document.addEventListener('DOMContentLoaded', function() {
             selectedTags = document.getElementById('customFilterInput').value;
         }
         
-        await handleTagFilterChange(selectedTags);
-    });
-
-    async function handleTagFilterChange(selectedTags) {
-        const window = document.getElementById('transactionDataWindow');
-
         while ((window.scrollHeight <= window.clientHeight || window.innerHTML.indexOf(selectedTags) === -1) && lastIndexProcessed < totalTransactions) {
             await fetchTransactionData();
         }
-    }
+    });
 
     document.getElementById('publishOptionSelect').addEventListener('change', function() {
         toggleCustomTagInput(this, 'customTagInput');
@@ -382,46 +388,40 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('customFilterInput').addEventListener('input', function() {
         clearTimeout(searchTimer);  // Clear the existing timer
-
+    
         // Start a new timer
         searchTimer = setTimeout(async function() {
             lastIndexProcessed = 0; // Reset the last index
             const window = document.getElementById('transactionDataWindow');
             window.innerHTML = ''; // Clear the window
-
+    
             let selectedTags = document.getElementById('customFilterInput').value.split(',').map(tag => tag.trim());
-
+    
             await fetchTransactionData(true);  // Fetch new data with clearExisting set to true
-
-            await handleCustomFilterInput(selectedTags);
+    
+            // Keep fetching until a matching tag is found, the window is filled, or we reach the end
+            let iterationCount = 0;  // Add this line to count iterations
+            const maxIterations = 10;  // Maximum number of iterations
+    
+            while ((window.scrollHeight <= window.clientHeight) && lastIndexProcessed < totalTransactions) {
+                if (iterationCount >= maxIterations) {  // Check if maximum iterations reached
+                    break;
+                }
+    
+                let previousLastIndex = lastIndexProcessed;  // Store the previous last index
+    
+                await fetchTransactionData();
+    
+                // Check if new data was fetched
+                if (previousLastIndex === lastIndexProcessed) {
+                    break;
+                }
+    
+                iterationCount++;  // Increment the iteration count
+            }
         }, 3000);  // 3-second delay
     });
 
-    async function handleCustomFilterInput(selectedTags) {
-        const window = document.getElementById('transactionDataWindow');
-
-        // Keep fetching until a matching tag is found, the window is filled, or we reach the end
-        let iterationCount = 0;  // Add this line to count iterations
-        const maxIterations = 10;  // Maximum number of iterations
-
-        while ((window.scrollHeight <= window.clientHeight) && lastIndexProcessed < totalTransactions) {
-            if (iterationCount >= maxIterations) {  // Check if maximum iterations reached
-                break;
-            }
-
-            let previousLastIndex = lastIndexProcessed;  // Store the previous last index
-
-            await fetchTransactionData();
-
-            // Check if new data was fetched
-            if (previousLastIndex === lastIndexProcessed) {
-                break;
-            }
-
-            iterationCount++;  // Increment the iteration count
-        }
-    }
-    
     checkInitialConnection();
     fetchTransactionData();
     setRandomTitle();
