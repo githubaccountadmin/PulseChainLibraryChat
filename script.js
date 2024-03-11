@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const endpoint = 'https://api.scan.pulsechain.com/api/v2/addresses/0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB/transactions';
             const response = await fetch(endpoint);
             
-            if (response.status !== 200) {
+            if (!response.ok) {
                 throw new Error(`Failed to fetch data. Status code: ${response.status}`);
             }
             
@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
             const data = await response.json();
 
-            if (!data || !data.result || !Array.isArray(data.result)) {
+            if (!data || !Array.isArray(data.result)) {
                 throw new Error('Invalid data format or missing result array.');
             }
             
