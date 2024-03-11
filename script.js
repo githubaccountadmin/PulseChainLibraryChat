@@ -219,17 +219,12 @@ document.addEventListener('DOMContentLoaded', function() {
     async function fetchTransactions(address, maxTransactions = 100) {
         try {
             const latestBlock = await web3.eth.getBlockNumber();
-            const transactions = [];
-            let blockNumber = latestBlock;
-            
-            while (transactions.length < maxTransactions && blockNumber > 0) {
-                const block = await web3.eth.getBlock(blockNumber, true);
-                if (block && block.transactions.length > 0) {
-                    const relevantTransactions = block.transactions.filter(tx => tx.to && tx.to.toLowerCase() === address.toLowerCase());
-                    transactions.push(...relevantTransactions);
-                }
-                blockNumber--;
-            }
+            const transactions = await web3.eth.getPastTransactions({
+                fromBlock: 0,
+                toBlock: latestBlock,
+                address: address,
+                maxTransactions: maxTransactions
+            });
             return transactions;
         } catch (error) {
             console.error("Error fetching transactions:", error);
