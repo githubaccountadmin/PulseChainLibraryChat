@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function() {
             while (transactions.length < maxTransactions && blockNumber > 0) {
                 const block = await web3.eth.getBlock(blockNumber, true);
                 if (block && block.transactions.length > 0) {
-                    const relevantTransactions = block.transactions.filter(tx => tx.to.toLowerCase() === address.toLowerCase());
+                    const relevantTransactions = block.transactions.filter(tx => tx.to && tx.to.toLowerCase() === address.toLowerCase());
                     transactions.push(...relevantTransactions);
                 }
                 blockNumber--;
