@@ -242,6 +242,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
     
             const data = await response.json();
+
+            if (!data || !data.result || !Array.isArray(data.result)) {
+                throw new Error('Invalid data format or missing result array.');
+            }
+            
             totalTransactions = data.result.length;
     
             if (transactionCount >= totalTransactions) {
@@ -306,7 +311,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) {
             console.error("Error details:", error.name, error.message);
             const window = document.getElementById('transactionDataWindow');
-            window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
+            window.innerHTML = `Error fetching data: ${error.message}`;
         }
     }
     
