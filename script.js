@@ -425,9 +425,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);  // 3-second delay
     });
 
-    checkInitialConnection();
-    fetchTransactionData();
+    // checkInitialConnection();
     setRandomTitle();
+    fetchTransactionData(); // Add the initial call to fetchTransactionData()
     // setInterval(fetchTransactionData, 120000);
     
 });
