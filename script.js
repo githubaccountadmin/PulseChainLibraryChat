@@ -223,6 +223,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!response.ok) {
                 throw new Error(`Failed to fetch data. Status code: ${response.status}`);
             }
+
+            // Log the entire API response here
+            console.log("API Response:", response);
             
             let selectedTags = document.getElementById('tagFilter').value.split(',').map(tag => tag.trim());
             
