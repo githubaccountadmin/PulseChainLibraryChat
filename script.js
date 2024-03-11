@@ -220,96 +220,78 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function fetchTransactionData(clearExisting = false) {
         try {
-            const endpoint = 'https://scan.pulsechain.com/api?module=account&action=txlist&address=0x490eE229913202fEFbf52925bF5100CA87fb4421&sort=desc';
-            const response = await fetch(endpoint);
-            
-            if (response.status !== 200) {
-                throw new Error(`Failed to fetch data. Status code: ${response.status}`);
-            }
-            
-            let selectedTags = document.getElementById('tagFilter').value.split(',').map(tag => tag.trim());
-            
-            if (selectedTags.length === 0 || selectedTags.includes("All")) {
-                selectedTags = ["All"];
-            }
-            
-            if (selectedTags.includes("Custom")) {
-                selectedTags = document.getElementById('customFilterInput').value.split(',').map(tag => tag.trim());
-            }
-                
             const window = document.getElementById('transactionDataWindow');
-        
+
             if (isFirstLoad) {
                 window.innerHTML = 'Fetching data...';
                 isFirstLoad = false;
             }
-    
-            const data = await response.json();
-            totalTransactions = data.result.length;
-    
-            if (transactionCount >= totalTransactions) {
-                return;
-            }
-            
-            let outputText = "";
-            const filteredData = data.result.filter(tx => tx.input !== '0x');
-            const sliceStart = lastIndexProcessed;
-            const sliceEnd = clearExisting ? lastIndexProcessed + 50 : lastIndexProcessed + 13;
-    
-            if (window.innerHTML === 'Fetching data...') {
-                window.innerHTML = '';
-            }
-            
+
+            let fromBlock = lastIndexProcessed > 0 ? lastIndexProcessed : 0;
+            const toBlock = 'latest';
+
+            const filter = {
+                fromBlock,
+                toBlock,
+                address: contractAddress,
+                topics: [null, null, web3.utils.id('0x0')]
+            };
+
+            const logs = await web3.eth.getPastLogs(filter);
+
             if (clearExisting) {
                 window.innerHTML = '';
             }
-            
-            filteredData.slice(sliceStart, sliceEnd).forEach(tx => {            
-                try {
-                    if (web3.utils.isHexStrict(tx.input)) {
-                        let decodedInput = web3.utils.hexToUtf8(tx.input);
-                        const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
-                        const tags = tagMatches ? tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')) : [];
-                        
-                        tags.forEach(tag => {
-                            decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
-                        });
-            
-                        const hasAllMatchingTags = selectedTags.every(selTag => tags.includes(selTag));
-            
-                        if (selectedTags.includes("All") || hasAllMatchingTags || selectedTags.length === 0) {
-                            const tagString = tags.join(', ');
-            
-                            // Convert the Unix timestamp to a JavaScript Date object
-                            const txTime = new Date(tx.timeStamp * 1000);
-            
-                            // Format the Date object to a human-readable string
-                            const formattedTime = txTime.toLocaleTimeString();
-                            const formattedDate = txTime.toLocaleDateString();
-            
-                            if (tags.length > 0) {
-                                outputText += `<div class="transaction"><p>Published at ${formattedTime} on ${formattedDate} by ${tx.from} - ${tagString}<br><br><br><span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
-                            } else {
-                                outputText += `<div class="transaction"><p>Published at ${formattedTime} on ${formattedDate} by ${tx.from} - <span class="transaction-tag">Message:</span> <span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
-                            }
-                        }
+
+            let selectedTags = document.getElementById('tagFilter').value.split(',').map(tag => tag.trim());
+
+            if (selectedTags.length === 0 || selectedTags.includes("All")) {
+                selectedTags = ["All"];
+            }
+
+            if (selectedTags.includes("Custom")) {
+                selectedTags = document.getElementById('customFilterInput').value.split(',').map(tag => tag.trim());
+            }
+
+            let outputText = "";
+
+            logs.forEach(log => {
+                const decodedInput = web3.utils.hexToUtf8(log.data);
+                const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
+                const tags = tagMatches ? tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')) : [];
+
+                tags.forEach(tag => {
+                    decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
+                });
+
+                const hasAllMatchingTags = selectedTags.every(selTag => tags.includes(selTag));
+
+                if (selectedTags.includes("All") || hasAllMatchingTags || selectedTags.length === 0) {
+                    const tagString = tags.join(', ');
+
+                    // Convert the block timestamp to a JavaScript Date object
+                    const blockData = await web3.eth.getBlock(log.blockNumber);
+                    const txTime = new Date(blockData.timestamp * 1000);
+
+                    // Format the Date object to a human-readable string
+                    const formattedTime = txTime.toLocaleTimeString();
+                    const formattedDate = txTime.toLocaleDateString();
+
+                    if (tags.length > 0) {
+                        outputText += `<div class="transaction"><p>Published at ${formattedTime} on ${formattedDate} by ${log.address} - ${tagString}<br><br><br><span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
+                    } else {
+                        outputText += `<div class="transaction"><p>Published at ${formattedTime} on ${formattedDate} by ${log.address} - <span class="transaction-tag">Message:</span> <span class="transaction-body">${decodedInput.trim()}</span></p></div>`;
                     }
-                } catch (error) {
-                    console.error('Error processing transaction:', error);
                 }
             });
 
             window.innerHTML += outputText;
-            lastIndexProcessed = sliceEnd;
+            lastIndexProcessed = logs.length > 0 ? logs[logs.length - 1].blockNumber + 1 : lastIndexProcessed;
 
-            if (lastIndexProcessed >= totalTransactions) {
-                return;
-            }            
-              
         } catch (error) {
-            console.error("Error details:", error.name, error.message);
+            console.error("Error details:", error);
             const window = document.getElementById('transactionDataWindow');
-            window.innerHTML = `Error fetching data: ${error.name} - ${error.message}`;
+            window.innerHTML = `Error fetching data: ${error.message}`;
         }
     }
     
