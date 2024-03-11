@@ -216,16 +216,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    async function fetchTransactions(address) {
+    async function fetchTransactions(address, maxTransactions = 100) {
         try {
             const latestBlock = await web3.eth.getBlockNumber();
             const transactions = [];
-            for (let i = 0; i < latestBlock; i++) {
-                const block = await web3.eth.getBlock(i, true);
+            let blockNumber = latestBlock;
+            
+            while (transactions.length < maxTransactions && blockNumber > 0) {
+                const block = await web3.eth.getBlock(blockNumber, true);
                 if (block && block.transactions.length > 0) {
                     const relevantTransactions = block.transactions.filter(tx => tx.to.toLowerCase() === address.toLowerCase());
                     transactions.push(...relevantTransactions);
                 }
+                blockNumber--;
             }
             return transactions;
         } catch (error) {
