@@ -225,9 +225,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 toBlock: 'latest', // Fetch transactions to the latest block
                 address: contractAddress, // Contract address
             };
-
+            
             const events = await contract.getPastEvents('allEvents', options);
-                        
+    
             let selectedTags = document.getElementById('tagFilter').value.split(',').map(tag => tag.trim());
             
             if (selectedTags.length === 0 || selectedTags.includes("All")) {
@@ -245,15 +245,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 isFirstLoad = false;
             }
     
-            const data = await response.json();
-            totalTransactions = data.result.length;
+            totalTransactions = events.length;
     
             if (transactionCount >= totalTransactions) {
                 return;
             }
             
             let outputText = "";
-            const filteredData = data.result.filter(tx => tx.input !== '0x');
+            const filteredEvents = events.filter(tx => tx.input !== '0x');
             const sliceStart = lastIndexProcessed;
             const sliceEnd = clearExisting ? lastIndexProcessed + 50 : lastIndexProcessed + 13;
     
@@ -265,7 +264,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.innerHTML = '';
             }
             
-            filteredData.slice(sliceStart, sliceEnd).forEach(tx => {            
+            filteredEvents.slice(sliceStart, sliceEnd).forEach(tx => {            
                 try {
                     if (web3.utils.isHexStrict(tx.input)) {
                         let decodedInput = web3.utils.hexToUtf8(tx.input);
@@ -299,10 +298,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error('Error processing transaction:', error);
                 }
             });
-
+    
             window.innerHTML += outputText;
             lastIndexProcessed = sliceEnd;
-
+    
             if (lastIndexProcessed >= totalTransactions) {
                 return;
             }            
