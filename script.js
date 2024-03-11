@@ -225,11 +225,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 toBlock: 'latest', // Fetch transactions to the latest block
                 address: contractAddress, // Contract address
             };
-            
-            if (response.status !== 200) {
-                throw new Error(`Failed to fetch data. Status code: ${response.status}`);
-            }
-            
+
+            const events = await contract.getPastEvents('allEvents', options);
+                        
             let selectedTags = document.getElementById('tagFilter').value.split(',').map(tag => tag.trim());
             
             if (selectedTags.length === 0 || selectedTags.includes("All")) {
