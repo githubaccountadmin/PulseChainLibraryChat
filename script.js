@@ -310,11 +310,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('transactionDataWindow').addEventListener('scroll', async function() {
         const { scrollTop, scrollHeight, clientHeight } = this;
-        
+    
         if(clientHeight + scrollTop >= scrollHeight - 5) {
-            await fetchTransactionData();
+            await handleScroll();
         }
     });
+
+    async function handleScroll() {
+        await fetchTransactionData();
+    }
     
     document.getElementById('tagFilter').addEventListener('change', async function() {
         lastIndexProcessed = 0;
@@ -328,10 +332,16 @@ document.addEventListener('DOMContentLoaded', function() {
             selectedTags = document.getElementById('customFilterInput').value;
         }
         
+        await handleTagFilterChange(selectedTags);
+    });
+
+    async function handleTagFilterChange(selectedTags) {
+        const window = document.getElementById('transactionDataWindow');
+
         while ((window.scrollHeight <= window.clientHeight || window.innerHTML.indexOf(selectedTags) === -1) && lastIndexProcessed < totalTransactions) {
             await fetchTransactionData();
         }
-    });
+    }
 
     document.getElementById('publishOptionSelect').addEventListener('change', function() {
         toggleCustomTagInput(this, 'customTagInput');
@@ -373,40 +383,46 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('customFilterInput').addEventListener('input', function() {
         clearTimeout(searchTimer);  // Clear the existing timer
-    
+
         // Start a new timer
         searchTimer = setTimeout(async function() {
             lastIndexProcessed = 0; // Reset the last index
             const window = document.getElementById('transactionDataWindow');
             window.innerHTML = ''; // Clear the window
-    
+
             let selectedTags = document.getElementById('customFilterInput').value.split(',').map(tag => tag.trim());
-    
+
             await fetchTransactionData(true);  // Fetch new data with clearExisting set to true
-    
-            // Keep fetching until a matching tag is found, the window is filled, or we reach the end
-            let iterationCount = 0;  // Add this line to count iterations
-            const maxIterations = 10;  // Maximum number of iterations
-    
-            while ((window.scrollHeight <= window.clientHeight) && lastIndexProcessed < totalTransactions) {
-                if (iterationCount >= maxIterations) {  // Check if maximum iterations reached
-                    break;
-                }
-    
-                let previousLastIndex = lastIndexProcessed;  // Store the previous last index
-    
-                await fetchTransactionData();
-    
-                // Check if new data was fetched
-                if (previousLastIndex === lastIndexProcessed) {
-                    break;
-                }
-    
-                iterationCount++;  // Increment the iteration count
-            }
+
+            await handleCustomFilterInput(selectedTags);
         }, 3000);  // 3-second delay
     });
 
+    async function handleCustomFilterInput(selectedTags) {
+        const window = document.getElementById('transactionDataWindow');
+
+        // Keep fetching until a matching tag is found, the window is filled, or we reach the end
+        let iterationCount = 0;  // Add this line to count iterations
+        const maxIterations = 10;  // Maximum number of iterations
+
+        while ((window.scrollHeight <= window.clientHeight) && lastIndexProcessed < totalTransactions) {
+            if (iterationCount >= maxIterations) {  // Check if maximum iterations reached
+                break;
+            }
+
+            let previousLastIndex = lastIndexProcessed;  // Store the previous last index
+
+            await fetchTransactionData();
+
+            // Check if new data was fetched
+            if (previousLastIndex === lastIndexProcessed) {
+                break;
+            }
+
+            iterationCount++;  // Increment the iteration count
+        }
+    }
+    
     checkInitialConnection();
     fetchTransactionData();
     setRandomTitle();
