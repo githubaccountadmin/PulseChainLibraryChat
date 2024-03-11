@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function fetchTransactionData(clearExisting = false) {
         try {
-            const endpoint = 'https://scan.mypinata.cloud/ipfs/bafybeidn64pd2u525lmoipjl4nh3ooa2imd7huionjsdepdsphl5slfowy/#/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc';
+            const endpoint = 'https://scan.mypinata.cloud/ipfs/bafybeidn64pd2u525lmoipjl4nh3ooa2imd7huionjsdepdsphl5slfowy/api?module=account&action=txlist&address=0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB&sort=desc';
             const response = await fetch(endpoint);
             
             if (response.status !== 200) {
