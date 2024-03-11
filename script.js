@@ -2,7 +2,10 @@ const maxRetryCount = 3;
 const pulseChainId = 369;
 
 document.addEventListener('DOMContentLoaded', function() {
-    const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
+    const Web3 = require('web3');
+    const nodeProvider = 'https://rpc-pulsechain.g4mm4.io';
+    const web3 = new Web3(nodeProvider);
+    const contractAddress = '0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB';
     let totalTransactions = 0;
     let transactionCount = 13;
     let lastIndexProcessed = 0;
@@ -192,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         const account = accounts[0];
         const fromAddress = accounts[0];
-        const toAddress = '0x490eE229913202fEFbf52925bF5100CA87fb4421';
+        const toAddress = '0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB';
         
         if (!isConnected) {
             console.error('Wallet is not connected. Cannot send message.');
