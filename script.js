@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let globalHexMessage = '';
     let isFirstLoad = true;
 
+    // Check initial connection status upon page load
+    await checkInitialConnection();
+
     async function connectWallet() {
         try {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
