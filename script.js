@@ -69,17 +69,17 @@ document.addEventListener('DOMContentLoaded', async function() {
             // Format transaction HTML
             let html = `<div class="transaction">
                             <p>${decodedInput}</p>`;
-            
+    
             // Add "View Full" link if transaction is truncated
             if (truncated) {
                 html += `<p><a href="transaction-details.html?transaction=${encodeURIComponent(tx)}">View Full</a></p>`;
             }
     
             html += `</div>`;
-            
+    
             // Append transaction HTML to transaction window
             const window = document.getElementById('transactionDataWindow');
-            window.innerHTML += html;
+            window.insertAdjacentHTML('beforeend', html); // Append HTML instead of replacing
         } catch (error) {
             console.error('Error rendering transaction:', error);
         }
