@@ -74,9 +74,13 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
     
             // Format transaction HTML
-            let html = `<div class="transaction">
-                            <p>Published on ${txTime} by ${fromAddress}${transactionTags && transactionTags.length > 0 ? ' - ' + transactionTags.join(', ') : ''}</p>
-                            <p>${decodedInput}</p>`;
+            let html = `<div class="transaction">`;
+    
+            // Add transaction header
+            html += `<p>Published on ${txTime} by ${fromAddress}${transactionTags && transactionTags.length > 0 ? ' - ' + transactionTags.join(', ') : ''}</p>`;
+    
+            // Add transaction body
+            html += `<p>${decodedInput}</p>`;
     
             // Add "View Full" link if transaction is truncated
             if (truncated) {
