@@ -1,7 +1,7 @@
 /* Styling for the entire page in dark mode */
 body.dark-mode {
     background-color: #000000;
-    color: #5a2d8a;
+    color: #ffffff;
     font-family: 'Courier New', Courier, monospace;
     display: flex;
     flex-direction: column;
@@ -34,7 +34,7 @@ h2#dynamicTitle {
 button, #connectButton, #publishButton, #docs-button {
     background-color: #5a2d8a;
     border: none;
-    color: black;
+    color: #ffffff;
     padding: 10px 20px;
     text-align: center;
     font-size: 16px;
@@ -106,7 +106,7 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
 /* Styling for the text input area */
 #postInput, textarea {
     background-color: #000000;
-    color: #5a2d8a;
+    color: #ffffff;
     padding: 10px;
     margin: 4px 2px;
     border: 2px solid #5a2d8a;
@@ -146,7 +146,7 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
     width: 90%;
     overflow-y: auto;
     background-color: #000000;
-    color: #5a2d8a;    
+    color: #ffffff;    
     padding: 10px;
     margin-top: 20px;
     max-height: none;
@@ -163,7 +163,7 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
 
 /* Style the thumb (webkit) */
 .scrollable-window::-webkit-scrollbar-thumb {
-    background-color: #5a2d8a; /* Thumb color */
+    background-color: #ffffff; /* Thumb color */
     border-radius: 10px; /* Rounded corners for the thumb */
 }
 
@@ -188,7 +188,7 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
 
 /* For not connected state */
 button.not-connected {
-  background-color: grey;
+  background-color: #5a2d8a;
 }
 
 /* For connected state */
@@ -206,7 +206,7 @@ button.connected:hover {
 #tagFilter,
 #publishOptionSelect {
     background-color: #000000; /* Background color */
-    color: #5a2d8a; /* Text color */
+    color: #ffffff; /* Text color */
     border: 2px solid #5a2d8a; /* Border color */
     padding: 5px; /* Padding */
     font-size: 16px; /* Font size */
@@ -216,14 +216,14 @@ button.connected:hover {
 #tagFilter option,
 #publishOptionSelect option {
     background-color: #000000; /* Background color */
-    color: #5a2d8a; /* Text color */
+    color: #ffffff; /* Text color */
     font-size: 16px; /* Font size */
 }
 
 /* Styling for the initial state of the Publish options dropdown */
 #publishOptions[style*="display: block"] {
     background-color: #000000 !important; /* Background color */
-    color: #5a2d8a; /* Text color */
+    color: #ffffff; /* Text color */
     border: 2px solid #5a2d8a; /* Border color */
     padding: 5px; /* Padding */
     font-size: 16px; /* Font size */
