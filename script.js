@@ -24,24 +24,15 @@ document.addEventListener('DOMContentLoaded', function() {
     function checkPulseChain(networkId) {
         try {
             const connectButton = document.getElementById('connectButton');
-    
             const networkIdNumber = Number(networkId);
-                
-            connectButton.addEventListener('mouseover', function() {
-                if (!isConnected) {
-                    this.style.backgroundColor = 'green';
-                }
-            });
     
-            connectButton.addEventListener('mouseout', function() {
-                if (!isConnected) {
-                    this.style.backgroundColor = 'grey';
-                }
-            });
-            
+            if (isConnected) {
+                connectButton.classList.add('connected');
+            } else {
+                connectButton.classList.remove('connected');
+            }
+    
             connectButton.innerText = isConnected ? (networkIdNumber === pulseChainId ? "Connected" : "Not connected to PulseChain") : "Connect Wallet";
-            connectButton.style.backgroundColor = isConnected ? (networkIdNumber === pulseChainId ? "green" : "red") : "grey";
-                        
         } catch (error) {
             console.error('Error checking PulseChain network:', error);
         }
