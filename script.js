@@ -68,15 +68,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     
             // Format transaction HTML
             let html = `<div class="transaction">
-                            <p>Published on ${txTime} by ${fromAddress}`;
-    
-            // Include transaction tags in the header
-            if (transactionTags && transactionTags.length > 0) {
-                html += ` - ${transactionTags.join(', ')}`;
-            }
-    
-            html += `</p>
-                        <p>${decodedInput}</p>`;
+                            <p>Published on ${txTime} by ${fromAddress} - ${transactionTags ? transactionTags.join(', ') : ''}</p>
+                            <p>${decodedInput}</p>`;
     
             // Add "View Full" link if transaction is truncated
             if (truncated) {
