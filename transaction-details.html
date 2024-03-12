@@ -50,7 +50,6 @@
                 const decodedContent = decodeURIComponent(transaction);
                 const headerMatch = decodedContent.match(/^.*?(\n|$)/); // Match everything before the first newline or end of string
                 const header = headerMatch ? headerMatch[0].trim() : ''; // Extract and trim the header
-                document.title = header; // Set the page title to the header
                 const body = decodedContent.replace(header, ''); // Remove the header from the content
                 const transactionDetails = `<p>${header}</p>\n<p>${body}</p>`; // Construct the transaction details with header and body
                 transactionContentElement.innerHTML = transactionDetails; // Display the transaction details
