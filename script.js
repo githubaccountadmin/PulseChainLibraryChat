@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     // Function to render transactions
-    function renderTransaction(tx) {
+    function renderTransaction(tx, txTime, fromAddress, tags) {
         try {
             // Truncate transaction if it exceeds 10 lines
             let decodedInput = tx; // Assuming tx is the transaction content
@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     
             // Format transaction HTML
             let html = `<div class="transaction">
+                            <p>Published on ${txTime} by ${fromAddress} - ${tags.join(', ')}</p>
                             <p>${decodedInput}</p>`;
     
             // Add "View Full" link if transaction is truncated
@@ -307,7 +308,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                             // Skip this transaction and continue processing
                             return;
                         }
-    
+
+                        // Extract additional transaction details
+                        const tags = getTagsFromInput(decodedInput);
+                        const txTime = new Date(tx.timestamp);
+                        const formattedTime = formatTime(txTime);
+                        
                         // Combine decoded input and tag
                         const combinedContent = `${decodedInput}`;
     
@@ -358,6 +364,17 @@ document.addEventListener('DOMContentLoaded', async function() {
             window.innerHTML = `Error fetching data: ${error.message}`;
         }
     }
+    
+    // Helper function to extract tags from transaction input
+    function getTagsFromInput(input) {
+        const tagMatches = input.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
+        return tagMatches ? tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')) : [];
+    }
+    
+    // Helper function to format time
+    function formatTime(time) {
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'UTC' };
+        return new Intl.DateTimeFormat('en-US', options).format(time);
     
     function timeout(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
