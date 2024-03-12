@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transaction Details</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -25,11 +24,6 @@
             padding: 20px;
             white-space: pre-wrap; /* Ensures line breaks are preserved */
         }
-        .transaction-details h2 {
-            color: #fff;
-            font-size: 24px;
-            margin-top: 0;
-        }
         .transaction-details p {
             margin: 0;
             padding: 5px 0;
@@ -50,14 +44,19 @@
             const urlParams = new URLSearchParams(window.location.search);
             const transaction = urlParams.get('transaction');
             const transactionContentElement = document.getElementById('transactionContent');
-
+        
             // Decode and display transaction content
             try {
                 const decodedContent = decodeURIComponent(transaction);
-                transactionContentElement.innerHTML = `<h2>Transaction Details</h2><p>${decodedContent}</p>`;
+                const headerMatch = decodedContent.match(/^.*?(\n|$)/); // Match everything before the first newline or end of string
+                const header = headerMatch ? headerMatch[0].trim() : ''; // Extract and trim the header
+                document.title = header; // Set the page title to the header
+                const body = decodedContent.replace(header, ''); // Remove the header from the content
+                const transactionDetails = `<p>${header}</p>\n<p>${body}</p>`; // Construct the transaction details with header and body
+                transactionContentElement.innerHTML = transactionDetails; // Display the transaction details
             } catch (error) {
                 console.error('Error decoding transaction content:', error);
-                transactionContentElement.innerHTML = '<h2>Transaction Details</h2><p>Error decoding transaction content.</p>';
+                transactionContentElement.innerHTML = '<p>Error decoding transaction content.</p>';
             }
         });
     </script>
