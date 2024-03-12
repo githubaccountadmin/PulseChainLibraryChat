@@ -199,7 +199,7 @@ button.connected {
 /* Hover effect */
 button.not-connected:hover,
 button.connected:hover {
-  background-color: #808080;
+  background-color: #5a2d8a;
 }
 
 /* Styling for the Filter by Tag dropdown */
