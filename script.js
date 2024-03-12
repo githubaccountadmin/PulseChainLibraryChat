@@ -66,9 +66,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                 truncated = true;
             }
     
+            // Extract tag from the decoded input
+            const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
+            if (tagMatches) {
+                transactionTags = tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1'));
+                decodedInput = decodedInput.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g, ''); // Remove tag from the body
+            }
+    
             // Format transaction HTML
             let html = `<div class="transaction">
-                            <p>Published on ${txTime} by ${fromAddress} - ${transactionTags ? transactionTags.join(', ') : ''}</p>
+                            <p>Published on ${txTime} by ${fromAddress}${transactionTags && transactionTags.length > 0 ? ' - ' + transactionTags.join(', ') : ''}</p>
                             <p>${decodedInput}</p>`;
     
             // Add "View Full" link if transaction is truncated
