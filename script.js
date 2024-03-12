@@ -241,14 +241,13 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     async function fetchTransactionData(clearExisting = false) {
         try {
-            let transactionTags; // Declare transactionTags here
             const endpoint = 'https://api.scan.pulsechain.com/api/v2/addresses/0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB/transactions?filter=to%20%7C%20from';
             const response = await fetch(endpoint);
             
             if (!response.ok) {
                 throw new Error(`Failed to fetch data. Status code: ${response.status}`);
             }
-
+    
             // Log the entire API response here
             console.log("API Response:", response);
             
@@ -271,7 +270,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     
             const data = await response.json();
             console.log("API Response:", data); // Add this line
-
+    
             if (!data || !Array.isArray(data.items)) {
                 throw new Error('Invalid data format or missing result array.');
             }
@@ -294,8 +293,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             if (clearExisting) {
                 window.innerHTML = '';
             }
-            
-            filteredData.slice(sliceStart, sliceEnd).forEach(tx => {            
+    
+            for (let tx of filteredData.slice(sliceStart, sliceEnd)) {
                 try {
                     if (web3.utils.isHexStrict(tx.raw_input)) {
                         let decodedInput = '';
@@ -307,9 +306,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 console.error('Error decoding UTF-8:', utfError);
                             }
                             // Skip this transaction and continue processing
-                            return;
+                            continue;
                         }
-
+    
                         // Extract additional transaction details
                         const tags = getTagsFromInput(decodedInput);
                         const txTime = new Date(tx.timestamp);
@@ -319,7 +318,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         const combinedContent = `${decodedInput}`;
     
                         // Render each transaction
-                        renderTransaction(combinedContent, txTime, tx.from.hash, transactionTags);                        
+                        renderTransaction(combinedContent);
                         
                         const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
                         const transactionTags = tagMatches ? tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')) : [];                        
@@ -351,11 +350,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                 } catch (error) {
                     console.error('Error processing transaction:', error);
                 }
-            });
-
+            }
+    
             window.innerHTML += outputText;
             lastIndexProcessed = sliceEnd;
-
+    
             if (lastIndexProcessed >= totalTransactions) {
                 return;
             }            
