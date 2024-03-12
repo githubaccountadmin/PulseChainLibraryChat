@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     // Function to render transactions
-    function renderTransaction(tx, txTime, fromAddress, tags) {
+    function renderTransaction(tx, txTime, fromAddress, transactionTags) {
         try {
             // Truncate transaction if it exceeds 10 lines
             let decodedInput = tx; // Assuming tx is the transaction content
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     
             // Format transaction HTML
             let html = `<div class="transaction">
-                            <p>Published on ${txTime} by ${fromAddress} - ${tags.join(', ')}</p>
+                            <p>Published on ${txTime} by ${fromAddress} - ${transactionTags.join(', ')}</p>
                             <p>${decodedInput}</p>`;
     
             // Add "View Full" link if transaction is truncated
