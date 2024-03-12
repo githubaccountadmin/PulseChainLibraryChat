@@ -322,9 +322,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                         
                         const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
                         const transactionTags = tagMatches ? tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')) : [];                        
-                        tagMatches.forEach(tag => {
-                            decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
-                        });
+                        if (tagMatches) {
+                            tagMatches.forEach(tag => {
+                                decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
+                            });
+                        }
                         
                         const hasAllMatchingTags = selectedTags.every(selTag => tags.includes(selTag));
             
