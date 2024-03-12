@@ -1,7 +1,7 @@
 const maxRetryCount = 3;
 const pulseChainId = 369;
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
     let totalTransactions = 0;
     let transactionCount = 13;
@@ -10,17 +10,23 @@ document.addEventListener('DOMContentLoaded', function() {
     let globalHexMessage = '';
     let isFirstLoad = true;
 
-    async function connectWallet() {
+    // Function to check wallet connection status
+    async function checkWalletConnection() {
         try {
-            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            isConnected = true;
-            const networkId = await window.ethereum.request({ method: 'net_version' });
-            checkPulseChain(networkId);
+            const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+            isConnected = accounts.length > 0;
+            if (isConnected) {
+                const networkId = await window.ethereum.request({ method: 'net_version' });
+                checkPulseChain(networkId);
+            }
         } catch (error) {
-            console.error('Error connecting wallet:', error);
+            console.error('Error checking wallet connection:', error);
         }
     }
 
+    // Call function to check wallet connection status on page load
+    await checkWalletConnection();
+    
     function checkPulseChain(networkId) {
         try {
             const connectButton = document.getElementById('connectButton');
