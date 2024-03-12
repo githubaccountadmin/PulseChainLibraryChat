@@ -13,6 +13,14 @@
             color: #fff;
             overflow: hidden;
         }
+        .transaction-wrapper {
+            width: 90%;
+            margin: 5% auto;
+            border: 2px solid purple;
+            border-radius: 10px;
+            overflow-y: auto; /* Allow scrolling if content exceeds height */
+            max-height: 90vh; /* Limit height to 90% of viewport height */
+        }
         .transaction-details {
             padding: 20px;
             white-space: pre-wrap; /* Ensures line breaks are preserved */
@@ -30,10 +38,12 @@
     </style>
 </head>
 <body>
-    <div class="transaction-details">
-        <h2>Transaction Details</h2>
-        <div id="transactionContent">
-            <!-- Transaction content will be dynamically inserted here -->
+    <div class="transaction-wrapper">
+        <div class="transaction-details">
+            <h2>Transaction Details</h2>
+            <div id="transactionContent">
+                <!-- Transaction content will be dynamically inserted here -->
+            </div>
         </div>
     </div>
 
