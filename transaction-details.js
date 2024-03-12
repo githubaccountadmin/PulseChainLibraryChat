@@ -10,9 +10,15 @@ document.addEventListener('DOMContentLoaded', async function() {
             const transactionDetailsContainer = document.getElementById('transactionDetails');
             console.log('Transaction details container:', transactionDetailsContainer);
             
-            // Render transaction details HTML
+            // Separate the header and body of the message
+            const headerMatch = decodedTransaction.match(/^.*?(\n|$)/); // Match everything before the first newline or end of string
+            const header = headerMatch ? headerMatch[0].trim() : ''; // Extract and trim the header
+            const body = decodedTransaction.replace(header, ''); // Remove the header from the content
+            
+            // Render transaction details HTML with header and body
             let html = `<div class="transaction-details">
-                            <p>${decodedTransaction}</p>
+                            <p>${header}</p>
+                            <p>${body}</p>
                         </div>`;
             
             transactionDetailsContainer.innerHTML = html;
