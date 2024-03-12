@@ -375,6 +375,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     function formatTime(time) {
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'UTC' };
         return new Intl.DateTimeFormat('en-US', options).format(time);
+    }
     
     function timeout(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
