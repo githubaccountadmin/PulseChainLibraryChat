@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', async function() {
+    console.log('DOM content loaded');
     const urlParams = new URLSearchParams(window.location.search);
     const transaction = urlParams.get('transaction');
 
@@ -7,6 +8,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         try {
             const decodedTransaction = decodeURIComponent(transaction);
             const transactionDetailsContainer = document.getElementById('transactionDetails');
+            console.log('Transaction details container:', transactionDetailsContainer);
             
             // Render transaction details HTML
             let html = `<div class="transaction-details">
