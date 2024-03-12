@@ -24,6 +24,17 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     }
 
+    async function connectWallet() {
+        try {
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            isConnected = true;
+            const networkId = await window.ethereum.request({ method: 'net_version' });
+            checkPulseChain(networkId);
+        } catch (error) {
+            console.error('Error connecting wallet:', error);
+        }
+    }
+    
     // Call function to check wallet connection status on page load
     await checkWalletConnection();
     
