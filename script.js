@@ -374,6 +374,15 @@ document.addEventListener('DOMContentLoaded', async function() {
             await fetchTransactionData();
         }
     });
+
+    document.getElementById('transactionDataWindow').addEventListener('click', function(event) {
+        const target = event.target;
+        if (target.classList.contains('transaction')) {
+            // Navigate to transaction details page with transaction data as URL parameter
+            const transaction = target.querySelector('p').innerText;
+            window.location.href = `transaction-details.html?transaction=${encodeURIComponent(transaction)}`;
+        }
+    });
     
     document.getElementById('tagFilter').addEventListener('change', async function() {
         lastIndexProcessed = 0;
