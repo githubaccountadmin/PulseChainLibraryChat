@@ -191,17 +191,6 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
     white-space: pre-wrap; /* Preserve line breaks and spaces */
 }
 
-/* For not connected state */
-button.not-connected {
-  background-color: #5a2d8a;
-}
-
-/* Hover effect */
-button.not-connected:hover,
-button.connected:hover {
-  background-color: #5a2d8a;
-}
-
 /* Styling for the Filter by Tag dropdown */
 #tagFilter,
 #publishOptionSelect {
