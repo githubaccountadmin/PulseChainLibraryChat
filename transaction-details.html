@@ -4,19 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transaction Details</title>
-    <!-- Include any necessary CSS stylesheets -->
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        .transaction-details {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .transaction-details p {
+            margin: 0;
+            padding: 5px 0;
+        }
+    </style>
 </head>
 <body>
-    <div id="transactionDetails" class="transaction-details-container">
-        <div class="transaction">
-            <p id="transactionInfo">Transaction Information</p>
-            <p id="transactionContent">Transaction Content</p>
+    <div class="transaction-details">
+        <h2>Transaction Details</h2>
+        <div id="transactionContent">
+            <!-- Transaction content will be dynamically inserted here -->
         </div>
     </div>
 
-    <!-- Include any necessary JavaScript files -->
-    <script src="transaction-details.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Retrieve transaction data from URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const transaction = urlParams.get('transaction');
+            const transactionContentElement = document.getElementById('transactionContent');
+
+            // Decode and display transaction content
+            try {
+                const decodedContent = decodeURIComponent(transaction);
+                transactionContentElement.innerHTML = `<p>${decodedContent}</p>`;
+            } catch (error) {
+                console.error('Error decoding transaction content:', error);
+                transactionContentElement.innerHTML = '<p>Error decoding transaction content.</p>';
+            }
+        });
+    </script>
 </body>
 </html>
-
