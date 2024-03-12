@@ -1,58 +1,49 @@
-Documentation
+# Decentralized PulseChain Library: Empowering Content Creation on the Blockchain
 
-Title: Decentralized PulseChain Library: Empowering Content Creation on the Blockchain
+## Abstract
 
-Abstract:
+The Decentralized PulseChain Library is a DeFi hub on the PulseChain blockchain, revolutionizing content creation and dissemination. Our platform serves as a dynamic ecosystem for text-based content, facilitating collaboration and innovation within the PulseChain community.
 
-The Decentralized PulseChain Library is an innovative platform for text-based content creation and dissemination on the PulseChain blockchain. The project aims to harness the blockchain to create a decentralized repository for text content, from messages and stories to books and documents, all stored in a secure and transparent manner.
+## Vision
 
-Vision:
+Our vision is to create a vibrant DeFi hub where users can freely express, share, and collaborate on various forms of text content. By leveraging the PulseChain blockchain, we provide a decentralized repository that promotes transparency, security, and creative freedom.
 
-The platform aims to create a dynamic ecosystem that allows users to freely express, share, and collaborate on various forms of text content. By employing customizable tags, users can filter and discover content according to their interests, making information easily accessible. The project promotes an open, decentralized community valuing transparency, security, and creative freedom.
+## Key Features
 
-Key Features:
+- **Unlimited Text-Based Content:** Publish messages, stories, books, and documents effortlessly.
+- **Real-Time Content Feed:** Discover fresh and engaging content directly from the blockchain.
+- **Decentralized Repository:** Your content is stored securely and transparently on PulseChain.
+- **Block Gas Limit Awareness:** Respect for blockchain efficiency while ensuring content freedom.
+- **Transaction Feed Window:** Stay informed with a live feed of recent transactions and content.
+- **Customizable Tags:** Sort and discover content easily with customizable tags.
+- **Censorship-Resistant:** Immutable content ensures resistance to censorship.
+- **User-Centric Design:** Intuitive interface for seamless interaction.
+- **Transparency and Openness:** All transactions and content are accessible to everyone.
 
-    Unlimited Text-Based Content: Create, publish, and share any form of text-based content, from quick messages to extensive documents.
-    Real-Time Content Feed: Discover fresh and engaging content in real-time, directly from the blockchain.
-    Decentralized Repository: Your content is stored securely and transparently on the PulseChain blockchain, free from any central authority.
-    Block Gas Limit Awareness: While you can publish as much text as you want, the system is designed to respect the blockchain's block gas limit for efficiency.
-    Transaction Feed Window: Stay informed with a live feed of recent transactions and content, all available at the bottom of the user interface.
-    Customizable Tags: Sort and discover content more easily with customizable tags, allowing you to focus on what interests you.
-    Censorship-Resistant: With its decentralized nature, the platform ensures that your content is immutable and resistant to censorship.
-    User-Centric Design: Intuitive and accessible user interface to ensure seamless interaction, whether you're a blockchain veteran or a newbie.
-    Transparency and Openness: All transactions are visible, and all content is accessible to everyone, embodying the true spirit of decentralization.
+## Additional Features Coming Soon!
 
+- Private messaging between users.
+- DeFi tools to expand your knowledge.
+- And much more!
 
+## How to Use the Decentralized PulseChain Library
 
-Join us on this exciting journey as we build the Decentralized PulseChain Library, redefining the way content is created, shared, and preserved on the blockchain.
+1. **Connect Your Wallet:** Click the 'Connect Wallet' button and follow the prompts.
+2. **Create Your Content:** Type your message or content into the provided text box.
+3. **Publish Your Content:** Click the 'Publish' button and select a tag for your content.
+   - **Note:** When confirming the transaction, please be aware that MetaMask wallet may show a high gas cost. It's advised to use a different wallet, such as Rabby or others, for more cost-effective transactions.
+4. **Confirm and Pay Gas Fees:** After selecting a tag, click 'Confirm' and pay the gas fees.
+5. **Monitor Your Transaction:** Once confirmed, your content will be visible in the real-time feed.
+6. **Explore and Filter Content:** Use the 'Filter by Tag' dropdown to explore content based on categories.
 
-How to Use the Decentralized PulseChain Library
-Step 1: Connect Your Wallet
+## Troubleshooting and Tips
 
-Click the 'Connect Wallet' button located at the top-right corner of the page. Follow the prompts to connect your Ethereum wallet.
-Step 2: Create Your Content
+- **Refreshing the Feed:** Reload the page to refresh and see new content.
+- **Network Issues:** Refresh the page if data isn't fetching properly.
+- **Populating New Transactions:** Reload the page to populate new transactions.
+- **If it doesn't seem to work:** Try reloading the page (and clearing cache), or try back later.
 
-Type your message, story, or any other form of text-based content into the text box provided.
-Step 3: Publish Your Content
+---
 
-Click the 'Publish' button below the text box. This will reveal a dropdown menu for you to select a tag for your content.
-Step 4: Confirm and Pay Gas Fees
-
-After selecting a tag, click 'Confirm' to proceed. You will be prompted to pay the gas fees to publish your content on the blockchain.
-Step 5: Monitor Your Transaction
-
-Once the transaction is confirmed, your content will be published and visible in the real-time feed.
-Step 6: Explore and Filter Content
-
-Use the 'Filter by Tag' dropdown to explore content based on different categories like books, documents, messages, etc.
-Troubleshooting and Tips
-
-    Refreshing the Feed: After publishing, you may need to reload the page to refresh the feed and see your new content.
-    Network Issues: If you encounter any network issues or the data isn't fetching properly, try refreshing the page.
-    Populating New Transactions: Currently, you may need to reload the page to populate new transactions in the feed.
-
-*******************************************************************************************************************************
-
-Additional Features Coming Soon! -Private messages between users, DeFi tools to expand your knowledge, Plus much more...
-The Decentralized PulseChain Library is a DeFi Hub for PulseChain with many features to be added... Check back often!
-...this site is built by a single dev and their ai friend, wiz. If you like what you see, feel free to donate $PLS here: lighting.pls
+Built with ❤️ by a single dev and their AI friend, Hermes. If you like what you see, feel free to donate $PLS here: lighting.pls
+Respect the lolz...
