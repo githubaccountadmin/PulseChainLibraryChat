@@ -55,6 +55,36 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     }
 
+    // Function to render transactions
+    function renderTransaction(tx) {
+        try {
+            // Truncate transaction if it exceeds 10 lines
+            let decodedInput = tx; // Assuming tx is the transaction content
+            let truncated = false;
+            if (decodedInput.split('\n').length > 10) {
+                decodedInput = decodedInput.split('\n').slice(0, 10).join('\n');
+                truncated = true;
+            }
+    
+            // Format transaction HTML
+            let html = `<div class="transaction">
+                            <p>${decodedInput}</p>`;
+            
+            // Add "View Full" link if transaction is truncated
+            if (truncated) {
+                html += `<p><a href="transaction-details.html?transaction=${encodeURIComponent(tx)}">View Full</a></p>`;
+            }
+    
+            html += `</div>`;
+            
+            // Append transaction HTML to transaction window
+            const window = document.getElementById('transactionDataWindow');
+            window.innerHTML += html;
+        } catch (error) {
+            console.error('Error rendering transaction:', error);
+        }
+    }
+    
     function setRandomTitle() {
         try {
             const titles = [
@@ -276,6 +306,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                             // Skip this transaction and continue processing
                             return;
                         }
+
+                        // Render each transaction
+                        renderTransaction(decodedInput);
                         const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
                         const tags = tagMatches ? tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')) : [];
                         
