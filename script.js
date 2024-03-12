@@ -322,11 +322,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                         renderTransaction(combinedContent, formattedTime, tx.from.hash, transactionTags);
                         
                         const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
-                        const transactionTags = tagMatches ? tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')) : [];                        
                         if (tagMatches) {
+                            const newTransactionTags = tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')); // Assign the value
                             tagMatches.forEach(tag => {
                                 decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
                             });
+                            transactionTags.push(...newTransactionTags); // Append new tags to the existing array
+
                         }
                         
                         const hasAllMatchingTags = selectedTags.every(selTag => tags.includes(selTag));
