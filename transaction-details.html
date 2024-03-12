@@ -39,11 +39,8 @@
 </head>
 <body>
     <div class="transaction-wrapper">
-        <div class="transaction-details">
-            <h2>Transaction Details</h2>
-            <div id="transactionContent">
-                <!-- Transaction content will be dynamically inserted here -->
-            </div>
+        <div class="transaction-details" id="transactionContent">
+            <!-- Transaction content will be dynamically inserted here -->
         </div>
     </div>
 
@@ -57,10 +54,10 @@
             // Decode and display transaction content
             try {
                 const decodedContent = decodeURIComponent(transaction);
-                transactionContentElement.innerHTML = `<p>${decodedContent}</p>`;
+                transactionContentElement.innerHTML = `<h2>Transaction Details</h2><p>${decodedContent}</p>`;
             } catch (error) {
                 console.error('Error decoding transaction content:', error);
-                transactionContentElement.innerHTML = '<p>Error decoding transaction content.</p>';
+                transactionContentElement.innerHTML = '<h2>Transaction Details</h2><p>Error decoding transaction content.</p>';
             }
         });
     </script>
