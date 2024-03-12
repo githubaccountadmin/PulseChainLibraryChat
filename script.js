@@ -319,7 +319,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         const combinedContent = `${decodedInput}`;
     
                         // Render each transaction
-                        renderTransaction(combinedContent);
+                        renderTransaction(combinedContent, formattedTime, tx.from.hash, transactionTags);
                         
                         const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
                         const transactionTags = tagMatches ? tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')) : [];                        
