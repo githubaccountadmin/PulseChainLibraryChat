@@ -50,3 +50,9 @@ Troubleshooting and Tips
     Refreshing the Feed: After publishing, you may need to reload the page to refresh the feed and see your new content.
     Network Issues: If you encounter any network issues or the data isn't fetching properly, try refreshing the page.
     Populating New Transactions: Currently, you may need to reload the page to populate new transactions in the feed.
+
+*******************************************************************************************************************************
+
+Additional Features Coming Soon! -Private messages between users, DeFi tools to expand your knowledge, Plus much more...
+The Decentralized PulseChain Library is a DeFi Hub for PulseChain with many features to be added... Check back often!
+...this site is built by a single dev and their ai friend, wiz. If you like what you see, feel free to donate $PLS here: lighting.pls
