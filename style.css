@@ -163,7 +163,7 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
 
 /* Style the thumb (webkit) */
 .scrollable-window::-webkit-scrollbar-thumb {
-    background-color: #ffffff; /* Thumb color */
+    background-color: #000000; /* Thumb color */
     border-radius: 10px; /* Rounded corners for the thumb */
 }
 
@@ -174,7 +174,7 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
 
 /* Style the scrollbar (firefox) */
 .scrollable-window {
-    scrollbar-color: #5a2d8a #000000;
+    scrollbar-color: #ffffff #000000;
     scrollbar-width: thin;
 }
 
