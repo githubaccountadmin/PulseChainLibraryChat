@@ -113,7 +113,7 @@ const pulseChainId = 369;
             }
         });
         
-        publishOptionSelect.addEventListener('change', function() {
+        publishOptionSelect.addEventListener('change', async function() {
             try {
                 handlePublishOption(publishOptionSelect.value);
             } catch (error) {
@@ -354,7 +354,7 @@ const pulseChainId = 369;
                 await fetchTransactionData();
             }
         });
-    
+            
         document.getElementById('publishOptionSelect').addEventListener('change', function() {
             toggleCustomTagInput(this, 'customTagInput');
         });
