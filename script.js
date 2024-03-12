@@ -241,6 +241,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     async function fetchTransactionData(clearExisting = false) {
         try {
+            const transactionTags = []; // Define transactionTags as an empty array
             const endpoint = 'https://api.scan.pulsechain.com/api/v2/addresses/0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB/transactions?filter=to%20%7C%20from';
             const response = await fetch(endpoint);
             
