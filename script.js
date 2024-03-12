@@ -58,10 +58,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Function to render transactions
     function renderTransaction(tx, txTime, fromAddress, transactionTags) {
         try {
-            // Declare transactionTags variable
-            const tagMatches = tx.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
-            const transactionTags = tagMatches ? tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')) : [];
-    
             // Truncate transaction if it exceeds 10 lines
             let decodedInput = tx; // Assuming tx is the transaction content
             let truncated = false;
