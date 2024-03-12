@@ -323,10 +323,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                         const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
                         const tags = tagMatches ? tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')) : [];
                         
-                        tags.forEach(tag => {
+                        tagMatches.forEach(tag => {
                             decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
                         });
-            
+                        
                         const hasAllMatchingTags = selectedTags.every(selTag => tags.includes(selTag));
             
                         if (selectedTags.includes("All") || hasAllMatchingTags || selectedTags.length === 0) {
