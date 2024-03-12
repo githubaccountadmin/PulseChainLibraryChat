@@ -49,6 +49,11 @@ button, #connectButton, #publishButton, #docs-button {
     right: 0;
 }
 
+/* For connected state */
+button.connected {
+    background-color: #5a2d8a; /* PulseChain purple background */
+}
+
 .fixed-width-title {
     max-width: 1000px;  /* or whatever size fits your layout */
     overflow: hidden;  /* hide text that exceeds the maximum width */
@@ -188,11 +193,6 @@ button:hover, #connectButton:hover, #publishButton:hover, #docs-button:hover {
 
 /* For not connected state */
 button.not-connected {
-  background-color: #5a2d8a;
-}
-
-/* For connected state */
-button.connected {
   background-color: #5a2d8a;
 }
 
