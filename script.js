@@ -297,11 +297,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 try {
                     if (web3.utils.isHexStrict(tx.raw_input)) {
                         let decodedInput = '';
-                        let decodedTag = '';
                         
                         try {
                             decodedInput = web3.utils.hexToUtf8(tx.raw_input);
-                            decodedTag = web3.utils.hexToUtf8(tx.tag); // Assuming 'tag' is the field name for the tag data
                         } catch (utfError) {
                             if (utfError.message !== 'Invalid UTF-8 detected') {
                                 console.error('Error decoding UTF-8:', utfError);
@@ -311,7 +309,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
     
                         // Combine decoded input and tag
-                        const combinedContent = `${decodedInput} - Tag: ${decodedTag}`;
+                        const combinedContent = `${decodedInput}`;
     
                         // Render each transaction
                         renderTransaction(combinedContent);
