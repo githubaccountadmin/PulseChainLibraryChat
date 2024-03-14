@@ -30,8 +30,3 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Call function to render transaction details
     renderTransactionDetails(transaction);
 });
-
-
-    // Call function to render transaction details
-    renderTransactionDetails(transaction);
-});
