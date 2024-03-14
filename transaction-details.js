@@ -1,30 +1,36 @@
 document.addEventListener('DOMContentLoaded', async function() {
     console.log('DOM content loaded');
 
-    // Ensure the DOM content is loaded before proceeding
-    const txTimeElement = document.querySelector('.transaction-details.transaction-time');
-    const fromAddressElement = document.querySelector('.transaction-details.from-address');
-    const transactionTagsElement = document.querySelector('.transaction-details.transaction-tags');
+    // Function to handle click events on transaction window links
+    function handleTransactionWindowClick(event) {
+        // Ensure the clicked element is a link within the transaction window
+        const isTransactionLink = event.target.closest('.transaction-wrapper a');
+        if (isTransactionLink) {
+            // Check if the required elements are available before proceeding
+            const txTimeElement = document.querySelector('.transaction-details.transaction-time');
+            const fromAddressElement = document.querySelector('.transaction-details.from-address');
+            const transactionTagsElement = document.querySelector('.transaction-details.transaction-tags');
 
-    // Log to check if the elements are found
-    console.log('txTimeElement:', txTimeElement);
-    console.log('fromAddressElement:', fromAddressElement);
-    console.log('transactionTagsElement:', transactionTagsElement);
-    
+            // Check if any required element is missing
+            if (!txTimeElement || !fromAddressElement || !transactionTagsElement) {
+                console.error('One or more required elements not found.');
+                event.preventDefault(); // Prevent default behavior of the link
+            }
+        }
+    }
+
+    // Add event listener to handle click events on transaction window links
+    document.addEventListener('click', handleTransactionWindowClick);
+
+    // Check if the URL contains transaction details
     const urlParams = new URLSearchParams(window.location.search);
     const transaction = urlParams.get('transaction');
     const decodedInput = urlParams.get('decodedInput');
 
-    // Check if the elements are found before proceeding
-    if (!txTimeElement || !fromAddressElement || !transactionTagsElement) {
-        console.error('One or more required elements not found.');
-        return;
-    }
-
     // Get the text content of the elements
-    const txTime = txTimeElement.textContent;
-    const fromAddress = fromAddressElement.textContent;
-    const transactionTags = transactionTagsElement.textContent;
+    const txTime = document.getElementById('txTime').textContent;
+    const fromAddress = document.getElementById('fromAddress').textContent;
+    const transactionTags = document.getElementById('transactionTags').textContent;
 
     renderTransactionDetails(transaction, txTime, fromAddress, transactionTags, decodedInput);
 });
