@@ -15,7 +15,7 @@
         .transaction-wrapper {
             width: 90%;
             margin: 5% auto;
-            border: 2px #5a2d8a;
+            border: 2px solid purple;
             border-radius: 10px;
             overflow-y: auto; /* Allow scrolling if content exceeds height */
             max-height: 90vh; /* Limit height to 90% of viewport height */
@@ -32,32 +32,10 @@
     </style>
 </head>
 <body>
-    <div class="transaction-wrapper">
-        <div class="transaction-details" id="transactionContent">
-            <!-- Transaction content will be dynamically inserted here -->
-        </div>
+    <div class="transaction-wrapper" id="transactionContent">
+        <!-- Transaction content will be dynamically inserted here -->
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Retrieve transaction data from URL parameter
-            const urlParams = new URLSearchParams(window.location.search);
-            const transaction = urlParams.get('transaction');
-            const transactionContentElement = document.getElementById('transactionContent');
-        
-            // Decode and display transaction content
-            try {
-                const decodedContent = decodeURIComponent(transaction);
-                const headerMatch = decodedContent.match(/^.*?(\n|$)/); // Match everything before the first newline or end of string
-                const header = headerMatch ? headerMatch[0].trim() : ''; // Extract and trim the header
-                const body = decodedContent.replace(header, ''); // Remove the header from the content
-                const transactionDetails = `<p>${header}</p>\n<p>${body}</p>`; // Construct the transaction details with header and body
-                transactionContentElement.innerHTML = transactionDetails; // Display the transaction details
-            } catch (error) {
-                console.error('Error decoding transaction content:', error);
-                transactionContentElement.innerHTML = '<p>Error decoding transaction content.</p>';
-            }
-        });
-    </script>
+    <script src="transaction-details.js"></script>
 </body>
 </html>
