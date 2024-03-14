@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             // Separate the header and body of the message
             const headerEndIndex = decodedTransaction.indexOf('\n'); // Find the end of the header
             const header = decodedTransaction.slice(0, headerEndIndex).trim(); // Extract the header
-            const body = decodedTransaction.slice(headerEndIndex).trim(); // Extract the body
+            const body = decodedTransaction.slice(headerEndIndex + 1).trim(); // Extract the body
             
             // Render transaction details HTML with header and body
             let html = `<div class="transaction-details">
