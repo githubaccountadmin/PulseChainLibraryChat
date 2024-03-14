@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     function renderTransactionDetails(transaction) {
         try {
             const decodedTransaction = decodeURIComponent(transaction);
-            const transactionDetailsContainer = document.getElementById('transactionContent'); // Corrected ID
+            const transactionDetailsContainer = document.getElementById('transactionContent');
             console.log('Transaction details container:', transactionDetailsContainer);
             
             // Separate the header and body of the message
