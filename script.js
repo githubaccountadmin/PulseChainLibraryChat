@@ -328,10 +328,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                         
                         // Combine decoded input and tag
                         const combinedContent = `${decodedInput}`;
+
+                        // Separate the header and body of the message
+                        const headerEndIndex = decodedInput.indexOf('\n'); // Find the end of the header
+                        const header = decodedInput.slice(0, headerEndIndex).trim(); // Extract the header
+                        const body = decodedInput.slice(headerEndIndex).trim(); // Extract the body
     
                         // Render each transaction
-                        renderTransaction(combinedContent, formattedTime, tx.from.hash, transactionTags);
-                        
+                        renderTransaction(header, formattedTime, tx.from.hash, transactionTags); // Render the header
+                        renderTransaction(body, formattedTime, tx.from.hash, transactionTags); // Render the body
+                                                
                         const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
                         if (tagMatches) {
                             const newTransactionTags = tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')); // Assign the value
