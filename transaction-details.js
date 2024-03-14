@@ -1,12 +1,18 @@
 document.addEventListener('DOMContentLoaded', async function() {
     console.log('DOM content loaded');
-    
-    const urlParams = new URLSearchParams(window.location.search);
-    const transaction = urlParams.get('transaction');
-    // Update here: Selecting elements with multiple classes
+
+    // Ensure the DOM content is loaded before proceeding
     const txTimeElement = document.querySelector('.transaction-details.transaction-time');
     const fromAddressElement = document.querySelector('.transaction-details.from-address');
     const transactionTagsElement = document.querySelector('.transaction-details.transaction-tags');
+
+    // Log to check if the elements are found
+    console.log('txTimeElement:', txTimeElement);
+    console.log('fromAddressElement:', fromAddressElement);
+    console.log('transactionTagsElement:', transactionTagsElement);
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const transaction = urlParams.get('transaction');
     const decodedInput = urlParams.get('decodedInput');
 
     // Check if the elements are found before proceeding
