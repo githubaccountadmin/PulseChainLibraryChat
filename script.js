@@ -415,24 +415,31 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     document.getElementById('transactionDataWindow').addEventListener('click', function(event) {
         const target = event.target;
-        if (target.classList.contains('transaction')) {
-            // Navigate to transaction details page with transaction data as URL parameter
-            const transaction = target.querySelector('p').innerText;
-            const txTime = target.closest('.transaction').querySelector('.transaction-time').innerText; // Extract transaction time from the inner text
-            const fromAddress = target.closest('.transaction').querySelector('.from-address').innerText; // Extract sender address from the inner text
-            const transactionTags = target.closest('.transaction').querySelector('.transaction-tags').innerText; // Extract transaction tags from the inner text
-            window.location.href = `transaction-details.html?transaction=${encodeURIComponent(transaction)}&txTime=${txTime}&fromAddress=${fromAddress}&transactionTags=${encodeURIComponent(transactionTags)}`;
-        } else if (target.tagName.toLowerCase() === 'a' && target.parentElement.classList.contains('transaction')) {
-            // Link clicked, do nothing as the URL will handle the navigation
+        const transactionElement = target.closest('.transaction');
+    
+        if (!transactionElement) {
+            // Do nothing if the click is not within a transaction element
             return;
-        } else {
-            // Navigate to transaction details page with transaction data as URL parameter
-            const transaction = target.closest('.transaction').querySelector('p').innerText;
-            const txTime = target.closest('.transaction').querySelector('.transaction-time').innerText; // Extract transaction time from the inner text
-            const fromAddress = target.closest('.transaction').querySelector('.from-address').innerText; // Extract sender address from the inner text
-            const transactionTags = target.closest('.transaction').querySelector('.transaction-tags').innerText; // Extract transaction tags from the inner text
-            window.location.href = `transaction-details.html?transaction=${encodeURIComponent(transaction)}&txTime=${txTime}&fromAddress=${fromAddress}&transactionTags=${encodeURIComponent(transactionTags)}`;
         }
+    
+        const transactionTextElement = transactionElement.querySelector('p');
+        const txTimeElement = transactionElement.querySelector('.transaction-time');
+        const fromAddressElement = transactionElement.querySelector('.from-address');
+        const transactionTagsElement = transactionElement.querySelector('.transaction-tags');
+    
+        if (!transactionTextElement || !txTimeElement || !fromAddressElement || !transactionTagsElement) {
+            // If any of the required elements are missing, log an error and return
+            console.error('One or more required elements not found.');
+            return;
+        }
+    
+        const transaction = transactionTextElement.innerText;
+        const txTime = txTimeElement.innerText;
+        const fromAddress = fromAddressElement.innerText;
+        const transactionTags = transactionTagsElement.innerText;
+    
+        // Navigate to transaction details page with transaction data as URL parameter
+        window.location.href = `transaction-details.html?transaction=${encodeURIComponent(transaction)}&txTime=${txTime}&fromAddress=${fromAddress}&transactionTags=${encodeURIComponent(transactionTags)}`;
     });
     
     document.getElementById('tagFilter').addEventListener('change', async function() {
