@@ -3,10 +3,22 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     const urlParams = new URLSearchParams(window.location.search);
     const transaction = urlParams.get('transaction');
-    const txTime = urlParams.get('txTime');
-    const fromAddress = urlParams.get('fromAddress');
-    const transactionTags = urlParams.get('transactionTags');
+    // Update here: Selecting elements with multiple classes
+    const txTimeElement = document.querySelector('.transaction-details.transaction-time');
+    const fromAddressElement = document.querySelector('.transaction-details.from-address');
+    const transactionTagsElement = document.querySelector('.transaction-details.transaction-tags');
     const decodedInput = urlParams.get('decodedInput');
+
+    // Check if the elements are found before proceeding
+    if (!txTimeElement || !fromAddressElement || !transactionTagsElement) {
+        console.error('One or more required elements not found.');
+        return;
+    }
+
+    // Get the text content of the elements
+    const txTime = txTimeElement.textContent;
+    const fromAddress = fromAddressElement.textContent;
+    const transactionTags = transactionTagsElement.textContent;
 
     renderTransactionDetails(transaction, txTime, fromAddress, transactionTags, decodedInput);
 });
@@ -14,28 +26,25 @@ document.addEventListener('DOMContentLoaded', async function() {
 // Function to render the transaction details
 function renderTransactionDetails(transaction, txTime, fromAddress, transactionTags, decodedInput) {
     try {
-        // Add a slight delay to ensure the elements are available
-        setTimeout(function() {
-            // Render transaction details HTML with the decoded transaction
-            let html = `<div class="transaction-details">`;
+        // Render transaction details HTML with the decoded transaction
+        let html = `<div class="transaction-details">`;
 
-            // Add transaction header
-            html += `<p>Published on ${txTime} by ${fromAddress}${transactionTags ? ' - ' + transactionTags : ''}</p>`;
+        // Add transaction header
+        html += `<p>Published on ${txTime} by ${fromAddress}${transactionTags ? ' - ' + transactionTags : ''}</p>`;
 
-            // Add transaction body
-            html += `<p>${transaction}</p>`;
+        // Add transaction body
+        html += `<p>${transaction}</p>`;
 
-            // Add decoded input if available
-            if (decodedInput) {
-                html += `<p>Decoded Input: ${decodedInput}</p>`;
-            }
+        // Add decoded input if available
+        if (decodedInput) {
+            html += `<p>Decoded Input: ${decodedInput}</p>`;
+        }
 
-            html += `</div>`;
+        html += `</div>`;
 
-            // Append transaction HTML to transaction window
-            const transactionDetailsContainer = document.getElementById('transactionContent');
-            transactionDetailsContainer.innerHTML = html;
-        }, 100); // Adjust the delay time as needed
+        // Append transaction HTML to transaction window
+        const transactionDetailsContainer = document.getElementById('transactionContent');
+        transactionDetailsContainer.innerHTML = html;
     } catch (error) {
         console.error('Error rendering transaction details:', error);
     }
