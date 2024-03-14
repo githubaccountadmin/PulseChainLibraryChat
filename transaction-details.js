@@ -14,25 +14,28 @@ document.addEventListener('DOMContentLoaded', async function() {
 // Function to render the transaction details
 function renderTransactionDetails(transaction, txTime, fromAddress, transactionTags, decodedInput) {
     try {
-        // Render transaction details HTML with the decoded transaction
-        let html = `<div class="transaction-details">`;
+        // Add a slight delay to ensure the elements are available
+        setTimeout(function() {
+            // Render transaction details HTML with the decoded transaction
+            let html = `<div class="transaction-details">`;
 
-        // Add transaction header
-        html += `<p>Published on ${txTime} by ${fromAddress}${transactionTags ? ' - ' + transactionTags : ''}</p>`;
+            // Add transaction header
+            html += `<p>Published on ${txTime} by ${fromAddress}${transactionTags ? ' - ' + transactionTags : ''}</p>`;
 
-        // Add transaction body
-        html += `<p>${transaction}</p>`;
+            // Add transaction body
+            html += `<p>${transaction}</p>`;
 
-        // Add decoded input if available
-        if (decodedInput) {
-            html += `<p>Decoded Input: ${decodedInput}</p>`;
-        }
+            // Add decoded input if available
+            if (decodedInput) {
+                html += `<p>Decoded Input: ${decodedInput}</p>`;
+            }
 
-        html += `</div>`;
+            html += `</div>`;
 
-        // Append transaction HTML to transaction window
-        const transactionDetailsContainer = document.getElementById('transactionContent');
-        transactionDetailsContainer.innerHTML = html;
+            // Append transaction HTML to transaction window
+            const transactionDetailsContainer = document.getElementById('transactionContent');
+            transactionDetailsContainer.innerHTML = html;
+        }, 100); // Adjust the delay time as needed
     } catch (error) {
         console.error('Error rendering transaction details:', error);
     }
