@@ -418,9 +418,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (target.classList.contains('transaction')) {
             // Navigate to transaction details page with transaction data as URL parameter
             const transaction = target.querySelector('p').innerText;
-            const txTime = target.querySelector('.transaction-time').innerText; // Extract transaction time from the inner text
-            const fromAddress = target.querySelector('.from-address').innerText; // Extract sender address from the inner text
-            const transactionTags = target.querySelector('.transaction-tags').innerText; // Extract transaction tags from the inner text
+            const txTime = target.closest('.transaction').querySelector('.transaction-time').innerText; // Extract transaction time from the inner text
+            const fromAddress = target.closest('.transaction').querySelector('.from-address').innerText; // Extract sender address from the inner text
+            const transactionTags = target.closest('.transaction').querySelector('.transaction-tags').innerText; // Extract transaction tags from the inner text
             window.location.href = `transaction-details.html?transaction=${encodeURIComponent(transaction)}&txTime=${txTime}&fromAddress=${fromAddress}&transactionTags=${encodeURIComponent(transactionTags)}`;
         } else if (target.tagName.toLowerCase() === 'a' && target.parentElement.classList.contains('transaction')) {
             // Link clicked, do nothing as the URL will handle the navigation
