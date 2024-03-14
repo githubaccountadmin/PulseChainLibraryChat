@@ -417,25 +417,21 @@ document.addEventListener('DOMContentLoaded', async function() {
         const target = event.target;
         if (target.classList.contains('transaction')) {
             // Navigate to transaction details page with transaction data as URL parameter
-            const transactionText = target.querySelector('p').innerText;
-            const transactionParts = transactionText.split('-').map(part => part.trim());
-    
-            // Extract transaction details
-            const transaction = transactionParts[0];
-            const txTime = transactionParts[1].split('by')[0].trim(); // Assuming the transaction time is before 'by'
-            const fromAddress = transactionParts[1].split('by')[1].trim(); // Assuming the sender address is after 'by'
-            const transactionTags = transactionParts[2] ? transactionParts[2].split(',').map(tag => tag.trim()) : []; // Assuming transaction tags are separated by commas
-    
-            // Construct URL with transaction details as parameters
-            const queryParams = new URLSearchParams({
-                transaction: transaction,
-                txTime: txTime,
-                fromAddress: fromAddress,
-                transactionTags: transactionTags.join(',') // Convert transaction tags back to string
-            });
-            const url = `transaction-details.html?${queryParams}`;
-    
-            window.location.href = url;
+            const transaction = target.querySelector('p').innerText;
+            const txTime = target.querySelector('.transaction-time').innerText; // Extract transaction time from the inner text
+            const fromAddress = target.querySelector('.from-address').innerText; // Extract sender address from the inner text
+            const transactionTags = target.querySelector('.transaction-tags').innerText; // Extract transaction tags from the inner text
+            window.location.href = `transaction-details.html?transaction=${encodeURIComponent(transaction)}&txTime=${txTime}&fromAddress=${fromAddress}&transactionTags=${encodeURIComponent(transactionTags)}`;
+        } else if (target.tagName.toLowerCase() === 'a' && target.parentElement.classList.contains('transaction')) {
+            // Link clicked, do nothing as the URL will handle the navigation
+            return;
+        } else {
+            // Navigate to transaction details page with transaction data as URL parameter
+            const transaction = target.closest('.transaction').querySelector('p').innerText;
+            const txTime = target.closest('.transaction').querySelector('.transaction-time').innerText; // Extract transaction time from the inner text
+            const fromAddress = target.closest('.transaction').querySelector('.from-address').innerText; // Extract sender address from the inner text
+            const transactionTags = target.closest('.transaction').querySelector('.transaction-tags').innerText; // Extract transaction tags from the inner text
+            window.location.href = `transaction-details.html?transaction=${encodeURIComponent(transaction)}&txTime=${txTime}&fromAddress=${fromAddress}&transactionTags=${encodeURIComponent(transactionTags)}`;
         }
     });
     
