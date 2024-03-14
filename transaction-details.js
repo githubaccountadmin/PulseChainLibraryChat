@@ -6,12 +6,29 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Function to render the transaction details
     function renderTransactionDetails(transaction) {
         try {
+            if (!transaction) {
+                console.error('Transaction data not found.');
+                return;
+            }
+            
             const decodedTransaction = decodeURIComponent(transaction);
+            console.log('Decoded transaction:', decodedTransaction); // Debugging: Log decoded transaction
             const transactionDetailsContainer = document.getElementById('transactionContent');
             console.log('Transaction details container:', transactionDetailsContainer);
+
+            if (!transactionDetailsContainer) {
+                console.error('Transaction details container not found.');
+                return;
+            }
             
             // Separate the header and body of the message
             const headerEndIndex = decodedTransaction.indexOf('\n'); // Find the end of the header
+            
+            if (headerEndIndex === -1) {
+                console.error('Header end index not found.');
+                return;
+            }
+
             const header = decodedTransaction.slice(0, headerEndIndex).trim(); // Extract the header
             const body = decodedTransaction.slice(headerEndIndex + 1).trim(); // Extract the body
             
