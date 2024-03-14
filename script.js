@@ -418,7 +418,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (target.classList.contains('transaction')) {
             // Navigate to transaction details page with transaction data as URL parameter
             const transaction = target.querySelector('p').innerText;
-            window.location.href = `transaction-details.html?transaction=${encodeURIComponent(transaction)}`;
+            const txTime = ...; // Extract transaction time from the inner text
+            const fromAddress = ...; // Extract sender address from the inner text
+            const transactionTags = ...; // Extract transaction tags from the inner text
+            window.location.href = `transaction-details.html?transaction=${encodeURIComponent(transaction)}&txTime=${txTime}&fromAddress=${fromAddress}&transactionTags=${encodeURIComponent(transactionTags)}`;
         }
     });
     
