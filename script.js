@@ -450,9 +450,13 @@ document.addEventListener('DOMContentLoaded', async function() {
         const txTime = txTimeElement.innerText;
         const fromAddress = fromAddressElement.innerText;
         const transactionTags = transactionTagsElement.innerText;
+        const decodedInput = transactionTextElement.innerText; // Modify this to extract the decoded input
     
-        // Navigate to transaction details page with transaction data as URL parameter
-        window.location.href = `transaction-details.html?transaction=${encodeURIComponent(transaction)}&txTime=${txTime}&fromAddress=${fromAddress}&transactionTags=${encodeURIComponent(transactionTags)}`;
+        // Construct the URL with query parameters
+        const url = `transaction-details.html?transaction=${encodeURIComponent(transaction)}&txTime=${txTime}&fromAddress=${fromAddress}&transactionTags=${encodeURIComponent(transactionTags)}&decodedInput=${encodeURIComponent(decodedInput)}`;
+    
+        // Navigate to the transaction details page
+        window.location.href = url;
     });
     
     document.getElementById('tagFilter').addEventListener('change', async function() {
