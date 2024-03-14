@@ -4,29 +4,21 @@ document.addEventListener('DOMContentLoaded', async function() {
     const transaction = urlParams.get('transaction');
 
     // Function to render the transaction details
-    function renderTransactionDetails(transaction) {
+    function renderTransactionDetails(transaction, txTime, fromAddress, transactionTags) {
         try {
-            if (!transaction) {
-                console.error('Transaction data not found.');
-                return;
-            }
-            
-            const decodedTransaction = decodeURIComponent(transaction);
-            console.log('Decoded transaction:', decodedTransaction); // Debugging: Log decoded transaction
-            console.log('Decoded transaction length:', decodedTransaction.length); // Debugging: Log length of decoded transaction
-            const transactionDetailsContainer = document.getElementById('transactionContent');
-            console.log('Transaction details container:', transactionDetailsContainer);
-    
-            if (!transactionDetailsContainer) {
-                console.error('Transaction details container not found.');
-                return;
-            }
-            
             // Render transaction details HTML with the decoded transaction
-            let html = `<div class="transaction-details">
-                            <p>${decodedTransaction}</p>
-                        </div>`;
-            
+            let html = `<div class="transaction-details">`;
+    
+            // Add transaction header
+            html += `<p>Published on ${txTime} by ${fromAddress}${transactionTags && transactionTags.length > 0 ? ' - ' + transactionTags.join(', ') : ''}</p>`;
+    
+            // Add transaction body
+            html += `<p>${transaction}</p>`;
+    
+            html += `</div>`;
+    
+            // Append transaction HTML to transaction window
+            const transactionDetailsContainer = document.getElementById('transactionContent');
             transactionDetailsContainer.innerHTML = html;
         } catch (error) {
             console.error('Error rendering transaction details:', error);
