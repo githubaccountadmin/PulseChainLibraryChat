@@ -427,6 +427,19 @@ document.addEventListener('DOMContentLoaded', async function() {
         const fromAddressElement = transactionElement.querySelector('.from-address');
         const transactionTagsElement = transactionElement.querySelector('.transaction-tags');
     
+        if (!transactionTextElement) {
+            console.error('Transaction text element not found.');
+        }
+        if (!txTimeElement) {
+            console.error('Transaction time element not found.');
+        }
+        if (!fromAddressElement) {
+            console.error('From address element not found.');
+        }
+        if (!transactionTagsElement) {
+            console.error('Transaction tags element not found.');
+        }
+    
         if (!transactionTextElement || !txTimeElement || !fromAddressElement || !transactionTagsElement) {
             // If any of the required elements are missing, log an error and return
             console.error('One or more required elements not found.');
