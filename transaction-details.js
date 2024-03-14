@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             console.log('Transaction details container:', transactionDetailsContainer);
             
             // Separate the header and body of the message
-            const headerMatch = decodedTransaction.match(/^.*?(\n|$)/); // Match everything before the first newline or end of string
-            const header = headerMatch ? headerMatch[0].trim() : ''; // Extract and trim the header
-            const body = decodedTransaction.replace(header, ''); // Remove the header from the content
+            const headerEndIndex = decodedTransaction.indexOf('\n'); // Find the end of the header
+            const header = decodedTransaction.slice(0, headerEndIndex).trim(); // Extract the header
+            const body = decodedTransaction.slice(headerEndIndex).trim(); // Extract the body
             
             // Render transaction details HTML with header and body
             let html = `<div class="transaction-details">
@@ -26,6 +26,11 @@ document.addEventListener('DOMContentLoaded', async function() {
             console.error('Error rendering transaction details:', error);
         }
     }
+
+    // Call function to render transaction details
+    renderTransactionDetails(transaction);
+});
+
 
     // Call function to render transaction details
     renderTransactionDetails(transaction);
