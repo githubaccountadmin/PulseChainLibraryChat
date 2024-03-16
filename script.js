@@ -55,48 +55,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     }
 
-    // Function to render transactions
-    function renderTransaction(tx, txTime, fromAddress, transactionTags) {
-        try {
-            // Truncate transaction if it exceeds 10 lines
-            let decodedInput = tx; // Assuming tx is the transaction content
-            let truncated = false;
-            if (decodedInput.split('\n').length > 10) {
-                decodedInput = decodedInput.split('\n').slice(0, 10).join('\n');
-                truncated = true;
-            }
-    
-            // Extract tag from the decoded input
-            const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
-            if (tagMatches) {
-                transactionTags = tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1'));
-                decodedInput = decodedInput.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g, ''); // Remove tag from the body
-            }
-    
-            // Format transaction HTML
-            let html = `<div class="transaction">`;
-    
-            // Add transaction header
-            html += `<p>Published on ${txTime} by ${fromAddress}${transactionTags && transactionTags.length > 0 ? ' - ' + transactionTags.join(', ') : ''}</p>`;
-    
-            // Add transaction body
-            html += `<p>${decodedInput}</p>`;
-    
-            // Add "View Full" link if transaction is truncated
-            if (truncated) {
-                html += `<p><a href="transaction-details.html?transaction=${encodeURIComponent(tx)}">View Full</a></p>`;
-            }
-    
-            html += `</div>`;
-    
-            // Append transaction HTML to transaction window
-            const window = document.getElementById('transactionDataWindow');
-            window.insertAdjacentHTML('beforeend', html); // Append HTML instead of replacing
-        } catch (error) {
-            console.error('Error rendering transaction:', error);
-        }
-    }
-    
     function setRandomTitle() {
         try {
             const titles = [
@@ -252,14 +210,13 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     async function fetchTransactionData(clearExisting = false) {
         try {
-            const transactionTags = []; // Define transactionTags as an empty array
             const endpoint = 'https://api.scan.pulsechain.com/api/v2/addresses/0x9Cd83BE15a79646A3D22B81fc8dDf7B7240a62cB/transactions?filter=to%20%7C%20from';
             const response = await fetch(endpoint);
             
             if (!response.ok) {
                 throw new Error(`Failed to fetch data. Status code: ${response.status}`);
             }
-    
+
             // Log the entire API response here
             console.log("API Response:", response);
             
@@ -282,7 +239,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     
             const data = await response.json();
             console.log("API Response:", data); // Add this line
-    
+
             if (!data || !Array.isArray(data.items)) {
                 throw new Error('Invalid data format or missing result array.');
             }
@@ -305,12 +262,11 @@ document.addEventListener('DOMContentLoaded', async function() {
             if (clearExisting) {
                 window.innerHTML = '';
             }
-    
-            for (let tx of filteredData.slice(sliceStart, sliceEnd)) {
+            
+            filteredData.slice(sliceStart, sliceEnd).forEach(tx => {            
                 try {
                     if (web3.utils.isHexStrict(tx.raw_input)) {
                         let decodedInput = '';
-                        
                         try {
                             decodedInput = web3.utils.hexToUtf8(tx.raw_input);
                         } catch (utfError) {
@@ -318,30 +274,15 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 console.error('Error decoding UTF-8:', utfError);
                             }
                             // Skip this transaction and continue processing
-                            continue;
+                            return;
                         }
-    
-                        // Extract additional transaction details
-                        const tags = getTagsFromInput(decodedInput);
-                        const txTime = new Date(tx.timestamp);
-                        const formattedTime = formatTime(txTime);
-                        
-                        // Combine decoded input and tag
-                        const combinedContent = `${decodedInput}`;
-    
-                        // Render each transaction
-                        renderTransaction(combinedContent, formattedTime, tx.from.hash, transactionTags);
-                        
                         const tagMatches = decodedInput.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
-                        if (tagMatches) {
-                            const newTransactionTags = tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')); // Assign the value
-                            tagMatches.forEach(tag => {
-                                decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
-                            });
-                            transactionTags.push(...newTransactionTags); // Append new tags to the existing array
-
-                        }
+                        const tags = tagMatches ? tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')) : [];
                         
+                        tags.forEach(tag => {
+                            decodedInput = decodedInput.replace(`*****(${tag})*****`, '');
+                        });
+            
                         const hasAllMatchingTags = selectedTags.every(selTag => tags.includes(selTag));
             
                         if (selectedTags.includes("All") || hasAllMatchingTags || selectedTags.length === 0) {
@@ -364,11 +305,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                 } catch (error) {
                     console.error('Error processing transaction:', error);
                 }
-            }
-    
+            });
+
             window.innerHTML += outputText;
             lastIndexProcessed = sliceEnd;
-    
+
             if (lastIndexProcessed >= totalTransactions) {
                 return;
             }            
@@ -378,18 +319,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             const window = document.getElementById('transactionDataWindow');
             window.innerHTML = `Error fetching data: ${error.message}`;
         }
-    }
-    
-    // Helper function to extract tags from transaction input
-    function getTagsFromInput(input) {
-        const tagMatches = input.match(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/g);
-        return tagMatches ? tagMatches.map(match => match.replace(/\*\*\*\*\*\((.*?)\)\*\*\*\*\*/, '$1')) : [];
-    }
-    
-    // Helper function to format time
-    function formatTime(time) {
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'UTC' };
-        return new Intl.DateTimeFormat('en-US', options).format(time);
     }
     
     function timeout(ms) {
@@ -411,52 +340,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         if(clientHeight + scrollTop >= scrollHeight - 5) {
             await fetchTransactionData();
         }
-    });
-
-    document.getElementById('transactionDataWindow').addEventListener('click', function(event) {
-        const target = event.target;
-        const transactionElement = target.closest('.transaction');
-    
-        if (!transactionElement) {
-            // Do nothing if the click is not within a transaction element
-            return;
-        }
-    
-        const transactionTextElement = transactionElement.querySelector('p');
-        const txTimeElement = transactionElement.querySelector('.transaction-time');
-        const fromAddressElement = transactionElement.querySelector('.from-address');
-        const transactionTagsElement = transactionElement.querySelector('.transaction-tags');
-    
-        if (!transactionTextElement) {
-            console.error('Transaction text element not found.');
-        }
-        if (!txTimeElement) {
-            console.error('Transaction time element not found.');
-        }
-        if (!fromAddressElement) {
-            console.error('From address element not found.');
-        }
-        if (!transactionTagsElement) {
-            console.error('Transaction tags element not found.');
-        }
-    
-        if (!transactionTextElement || !txTimeElement || !fromAddressElement || !transactionTagsElement) {
-            // If any of the required elements are missing, log an error and return
-            console.error('One or more required elements not found.');
-            return;
-        }
-    
-        const transaction = transactionTextElement.innerText;
-        const txTime = txTimeElement.innerText;
-        const fromAddress = fromAddressElement.innerText;
-        const transactionTags = transactionTagsElement.innerText;
-        const decodedInput = transactionTextElement.innerText; // Modify this to extract the decoded input
-    
-        // Construct the URL with query parameters
-        const url = `transaction-details.html?transaction=${encodeURIComponent(transaction)}&txTime=${txTime}&fromAddress=${fromAddress}&transactionTags=${encodeURIComponent(transactionTags)}&decodedInput=${encodeURIComponent(decodedInput)}`;
-    
-        // Navigate to the transaction details page
-        window.location.href = url;
     });
     
     document.getElementById('tagFilter').addEventListener('change', async function() {
