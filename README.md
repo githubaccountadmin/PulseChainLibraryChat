@@ -45,5 +45,4 @@ Our vision is to create a vibrant DeFi hub where users can freely express, share
 
 ---
 
-Built with ❤️ by a single dev and their AI friend, Hermes. If you like what you see, feel free to donate $PLS here: lighting.pls
-Respect the lolz...
+Built with ❤️ by a single dev and their AI friend, Hermes.
